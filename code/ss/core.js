@@ -45,7 +45,7 @@ function runLevel(level, Display, andThen) {
 
 function runGame(plans, Display) {
   stats = new Statistics();
-
+  //mySound = new Audio();
   function startLevel(n) {
     runLevel(new Level(plans[n]), Display, function(status) {
       if (status == "lost") {

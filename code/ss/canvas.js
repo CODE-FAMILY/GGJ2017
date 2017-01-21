@@ -154,17 +154,15 @@ CanvasDisplay.prototype.drawActors = function() {
       //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
         var sprite;
         if (actor.type == "switch") {
-          if (actor.on) {
-            sprite = coinSprite;
-          } else {
-            sprite = lavaSprite;
-          }
+          if (actor.on) sprite = coinSprite;
+          else          sprite = lavaSprite;
         } else if (actor.type == "coin") {
             sprite = coinSprite;
-        }
-        else if (actor.type == "lava") {
+        } else if (actor.type == "lava") {
             sprite = lavaSprite;
-        }
+        } else if (actor.type == "ladder") {
+            sprite = brickSprite;
+        } 
         this.cx.drawImage(sprite,
                         //tileX, 0, width, height,
                         x,     y, width, height);
