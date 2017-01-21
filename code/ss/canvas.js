@@ -120,6 +120,7 @@ CanvasDisplay.prototype.drawBackground = function() {
 
 CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
   var sprite = 8, player = this.level.player;
+  var spriteW = 24, spriteH = 30;
   width += playerXOverlap * 2;
   x -= playerXOverlap;
   if (player.speed.x != 0)
@@ -135,7 +136,7 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
     flipHorizontally(this.cx, x + width / 2);
 
   this.cx.drawImage(playerSprites,
-                    sprite * width, 0, width, height,
+                    sprite * spriteW, 0, spriteW, spriteH,
                     x,              y, width, height);
 
   this.cx.restore();

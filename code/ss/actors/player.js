@@ -2,10 +2,14 @@ function Player(pos) {
   this.pos = pos.plus(new Vector(0, -0.5));
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
-  this.touchingSwitch = null;
+  this.gravity = 30;
+  this.jumpSpeed = 17;
+  this.playerXSpeed = 7;
+
+  this.playerSprites = playerSprites;
+  this.isTouchingSwitch = false;
 }
 Player.prototype.type = "player";
-
 
 Player.prototype.moveX = function(step, level, keys) {
   this.speed.x = 0;
@@ -81,3 +85,36 @@ Player.prototype.act = function(step, level, keys) {
     this.size.y -= step;
   }
 };
+
+//getters and setters
+Player.prototype.setGravity = function(tempGrav){
+  this.gravity = tempGrav;
+} 
+
+Player.prototype.getGravity = function(){
+  return this.gravity;
+} 
+
+Player.prototype.setJumpSpeed = function(tempSpeed){
+  this.speed = tempSpeed;
+} 
+
+Player.prototype.getJumpSpeed = function(){
+  return this.speed;
+} 
+
+Player.prototype.setXSpeed = function(tempXSpeed){
+  this.playerXSpeed = tempXSpeed;
+} 
+
+Player.prototype.getXSpeed = function(){
+  return this.playerXSpeed;
+} 
+
+Player.prototype.setSpriteSrc = function(tempSrc){
+  this.playerSprites.src = tempSrc;
+}
+
+Player.prototype.getSprite = function(){
+  return this.playerSprites;
+}
