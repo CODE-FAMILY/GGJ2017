@@ -30,7 +30,7 @@ function runAnimation(frameFunc) {
 }
 
 function runLevel(level, Display, andThen) {
-  var display = new Display(document.body, level);
+  var display = new Display(document.getElementById("viewport"), level);
   runAnimation(function(step) {
     level.animate(step, arrows);
     display.drawFrame(step);

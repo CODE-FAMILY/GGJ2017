@@ -4,11 +4,14 @@ function CanvasDisplay(parent, level) {
   this.canvas = document.createElement("canvas");
   this.canvas.width = Math.min(document.documentElement.clientWidth, level.width * scale);
   this.canvas.height = Math.min(document.documentElement.clientHeight, level.height * scale);
+
   this.Ui = document.createElement("canvas");
   this.Ui.width = Math.min(document.documentElement.clientWidth, level.width * scale);
   this.Ui.height = Math.min(document.documentElement.clientHeight, level.height * scale);
+
   parent.appendChild(this.Ui);
   parent.appendChild(this.canvas);
+  
   this.cx = this.canvas.getContext("2d");
 
   this.level = level;
