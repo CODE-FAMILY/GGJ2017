@@ -3,8 +3,8 @@ var playerXOverlap = 4;
 var scale = 20;
 var maxStep = 0.05;
 
-var gravity = 30;
-var jumpSpeed = 17;
+// var gravity = 30;
+// var jumpSpeed = 17;
 var playerXSpeed = 7;
 var wobbleSpeed = 8, wobbleDist = 0.07;
 
