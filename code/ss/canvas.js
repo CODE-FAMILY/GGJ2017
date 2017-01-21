@@ -98,18 +98,18 @@ CanvasDisplay.prototype.drawBackground = function() {
       if (tile == null) continue;
       var screenX = (x - view.left) * scale;
       var screenY = (y - view.top) * scale;
-
       //var tileX = tile == "lava" ? scale : 0;
 
       var sprite;
-      if (tile == "lava")
-          sprite = lavaSprite;
-      else if (tile == "slideRight")
-          sprite = lavaSprite;
-      else if (tile == "slideLeft")
-          sprite = lavaSprite;
-      else
-          sprite = brickSprite;
+      if (tile == "lava") {
+        sprite = lavaSprite;
+      } else if (tile == "slideRight") {
+        sprite = lavaSprite;
+      } else if (tile == "slideLeft") {
+        sprite = lavaSprite;
+      } else {
+        sprite = brickSprite;
+      }
 
       this.cx.drawImage(sprite,
                         //tileX,         0, scale, scale,
@@ -149,33 +149,23 @@ CanvasDisplay.prototype.drawActors = function() {
     var y = (actor.pos.y - this.viewport.top) * scale;
     if (actor.type == "player") {
       this.drawPlayer(x, y, width, height);
-<<<<<<< HEAD
-    } else if (actor.type == "switch") {
-      if (actor.on) {
-        var tileX = 2 * scale;
-        this.cx.drawImage(otherSprites,
-                          tileX, 0, width, height,
-                          x,     y, width, height);
-      } else {
-
-      }
     } else {
-      var tileX = (actor.type == "coin" ? 2 : 1) * scale;
-      this.cx.drawImage(otherSprites,
-                        tileX, 0, width, height,
-=======
-    }
-    else {
       //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
-
         var sprite;
-        if (actor.type == "coin")
+        if (actor.type == "switch") {
+          if (actor.on) {
             sprite = coinSprite;
-        else if (actor.type == "lava")
+          } else {
             sprite = lavaSprite;
+          }
+        } else if (actor.type == "coin") {
+            sprite = coinSprite;
+        }
+        else if (actor.type == "lava") {
+            sprite = lavaSprite;
+        }
         this.cx.drawImage(sprite,
                         //tileX, 0, width, height,
->>>>>>> 551d4602d21d67549dfc5063204f9f51731f8324
                         x,     y, width, height);
     }
   }, this);
