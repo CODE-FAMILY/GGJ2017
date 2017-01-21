@@ -2,11 +2,11 @@ function Player(pos) {
   this.pos = pos.plus(new Vector(0, -0.5));
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
-  this.gravity = 30;
-  this.jumpSpeed = 17;
-  this.playerXSpeed = 7;
-
-  this.playerSprites = playerSprites;
+  //this.gravity = 30;
+  //this.jumpSpeed = 17;
+  //this.playerXSpeed = 7;
+  this.revertChar();
+  //this.playerSprites = playerSprites;
   this.isTouchingSwitch = false;
 }
 Player.prototype.type = "player";
@@ -72,14 +72,30 @@ Player.prototype.move = function(actor, step, level, keys) {
   }
 };
 
-Player.prototype.changeChar = function (step, level, keys) {
-    //this.speed.x = 0;
+Player.prototype.changeChar = function (keys) {
+    var charIndex = -1;
     if (keys.charOneChange)
-        playerSprites = playerOneSprites;
+        charIndex = 0;
     else if (keys.charTwoChange)
-        playerSprites = playerTwoSprites;
+        charIndex = 1;
     else if (keys.charThreeChange)
-        playerSprites = playerThreeSprites;
+        charIndex = 2;
+
+    if (charIndex != -1) {
+        this.gravity = charGravity[charIndex];
+        this.jumpSpeed = charJumpSpeed[charIndex];
+        this.playerXSpeed = charXspeed[charIndex];
+        playerXSpeed = charXspeed[charIndex];
+        playerSprites = charSprites[charIndex];
+    }
+}
+
+Player.prototype.revertChar = function () {
+    this.gravity = charGravity[0];
+    this.jumpSpeed = charJumpSpeed[0];
+    this.playerXSpeed = charXspeed[0];
+    playerXSpeed = charXspeed[0];
+    playerSprites = charSprites[0];
 }
 
 Player.prototype.actions = function(step, level, keys){
@@ -95,7 +111,7 @@ Player.prototype.actions = function(step, level, keys){
 Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
   this.actions(step, level, keys);
-  this.changeChar(step, level, keys);
+  this.changeChar(keys);
 
   this.move(otherActor, step, level, keys);
 
@@ -112,6 +128,11 @@ Player.prototype.act = function(step, level, keys) {
     this.size.y -= step;
   }
 };
+
+//Character Stats
+var charGravity = [30, 22, 38]; //gravity values for characters one through three
+var charJumpSpeed = [17, 20, 13];
+var charXspeed = [7, 5, 11];
 
 //getters and setters
 Player.prototype.setGravity = function(tempGrav){

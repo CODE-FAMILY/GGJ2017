@@ -1,14 +1,19 @@
-var playerOneSprites = document.createElement("img");
-playerOneSprites.src = "img/atlasedElements/player.png";
+var charSprites = [document.createElement("img"), document.createElement("img"), document.createElement("img")];
+charSprites[0].src = "img/atlasedElements/player.png";
+charSprites[1].src = "img/atlasedElements/playerTwo.png";
+charSprites[2].src = "img/atlasedElements/playerThree.png";
 
-var playerTwoSprites = document.createElement("img");
-playerTwoSprites.src = "img/atlasedElements/playerTwo.png";
+//var playerOneSprites = document.createElement("img");
+//playerOneSprites.src = "img/atlasedElements/player.png";
 
-var playerThreeSprites = document.createElement("img");
-playerThreeSprites.src = "img/atlasedElements/playerThree.png";
+//var playerTwoSprites = document.createElement("img");
+//playerTwoSprites.src = "img/atlasedElements/playerTwo.png";
+
+//var playerThreeSprites = document.createElement("img");
+//playerThreeSprites.src = "img/atlasedElements/playerThree.png";
 
 var playerSprites = document.createElement("img");
-playerSprites = playerOneSprites;
+playerSprites = charSprites[0];
 
 var lavaSprite = document.createElement("img");
 lavaSprite.src = "img/actorElements/lavaSprite.png";
