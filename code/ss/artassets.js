@@ -2,7 +2,7 @@ var playerSprites = document.createElement("img");
 playerSprites.src = "img/player.png";
 
 var lavaSprite = document.createElement("img");
-lavaSprite.src = "img/lavaSprite.png";
+lavaSprite.src = "img/ICECUBE-02.png";
 
 var brickSprite = document.createElement("img");
 brickSprite.src = "img/brickSprite.png";
