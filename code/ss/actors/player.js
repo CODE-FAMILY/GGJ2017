@@ -26,6 +26,10 @@ Player.prototype.moveY = function(step, level, keys) {
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
     level.playerTouched(obstacle);
+
+    if      (obstacle == "slideRight") this.pos.x += step * 2;
+    else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
+
     if (keys.up && this.speed.y > 0)
       this.speed.y = -jumpSpeed;
     else

@@ -94,7 +94,18 @@ CanvasDisplay.prototype.drawBackground = function() {
       if (tile == null) continue;
       var screenX = (x - view.left) * scale;
       var screenY = (y - view.top) * scale;
-      var tileX = tile == "lava" ? scale : 0;
+
+      var tileX;
+      if (tile == "lava") {
+        tileX = scale;
+      } else if (tile == "slideRight") {
+        tileX = scale;
+      } else if (tile == "slideLeft") {
+        tileX = scale;
+      } else {
+        tileX = 0;
+      }
+
       this.cx.drawImage(otherSprites,
                         tileX,         0, scale, scale,
                         screenX, screenY, scale, scale);

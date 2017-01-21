@@ -22,6 +22,10 @@ function Level(plan) {
         fieldType = "wall";
       else if (ch == "!")
         fieldType = "lava";
+      else if (ch == "<")
+        fieldType = "slideLeft";
+      else if (ch == ">")
+        fieldType = "slideRight";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
