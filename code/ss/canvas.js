@@ -5,8 +5,8 @@
 function createCanvas(id, level) {
   canvas = document.createElement("canvas");
   canvas.setAttribute("id", id);
-  canvas.width = Math.min(document.documentElement.clientWidth, level.width * scale);
-  canvas.height = Math.min(document.documentElement.clientHeight, level.height * scale);
+  canvas.width = Math.min(document.documentElement.clientWidth*0.95, level.width * scale);
+  canvas.height = Math.min(document.documentElement.clientHeight*0.95, level.height * scale);
 
   return canvas;
 }
