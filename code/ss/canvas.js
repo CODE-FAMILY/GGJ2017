@@ -1,4 +1,3 @@
-
 /*
  * Helper function to create canvas object
  */
@@ -18,12 +17,17 @@ function CanvasDisplay(parent, level) {
   //UI Canvas
   this.UI = createCanvas("UI", level);
 
-  //UI and Player canvas to HTML page
-  parent.appendChild(this.UI);
+  //Add canvas to HTML page
   parent.appendChild(this.canvas);
+  parent.appendChild(this.UI);
 
   //Get canvas context
   this.cx = this.canvas.getContext("2d");
+  this.cu = this.UI.getContext("2d");
+
+  //Draw death statistic
+  var text = "Deaths: " + stats.deaths;
+  drawText(text, "0.8em", 100, 100, "UI");
 
   this.level = level;
   this.animationTime = 0;
@@ -94,9 +98,16 @@ CanvasDisplay.prototype.drawBackground = function() {
       if (tile == null) continue;
       var screenX = (x - view.left) * scale;
       var screenY = (y - view.top) * scale;
-      var tileX = tile == "lava" ? scale : 0;
-      this.cx.drawImage(otherSprites,
-                        tileX,         0, scale, scale,
+      //var tileX = tile == "lava" ? scale : 0;
+
+      var sprite;
+      if (tile == "lava")
+          sprite = lavaSprite;
+      else
+          sprite = brickSprite;
+
+      this.cx.drawImage(sprite,
+                        //tileX,         0, scale, scale,
                         screenX, screenY, scale, scale);
     }
   }
@@ -133,10 +144,17 @@ CanvasDisplay.prototype.drawActors = function() {
     var y = (actor.pos.y - this.viewport.top) * scale;
     if (actor.type == "player") {
       this.drawPlayer(x, y, width, height);
-    } else {
-      var tileX = (actor.type == "coin" ? 2 : 1) * scale;
-      this.cx.drawImage(otherSprites,
-                        tileX, 0, width, height,
+    }
+    else {
+      //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
+
+        var sprite;
+        if (actor.type == "coin")
+            sprite = coinSprite;
+        else if (actor.type == "lava")
+            sprite = lavaSprite;
+        this.cx.drawImage(sprite,
+                        //tileX, 0, width, height,
                         x,     y, width, height);
     }
   }, this);

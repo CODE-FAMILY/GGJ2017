@@ -93,6 +93,8 @@ Level.prototype.playerTouched = function(type, actor) {
     })) {
       this.status = "won";
       this.finishDelay = 1;
+
+      displayTextCenter("You Won!", "5em", "UI");
     }
   }
 };

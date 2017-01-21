@@ -44,14 +44,18 @@ function runLevel(level, Display, andThen) {
 }
 
 function runGame(plans, Display) {
+  stats = new Statistics();
+
   function startLevel(n) {
     runLevel(new Level(plans[n]), Display, function(status) {
-      if (status == "lost")
+      if (status == "lost") {
+        stats.playerDied();
         startLevel(n);
-      else if (n < plans.length - 1)
+      } else if (n < plans.length - 1) {
         startLevel(n + 1);
-      else
+      } else {
         console.log("You win!");
+      }
     });
   }
   startLevel(0);
