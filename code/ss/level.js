@@ -3,6 +3,7 @@ var actorChars = {
   "o": Coin,
   "s": Switch,
   "#": Ladder,
+  "T": Transport,
   "=": Lava, "|": Lava, "v": Lava
 };
 
@@ -102,5 +103,7 @@ Level.prototype.playerTouched = function(type, actor) {
       actor.on = !actor.on;
       this.player.touchingSwitch = actor;
     }
+  } else if (type == "transport") {
+      this.status = "won";
   }
 };

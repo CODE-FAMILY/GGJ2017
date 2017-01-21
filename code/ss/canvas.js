@@ -162,7 +162,9 @@ CanvasDisplay.prototype.drawActors = function() {
             sprite = lavaSprite;
         } else if (actor.type == "ladder") {
             sprite = brickSprite;
-        } 
+        } else if (actor.type == "transport") {
+            sprite = lavaSprite;
+        }
         this.cx.drawImage(sprite,
                         //tileX, 0, width, height,
                         x,     y, width, height);
