@@ -72,6 +72,16 @@ Player.prototype.move = function(actor, step, level, keys) {
   }
 };
 
+Player.prototype.changeChar = function (step, level, keys) {
+    //this.speed.x = 0;
+    if (keys.charOneChange)
+        playerSprites = playerOneSprites;
+    else if (keys.charTwoChange)
+        playerSprites = playerTwoSprites;
+    else if (keys.charThreeChange)
+        playerSprites = playerThreeSprites;
+}
+
 Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
 
@@ -85,6 +95,7 @@ Player.prototype.actions = function(step, level, keys){
 Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
   this.actions(step, level, keys);
+  this.changeChar(step, level, keys);
 
   this.move(otherActor, step, level, keys);
 

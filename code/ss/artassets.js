@@ -1,5 +1,14 @@
+var playerOneSprites = document.createElement("img");
+playerOneSprites.src = "img/atlasedElements/player.png";
+
+var playerTwoSprites = document.createElement("img");
+playerTwoSprites.src = "img/atlasedElements/playerTwo.png";
+
+var playerThreeSprites = document.createElement("img");
+playerThreeSprites.src = "img/atlasedElements/playerThree.png";
+
 var playerSprites = document.createElement("img");
-playerSprites.src = "img/atlasedElements/player.png";
+playerSprites = playerOneSprites;
 
 var lavaSprite = document.createElement("img");
 lavaSprite.src = "img/actorElements/lavaSprite.png";
