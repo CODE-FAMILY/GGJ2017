@@ -17,10 +17,19 @@ var iceSprite = document.createElement("img");
 iceSprite.src = "img/backgroundElements/ICECUBE-03.png";
 
 var brickSprite = document.createElement("img");
-brickSprite.src = "img/brickSprite.png";
+brickSprite.src = "img/backgroundElements/CENTER_TITLE.png";
+
+var brickRSprite = document.createElement("img");
+brickRSprite.src = "img/backgroundElements/RIGHTEDGE_TITLE.png";
+
+var brickLSprite = document.createElement("img");
+brickLSprite.src = "img/backgroundElements/LEFTEDGE_TITLE.png";
 
 var coinSprite = document.createElement("img");
 coinSprite.src = "img/tempCoin.svg";
 
 var offLever = document.createElement("img");
 offLever.src = "img/actorElements/FALSELEVER-05.png";
+
+var onLever = document.createElement("img");
+onLever.src = "img/actorElements/TRUELEVER.png";
