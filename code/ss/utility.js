@@ -1,8 +1,3 @@
-var playerSprites = document.createElement("img");
-playerSprites.src = "img/player.png";
-
-var otherSprites = document.createElement("img");
-otherSprites.src = "img/sprites.png";
 
 var playerXOverlap = 4;
 var scale = 20;

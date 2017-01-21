@@ -98,9 +98,16 @@ CanvasDisplay.prototype.drawBackground = function() {
       if (tile == null) continue;
       var screenX = (x - view.left) * scale;
       var screenY = (y - view.top) * scale;
-      var tileX = tile == "lava" ? scale : 0;
-      this.cx.drawImage(otherSprites,
-                        tileX,         0, scale, scale,
+      //var tileX = tile == "lava" ? scale : 0;
+
+      var sprite;
+      if (tile == "lava")
+          sprite = lavaSprite;
+      else
+          sprite = brickSprite;
+
+      this.cx.drawImage(sprite,
+                        //tileX,         0, scale, scale,
                         screenX, screenY, scale, scale);
     }
   }
@@ -137,10 +144,17 @@ CanvasDisplay.prototype.drawActors = function() {
     var y = (actor.pos.y - this.viewport.top) * scale;
     if (actor.type == "player") {
       this.drawPlayer(x, y, width, height);
-    } else {
-      var tileX = (actor.type == "coin" ? 2 : 1) * scale;
-      this.cx.drawImage(otherSprites,
-                        tileX, 0, width, height,
+    }
+    else {
+      //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
+
+        var sprite;
+        if (actor.type == "coin")
+            sprite = coinSprite;
+        else if (actor.type == "lava")
+            sprite = lavaSprite;
+        this.cx.drawImage(sprite,
+                        //tileX, 0, width, height,
                         x,     y, width, height);
     }
   }, this);
