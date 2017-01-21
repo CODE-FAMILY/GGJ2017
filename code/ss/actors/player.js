@@ -45,9 +45,14 @@ Player.prototype.moveY = function(step, level, keys) {
   }
 };
 
+Player.prototype.actions = function(step, level, keys){
+  // if(keys.act)
+}
+
 Player.prototype.act = function(step, level, keys) {
   this.moveX(step, level, keys);
   this.moveY(step, level, keys);
+  this.actions(step, level, keys);
 
   var otherActor = level.actorAt(this);
   if (otherActor)

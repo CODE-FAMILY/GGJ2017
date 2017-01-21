@@ -8,7 +8,13 @@ var maxStep = 0.05;
 var playerXSpeed = 7;
 var wobbleSpeed = 8, wobbleDist = 0.07;
 
-var arrowCodes = {37: "left", 38: "up", 39: "right" , 40 : "down"};
+var arrowCodes = {65: "left", 
+                  87: "up", 
+                  68: "right",
+                  83: "down",
+                  69: "actOne",
+                  70: "actTwo",
+                  82: "actThree"};
 
 var results = [
   {name: "Satisfied", count: 1043, color: "lightblue"},
