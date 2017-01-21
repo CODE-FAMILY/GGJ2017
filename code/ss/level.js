@@ -1,7 +1,7 @@
 var actorChars = {
   "@": Player,
   "o": Coin,
-  //"s": Switch,
+  "s": Switch,
   "=": Lava, "|": Lava, "v": Lava
 };
 
@@ -22,6 +22,10 @@ function Level(plan) {
         fieldType = "wall";
       else if (ch == "!")
         fieldType = "lava";
+      else if (ch == "<")
+        fieldType = "slideLeft";
+      else if (ch == ">")
+        fieldType = "slideRight";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
@@ -95,6 +99,11 @@ Level.prototype.playerTouched = function(type, actor) {
       this.finishDelay = 1;
 
       displayTextCenter("You Won!", "5em", "UI");
+    }
+  } else if (type == "switch") {
+    if (!this.player.isTouchingSwitch) {
+      actor.on = !actor.on;
+      this.player.isTouchingSwitch = true;
     }
   }
 };

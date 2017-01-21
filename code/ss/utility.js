@@ -1,6 +1,6 @@
 
 var playerXOverlap = 4;
-var scale = 20;
+var scale = 40;
 var maxStep = 0.05;
 
 // var gravity = 30;

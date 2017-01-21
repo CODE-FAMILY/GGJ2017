@@ -101,10 +101,15 @@ CanvasDisplay.prototype.drawBackground = function() {
       //var tileX = tile == "lava" ? scale : 0;
 
       var sprite;
-      if (tile == "lava")
-          sprite = lavaSprite;
-      else
-          sprite = brickSprite;
+      if (tile == "lava") {
+        sprite = lavaSprite;
+      } else if (tile == "slideRight") {
+        sprite = lavaSprite;
+      } else if (tile == "slideLeft") {
+        sprite = lavaSprite;
+      } else {
+        sprite = brickSprite;
+      }
 
       this.cx.drawImage(sprite,
                         //tileX,         0, scale, scale,
@@ -115,6 +120,7 @@ CanvasDisplay.prototype.drawBackground = function() {
 
 CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
   var sprite = 8, player = this.level.player;
+  var spriteW = 24, spriteH = 30;
   width += playerXOverlap * 2;
   x -= playerXOverlap;
   if (player.speed.x != 0)
@@ -130,7 +136,7 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
     flipHorizontally(this.cx, x + width / 2);
 
   this.cx.drawImage(playerSprites,
-                    sprite * width, 0, width, height,
+                    sprite * spriteW, 0, spriteW, spriteH,
                     x,              y, width, height);
 
   this.cx.restore();
@@ -144,15 +150,21 @@ CanvasDisplay.prototype.drawActors = function() {
     var y = (actor.pos.y - this.viewport.top) * scale;
     if (actor.type == "player") {
       this.drawPlayer(x, y, width, height);
-    }
-    else {
+    } else {
       //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
-
         var sprite;
-        if (actor.type == "coin")
+        if (actor.type == "switch") {
+          if (actor.on) {
             sprite = coinSprite;
-        else if (actor.type == "lava")
+          } else {
             sprite = lavaSprite;
+          }
+        } else if (actor.type == "coin") {
+            sprite = coinSprite;
+        }
+        else if (actor.type == "lava") {
+            sprite = lavaSprite;
+        }
         this.cx.drawImage(sprite,
                         //tileX, 0, width, height,
                         x,     y, width, height);

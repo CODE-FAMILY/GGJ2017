@@ -7,6 +7,7 @@ function Player(pos) {
   this.playerXSpeed = 7;
 
   this.playerSprites = playerSprites;
+  this.isTouchingSwitch = false;
 }
 Player.prototype.type = "player";
 
@@ -31,6 +32,10 @@ Player.prototype.moveY = function(step, level, keys) {
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
     level.playerTouched(obstacle);
+
+    if      (obstacle == "slideRight") this.pos.x += step * 2;
+    else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
+
     if (keys.up && this.speed.y > 0)
       this.speed.y = -this.jumpSpeed;
     else
@@ -47,6 +52,8 @@ Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
   if (otherActor)
     level.playerTouched(otherActor.type, otherActor);
+  else 
+    this.isTouchingSwitch = false;
 
   // Losing animation
   if (level.status == "lost") {
