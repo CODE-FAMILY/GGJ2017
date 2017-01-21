@@ -1,11 +1,13 @@
 var actorChars = {
   "@": Player,
   "o": Coin,
-  "s": Switch,
+  "0": Switch, "1": Switch,
   "#": Ladder,
-  "T": Transport,
-  "=": Lava, "|": Lava, "v": Lava
+  "t": Transport,
+  "=": Lava, "|": Lava, "v": Lava, "A": Lava
 };
+
+
 
 function Level(plan) {
   this.width = plan[0].length;
@@ -18,7 +20,7 @@ function Level(plan) {
     for (var x = 0; x < this.width; x++) {
       var ch = line[x], fieldType = null;
       var Actor = actorChars[ch];
-      if (Actor)
+      if (Actor) 
         this.actors.push(new Actor(new Vector(x, y), ch));
       else if (ch == "x")
         fieldType = "wall";
@@ -33,9 +35,9 @@ function Level(plan) {
     this.grid.push(gridLine);
   }
 
-  this.player = this.actors.filter(function(actor) {
-    return actor.type == "player";
-  })[0];
+  this.player = this.actors.filter(function(actor) { return actor.type == "player"; })[0];
+  this.actors.forEach(
+    function (actor) { if (actor.type == "switch") { mapConnectedActor(actor, this.actors); } }, this);
   this.status = this.finishDelay = null;
 }
 
@@ -79,9 +81,7 @@ Level.prototype.animate = function(step, keys) {
 
   while (step > 0) {
     var thisStep = Math.min(step, maxStep);
-    this.actors.forEach(function(actor) {
-      actor.act(thisStep, this, keys);
-    }, this);
+    this.actors.forEach(function(actor) { actor.act(thisStep, this, keys); }, this);
     step -= thisStep;
   }
 };

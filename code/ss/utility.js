@@ -59,3 +59,10 @@ function clearCanvas(id) {
   ctx = document.getElementById(id).getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+function isNumber(ch) {
+  return !isNaN(parseInt(ch));
+}
+
+function isUpperCase(ch) {
+}
