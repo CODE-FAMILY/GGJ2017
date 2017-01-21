@@ -3,6 +3,7 @@ var actorChars = {
   "o": Coin,
   "s": Switch,
   "#": Ladder,
+  "_": thinBar,
   "T": Transport,
   "=": Lava, "|": Lava, "v": Lava
 };
