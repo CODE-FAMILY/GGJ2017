@@ -144,6 +144,15 @@ CanvasDisplay.prototype.drawActors = function() {
     var y = (actor.pos.y - this.viewport.top) * scale;
     if (actor.type == "player") {
       this.drawPlayer(x, y, width, height);
+    } else if (actor.type == "switch") {
+      if (actor.on) {
+        var tileX = 2 * scale;
+        this.cx.drawImage(otherSprites,
+                          tileX, 0, width, height,
+                          x,     y, width, height);
+      } else {
+
+      }
     } else {
       var tileX = (actor.type == "coin" ? 2 : 1) * scale;
       this.cx.drawImage(otherSprites,

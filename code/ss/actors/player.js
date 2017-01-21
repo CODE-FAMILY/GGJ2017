@@ -2,6 +2,7 @@ function Player(pos) {
   this.pos = pos.plus(new Vector(0, -0.5));
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
+  this.isTouchingSwitch = false;
 }
 Player.prototype.type = "player";
 
@@ -44,8 +45,8 @@ Player.prototype.act = function(step, level, keys) {
   this.moveY(step, level, keys);
 
   var otherActor = level.actorAt(this);
-  if (otherActor)
-    level.playerTouched(otherActor.type, otherActor);
+  if (otherActor) level.playerTouched(otherActor.type, otherActor);
+  else this.isTouchingSwitch = false;
 
   // Losing animation
   if (level.status == "lost") {

@@ -1,7 +1,7 @@
 var actorChars = {
   "@": Player,
   "o": Coin,
-  //"s": Switch,
+  "s": Switch,
   "=": Lava, "|": Lava, "v": Lava
 };
 
@@ -97,6 +97,11 @@ Level.prototype.playerTouched = function(type, actor) {
     })) {
       this.status = "won";
       this.finishDelay = 1;
+    }
+  } else if (type == "switch") {
+    if (!this.player.isTouchingSwitch) {
+      actor.on = !actor.on;
+      this.player.isTouchingSwitch = true;
     }
   }
 };
