@@ -104,9 +104,9 @@ CanvasDisplay.prototype.drawBackground = function() {
       if (tile == "lava") {
         sprite = lavaSprite;
       } else if (tile == "slideRight") {
-        sprite = lavaSprite;
+        sprite = iceSprite;
       } else if (tile == "slideLeft") {
-        sprite = lavaSprite;
+        sprite = iceSprite;
       } else {
         sprite = brickSprite;
       }
@@ -155,13 +155,15 @@ CanvasDisplay.prototype.drawActors = function() {
         var sprite;
         if (actor.type == "switch") {
           if (actor.on) sprite = coinSprite;
-          else          sprite = lavaSprite;
+          else          sprite = offLever;
         } else if (actor.type == "coin") {
             sprite = coinSprite;
         } else if (actor.type == "lava") {
             sprite = lavaSprite;
         } else if (actor.type == "ladder") {
             sprite = brickSprite;
+        } else if (actor.type == "transport") {
+            sprite = lavaSprite;
         } 
         this.cx.drawImage(sprite,
                         //tileX, 0, width, height,
