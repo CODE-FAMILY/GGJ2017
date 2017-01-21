@@ -12,3 +12,6 @@ brickSprite.src = "img/brickSprite.png";
 
 var coinSprite = document.createElement("img");
 coinSprite.src = "img/tempCoin.svg";
+
+var offLever = document.createElement("img");
+offLever.src = "img/actorElements/FALSELEVER-05.png";

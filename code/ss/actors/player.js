@@ -49,14 +49,17 @@ Player.prototype.moveYonLadder = function(step, level, keys) {
   this.speed.y = 0;
   if (keys.down) this.speed.y += playerXSpeed;
   if (keys.up) this.speed.y -= playerXSpeed;
+  if (keys.jump) this.speed.y = -this.jumpSpeed;
 
   var motion = new Vector(0, this.speed.y * step);
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
-  if (obstacle)
+  if (obstacle){
     level.playerTouched(obstacle);
-  else
+    
+  } else {
     this.pos = newPos;
+  }
 };
 
 Player.prototype.move = function(actor, step, level, keys) {
@@ -70,7 +73,13 @@ Player.prototype.move = function(actor, step, level, keys) {
 };
 
 Player.prototype.actions = function(step, level, keys){
-  // if(keys.act)
+  if(keys.actOne){
+
+  } else if(keys.actTwo){
+    
+  } else if(keys.actThree){
+    
+  }
 }
 
 Player.prototype.act = function(step, level, keys) {
