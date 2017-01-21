@@ -108,7 +108,13 @@ CanvasDisplay.prototype.drawBackground = function() {
       } else if (tile == "slideLeft") {
         sprite = iceSprite;
       } else {
-        sprite = brickSprite;
+        sprite = brickRSprite;
+        if(this.level.grid[y][x+1] != null){
+          sprite = brickLSprite;
+          if(this.level.grid[y][x-1] != null){
+            sprite = brickSprite;
+          }
+        }
       }
 
       this.cx.drawImage(sprite,
@@ -154,7 +160,7 @@ CanvasDisplay.prototype.drawActors = function() {
       //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
         var sprite;
         if (actor.type == "switch") {
-          if (actor.on) sprite = coinSprite;
+          if (actor.on) sprite = onLever;
           else          sprite = offLever;
         } else if (actor.type == "coin") {
             sprite = coinSprite;
