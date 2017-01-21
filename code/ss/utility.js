@@ -1,8 +1,3 @@
-var playerSprites = document.createElement("img");
-playerSprites.src = "img/player.png";
-
-var otherSprites = document.createElement("img");
-otherSprites.src = "img/sprites.png";
 
 var playerXOverlap = 4;
 var scale = 20;
@@ -37,3 +32,19 @@ Vector.prototype.plus = function(other) {
 Vector.prototype.times = function(factor) {
   return new Vector(this.x * factor, this.y * factor);
 };
+
+function drawText(text, size, xpos, ypos, id) {
+  ctx = document.getElementById(id).getContext("2d");
+  ctx.font = "bold " + size + " Arial";
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillText(text, xpos, ypos);
+}
+
+function displayTextCenter(text, size, id) {
+      ctx = document.getElementById(id).getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "bold " + size + " Arial";
+      textString = text;
+      textMeasure = ctx.measureText(textString);
+      ctx.fillText(textString, ((canvas.width / 2) - (textMeasure.width / 2)), (canvas.height / 2) );
+}

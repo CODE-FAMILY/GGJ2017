@@ -1,12 +1,11 @@
-
 /*
  * Helper function to create canvas object
  */
 function createCanvas(id, level) {
   canvas = document.createElement("canvas");
   canvas.setAttribute("id", id);
-  canvas.width = Math.min(document.documentElement.clientWidth, level.width * scale);
-  canvas.height = Math.min(document.documentElement.clientHeight, level.height * scale);
+  canvas.width = Math.min(document.documentElement.clientWidth*0.95, level.width * scale);
+  canvas.height = Math.min(document.documentElement.clientHeight*0.95, level.height * scale);
 
   return canvas;
 }
@@ -18,12 +17,17 @@ function CanvasDisplay(parent, level) {
   //UI Canvas
   this.UI = createCanvas("UI", level);
 
-  //UI and Player canvas to HTML page
-  parent.appendChild(this.UI);
+  //Add canvas to HTML page
   parent.appendChild(this.canvas);
+  parent.appendChild(this.UI);
 
   //Get canvas context
   this.cx = this.canvas.getContext("2d");
+  this.cu = this.UI.getContext("2d");
+
+  //Draw death statistic
+  var text = "Deaths: " + stats.deaths;
+  drawText(text, "0.8em", 100, 100, "UI");
 
   this.level = level;
   this.animationTime = 0;
@@ -95,19 +99,20 @@ CanvasDisplay.prototype.drawBackground = function() {
       var screenX = (x - view.left) * scale;
       var screenY = (y - view.top) * scale;
 
-      var tileX;
-      if (tile == "lava") {
-        tileX = scale;
-      } else if (tile == "slideRight") {
-        tileX = scale;
-      } else if (tile == "slideLeft") {
-        tileX = scale;
-      } else {
-        tileX = 0;
-      }
+      //var tileX = tile == "lava" ? scale : 0;
 
-      this.cx.drawImage(otherSprites,
-                        tileX,         0, scale, scale,
+      var sprite;
+      if (tile == "lava")
+          sprite = lavaSprite;
+      else if (tile == "slideRight")
+          sprite = lavaSprite;
+      else if (tile == "slideLeft")
+          sprite = lavaSprite;
+      else
+          sprite = brickSprite;
+
+      this.cx.drawImage(sprite,
+                        //tileX,         0, scale, scale,
                         screenX, screenY, scale, scale);
     }
   }
@@ -144,6 +149,7 @@ CanvasDisplay.prototype.drawActors = function() {
     var y = (actor.pos.y - this.viewport.top) * scale;
     if (actor.type == "player") {
       this.drawPlayer(x, y, width, height);
+<<<<<<< HEAD
     } else if (actor.type == "switch") {
       if (actor.on) {
         var tileX = 2 * scale;
@@ -157,6 +163,19 @@ CanvasDisplay.prototype.drawActors = function() {
       var tileX = (actor.type == "coin" ? 2 : 1) * scale;
       this.cx.drawImage(otherSprites,
                         tileX, 0, width, height,
+=======
+    }
+    else {
+      //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
+
+        var sprite;
+        if (actor.type == "coin")
+            sprite = coinSprite;
+        else if (actor.type == "lava")
+            sprite = lavaSprite;
+        this.cx.drawImage(sprite,
+                        //tileX, 0, width, height,
+>>>>>>> 551d4602d21d67549dfc5063204f9f51731f8324
                         x,     y, width, height);
     }
   }, this);

@@ -6,6 +6,7 @@ function Player(pos) {
 }
 Player.prototype.type = "player";
 
+
 Player.prototype.moveX = function(step, level, keys) {
   this.speed.x = 0;
   if (keys.left) this.speed.x -= playerXSpeed;
