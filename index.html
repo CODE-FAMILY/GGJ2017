@@ -4,14 +4,15 @@
   <script src="code/ss/artassets.js"></script>
   <script src="code/ss/utility.js"></script>
 
-<script src="code/ss/actors/player.js"></script>
-<script src="code/ss/actors/lava.js"></script>
-<script src="code/ss/actors/coin.js"></script>
-<script src="code/ss/actors/switch.js"></script>
-<script src="code/ss/actors/ladder.js"></script>
+  <script src="code/ss/actors/player.js"></script>
+  <script src="code/ss/actors/lava.js"></script>
+  <script src="code/ss/actors/coin.js"></script>
+  <script src="code/ss/actors/switch.js"></script>
+  <script src="code/ss/actors/ladder.js"></script>
 
   <script src="code/ss/core.js"></script>
   <script src="code/ss/statistics.js"></script>
+  <script src="code/ss/sound.js"></script>
 
   <script src="code/ss/level.js"></script>
   <script src="code/base_level.js"></script>
@@ -21,6 +22,7 @@
 </head>
 <body>
   <div id="viewport">
+    <div id="audio-controls"></div>
     <script>
       runGame(GAME_LEVELS, CanvasDisplay);
     </script>
