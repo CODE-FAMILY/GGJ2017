@@ -104,9 +104,9 @@ CanvasDisplay.prototype.drawBackground = function() {
       if (tile == "lava") {
         sprite = lavaSprite;
       } else if (tile == "slideRight") {
-        sprite = lavaSprite;
+        sprite = iceSprite;
       } else if (tile == "slideLeft") {
-        sprite = lavaSprite;
+        sprite = iceSprite;
       } else {
         sprite = brickSprite;
       }

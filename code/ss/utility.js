@@ -14,7 +14,8 @@ var arrowCodes = {65: "left",
                   83: "down",
                   69: "actOne",
                   70: "actTwo",
-                  82: "actThree"};
+                  82: "actThree",
+                  32: "jump"};
 
 var results = [
   {name: "Satisfied", count: 1043, color: "lightblue"},
