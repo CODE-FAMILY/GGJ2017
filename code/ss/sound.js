@@ -11,34 +11,19 @@ function Sound() {
                      "Cinematic Inspiration": this.soundDir + "Alex_Che_-_Cinematic_Inspiration.ogg"
                   }
 
+
+  this.sounds = {
+                   "Theme": this.soundDir + "whale_force_theme_final.ogg",
+                   "Flow": this.soundDir + "flow.ogg",
+                   "Flex": this.soundDir + "flex.ogg",
+                   "Floyd": this.soundDir + "floyd.ogg",
+                 }
+
   this.bgSound = new Audio();
-  this.setBgSound( this.bgSounds["Ambient Background"] );
 }
 
 Sound.prototype.displayControls = function(id) {
   controls = document.getElementById(id);
-
-  selectLabel = document.createElement("label");
-  selectLabel.setAttribute("for", "bg-sound");
-  selectLabelText = document.createTextNode("Music: ");
-  selectLabel.appendChild(selectLabelText);
-
-
-  select = document.createElement("select");
-  select.setAttribute("id", "bg-sounds");
-
-  for (var key in this.bgSounds) {
-    var value = this.bgSounds[key];
-    option = document.createElement("option");
-    option.setAttribute("value", value);
-    optionText = document.createTextNode(key);
-    option.appendChild(optionText);
-    select.appendChild(option);
-  }
-
-  //additional reference to sound object for anonymous function
-  sound = this;
-  select.addEventListener("change", function () { sound.setBgSound( this.value ); sound.playBgSound(); }, false);
 
   mute = document.createElement("button");
   mute.setAttribute("data-mute","false");
@@ -58,16 +43,11 @@ Sound.prototype.displayControls = function(id) {
 
   }, false)
 
-  controls.appendChild(selectLabel);
-  controls.appendChild(select);
   controls.appendChild(mute);
 };
 
-Sound.prototype.setBgSound = function (file) {
-  this.bgSound.src = file;
-};
-
-Sound.prototype.playBgSound = function () {
+Sound.prototype.playBgSound = function (name) {
+  this.bgSound.src = this.sounds[name];
   this.bgSound.play();
   this.bgSound.addEventListener('ended', function() {
     this.play();
