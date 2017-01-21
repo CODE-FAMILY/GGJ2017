@@ -3,18 +3,23 @@ var playerXOverlap = 4;
 var scale = 40;
 var maxStep = 0.05;
 
-var gravity = 30;
-var jumpSpeed = 17;
+//var gravity = 30;
+//var jumpSpeed = 17;
 var playerXSpeed = 7;
 var wobbleSpeed = 8, wobbleDist = 0.07;
 
-var arrowCodes = {65: "left", 
-                  87: "up", 
-                  68: "right",
-                  83: "down",
-                  69: "actOne",
-                  70: "actTwo",
-                  82: "actThree"};
+var arrowCodes = {
+        37: "left",             //Left-Arrow
+        38: "up",               //Up-Arrow
+        39: "right",            //Right-Arrow
+        40: "down",             //Down-Arrow
+        69: "actOne",           //Z
+        70: "actTwo",           //X
+        82: "actThree",         //C
+        65: "charOneChange",    //A
+        83: "charTwoChange",    //S
+        68: "charThreeChange",  //D
+        32: "jump"};            //Space
 
 var results = [
   {name: "Satisfied", count: 1043, color: "lightblue"},
