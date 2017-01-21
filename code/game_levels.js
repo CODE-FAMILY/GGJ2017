@@ -1,4 +1,15 @@
 var GAME_LEVELS = [
+  /*["                                                                                ",
+   "                                                                                ",
+   "                                                                                ",
+   "                                                                                ",
+   "                                                                                ",
+   "                                                                                ",
+   "                                                                  xxx           ",
+   "           @         o                               xx      xx    xx!xx        ",
+   "           xxxxxxxxxxxxx                                                        ",
+   "                                                                 xx!xx          ",
+   "                                   xxxxx                          xvx           "],*/
   ["                                                                                ",
    "                                                                                ",
    "                                                                                ",

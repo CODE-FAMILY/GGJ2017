@@ -1,4 +1,3 @@
-
 /*
  * Helper function to create canvas object
  */
@@ -18,12 +17,17 @@ function CanvasDisplay(parent, level) {
   //UI Canvas
   this.UI = createCanvas("UI", level);
 
-  //UI and Player canvas to HTML page
-  parent.appendChild(this.UI);
+  //Add canvas to HTML page
   parent.appendChild(this.canvas);
+  parent.appendChild(this.UI);
 
   //Get canvas context
   this.cx = this.canvas.getContext("2d");
+  this.cu = this.UI.getContext("2d");
+
+  //Draw death statistic
+  var text = "Deaths: " + stats.deaths;
+  drawText(text, "0.8em", 100, 100, "UI");
 
   this.level = level;
   this.animationTime = 0;
