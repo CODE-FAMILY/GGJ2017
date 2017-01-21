@@ -1,6 +1,7 @@
 var actorChars = {
   "@": Player,
   "o": Coin,
+  //"s": Switch,
   "=": Lava, "|": Lava, "v": Lava
 };
 

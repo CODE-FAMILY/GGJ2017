@@ -1,17 +1,28 @@
 
+/*
+ * Helper function to create canvas object
+ */
+function createCanvas(id, level) {
+  canvas = document.createElement("canvas");
+  canvas.setAttribute("id", id);
+  canvas.width = Math.min(document.documentElement.clientWidth, level.width * scale);
+  canvas.height = Math.min(document.documentElement.clientHeight, level.height * scale);
+
+  return canvas;
+}
 
 function CanvasDisplay(parent, level) {
-  this.canvas = document.createElement("canvas");
-  this.canvas.width = Math.min(document.documentElement.clientWidth, level.width * scale);
-  this.canvas.height = Math.min(document.documentElement.clientHeight, level.height * scale);
+  //Player canvas
+  this.canvas = createCanvas("player", level);
 
-  this.Ui = document.createElement("canvas");
-  this.Ui.width = Math.min(document.documentElement.clientWidth, level.width * scale);
-  this.Ui.height = Math.min(document.documentElement.clientHeight, level.height * scale);
+  //UI Canvas
+  this.UI = createCanvas("UI", level);
 
-  parent.appendChild(this.Ui);
+  //UI and Player canvas to HTML page
+  parent.appendChild(this.UI);
   parent.appendChild(this.canvas);
-  
+
+  //Get canvas context
   this.cx = this.canvas.getContext("2d");
 
   this.level = level;
@@ -30,6 +41,7 @@ function CanvasDisplay(parent, level) {
 
 CanvasDisplay.prototype.clear = function() {
   this.canvas.parentNode.removeChild(this.canvas);
+  this.UI.parentNode.removeChild(this.UI);
 };
 
 CanvasDisplay.prototype.drawFrame = function(step) {
