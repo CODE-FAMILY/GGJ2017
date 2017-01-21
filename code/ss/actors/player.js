@@ -47,10 +47,18 @@ Player.prototype.moveY = function(step, level, keys) {
   }
 };
 
-Player.prototype.moveYonLadder = function(step, level, keys) {
+Player.prototype.moveYonLadder = function(actor, step, level, keys) {
   this.speed.y = 0;
-  if (keys.down) this.speed.y += playerXSpeed;
-  if (keys.up) this.speed.y -= playerXSpeed;
+  if (keys.down){
+  if(actor.type == "ladder"){
+      this.speed.y += playerXSpeed;
+    }
+    if(actor.type == "thinBar"){
+    }
+  } 
+  if (keys.up){
+    this.speed.y -= playerXSpeed * 2;
+  } 
   if (keys.jump) this.speed.y = -this.jumpSpeed;
 
   var motion = new Vector(0, this.speed.y * step);
@@ -65,9 +73,9 @@ Player.prototype.moveYonLadder = function(step, level, keys) {
 };
 
 Player.prototype.move = function(actor, step, level, keys) {
-  if (actor && actor.type == "ladder") {
+  if (actor && (actor.type == "ladder" || actor.type == "thinBar")) {
     this.moveX(step, level, keys);
-    this.moveYonLadder(step, level, keys);
+    this.moveYonLadder(actor, step, level, keys);
   } else {
     this.moveX(step, level, keys);
     this.moveY(step, level, keys);

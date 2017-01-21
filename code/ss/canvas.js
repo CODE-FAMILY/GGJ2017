@@ -118,7 +118,6 @@ CanvasDisplay.prototype.drawBackground = function() {
       }
 
       this.cx.drawImage(sprite,
-                        //tileX,         0, scale, scale,
                         screenX, screenY, scale, scale);
     }
   }
@@ -157,7 +156,6 @@ CanvasDisplay.prototype.drawActors = function() {
     if (actor.type == "player") {
       this.drawPlayer(x, y, width, height);
     } else {
-      //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
         var sprite;
         if (actor.type == "switch") {
           if (actor.on) sprite = onLever;
@@ -166,13 +164,15 @@ CanvasDisplay.prototype.drawActors = function() {
             sprite = coinSprite;
         } else if (actor.type == "lava") {
             sprite = lavaSprite;
-        } else if (actor.type == "ladder") {
+        } else if (actor.type == "ladder" || actor.type == "thinBar") {
             sprite = brickSprite;
+            if(actor.type == "thinBar"){
+              height = height * .1;
+            }
         } else if (actor.type == "transport") {
             sprite = lavaSprite;
         } 
         this.cx.drawImage(sprite,
-                        //tileX, 0, width, height,
                         x,     y, width, height);
     }
   }, this);

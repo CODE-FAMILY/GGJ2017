@@ -19,7 +19,9 @@ var arrowCodes = {
         65: "charOneChange",    //A
         83: "charTwoChange",    //S
         68: "charThreeChange",  //D
-        32: "jump"};            //Space
+        32: "jump",             //Space
+        27: "pause"             //Esc
+};
 
 var results = [
   {name: "Satisfied", count: 1043, color: "lightblue"},
