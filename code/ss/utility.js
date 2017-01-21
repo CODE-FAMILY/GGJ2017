@@ -41,10 +41,15 @@ function drawText(text, size, xpos, ypos, id) {
 }
 
 function displayTextCenter(text, size, id) {
-      ctx = document.getElementById(id).getContext("2d");
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = "bold " + size + " Arial";
-      textString = text;
-      textMeasure = ctx.measureText(textString);
-      ctx.fillText(textString, ((canvas.width / 2) - (textMeasure.width / 2)), (canvas.height / 2) );
+  ctx = document.getElementById(id).getContext("2d");
+  clearCanvas(id);
+  ctx.font = "bold " + size + " Arial";
+  textString = text;
+  textMeasure = ctx.measureText(textString);
+  ctx.fillText(textString, ((canvas.width / 2) - (textMeasure.width / 2)), (canvas.height / 2) );
+}
+
+function clearCanvas(id) {
+  ctx = document.getElementById(id).getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
