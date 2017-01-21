@@ -1,4 +1,6 @@
-# ggj2017
+# Global Game Jam 2017 (ggj2017)
+
+play the game: https://code-family.github.io/GGJ2017/
 
 pitch:
 
