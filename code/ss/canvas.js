@@ -167,7 +167,7 @@ CanvasDisplay.prototype.drawActors = function() {
         } else if (actor.type == "ladder" || actor.type == "thinBar") {
             sprite = brickSprite;
             if(actor.type == "thinBar"){
-              y = y * .1;
+              height = height * .1;
             }
         } else if (actor.type == "transport") {
             sprite = lavaSprite;

@@ -8,11 +8,17 @@ function Lava(pos, ch) {
   } else if (ch == "v") {
     this.speed = new Vector(0, 3);
     this.repeatPos = pos;
+  } else if (ch == "A") {
+    this.speed = new Vector(0, 3);
+    this.repeatPos = pos;
+    this.ch = ch;
   }
+  this.active = true;
 }
 Lava.prototype.type = "lava";
 
 Lava.prototype.act = function(step, level) {
+  if (!this.active) return;
   var newPos = this.pos.plus(this.speed.times(step));
   if (!level.obstacleAt(newPos, this.size))
     this.pos = newPos;

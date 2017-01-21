@@ -2,12 +2,14 @@ function Player(pos) {
   this.pos = pos.plus(new Vector(0, -0.5));
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
+  this.charIndex;
   //this.gravity = 30;
   //this.jumpSpeed = 17;
   //this.playerXSpeed = 7;
   this.revertChar();
   //this.playerSprites = playerSprites;
   this.isTouchingSwitch = false;
+
 }
 Player.prototype.type = "player";
 
@@ -73,20 +75,20 @@ Player.prototype.move = function(actor, step, level, keys) {
 };
 
 Player.prototype.changeChar = function (keys) {
-    var charIndex = -1;
+    var charChange = this.charIndex;
     if (keys.charOneChange)
-        charIndex = 0;
+        this.charIndex = 0;
     else if (keys.charTwoChange)
-        charIndex = 1;
+        this.charIndex = 1;
     else if (keys.charThreeChange)
-        charIndex = 2;
+        this.charIndex = 2;
 
-    if (charIndex != -1) {
-        this.gravity = charGravity[charIndex];
-        this.jumpSpeed = charJumpSpeed[charIndex];
-        this.playerXSpeed = charXspeed[charIndex];
-        playerXSpeed = charXspeed[charIndex];
-        playerSprites = charSprites[charIndex];
+    if (charChange !== this.charIndex) {
+        this.gravity = charGravity[this.charIndex];
+        this.jumpSpeed = charJumpSpeed[this.charIndex];
+        this.playerXSpeed = charXspeed[this.charIndex];
+        playerXSpeed = charXspeed[this.charIndex];
+        playerSprites = charSprites[this.charIndex];
     }
 }
 
@@ -96,6 +98,7 @@ Player.prototype.revertChar = function () {
     this.playerXSpeed = charXspeed[0];
     playerXSpeed = charXspeed[0];
     playerSprites = charSprites[0];
+    this.charIndex = 0;
 }
 
 Player.prototype.actions = function(step, level, keys){
@@ -130,8 +133,8 @@ Player.prototype.act = function(step, level, keys) {
 };
 
 //Character Stats
-var charGravity = [30, 22, 38]; //gravity values for characters one through three
-var charJumpSpeed = [17, 20, 13];
+var charGravity = [30, 22, 37]; //gravity values for characters one through three
+var charJumpSpeed = [17, 20, 14];
 var charXspeed = [7, 5, 11];
 
 //getters and setters
@@ -165,4 +168,8 @@ Player.prototype.setSpriteSrc = function(tempSrc){
 
 Player.prototype.getSprite = function(){
   return this.playerSprites;
+}
+
+Player.prototype.getCurrentChar = function() {
+    return this.charIndex;
 }
