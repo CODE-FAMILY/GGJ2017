@@ -2,6 +2,7 @@ var actorChars = {
   "@": Player,
   "o": Coin,
   "s": Switch,
+  "#": Ladder,
   "=": Lava, "|": Lava, "v": Lava
 };
 
@@ -89,21 +90,17 @@ Level.prototype.playerTouched = function(type, actor) {
     this.status = "lost";
     this.finishDelay = 1;
   } else if (type == "coin") {
-    this.actors = this.actors.filter(function(other) {
-      return other != actor;
-    });
-    if (!this.actors.some(function(actor) {
-      return actor.type == "coin";
-    })) {
+    this.actors = this.actors.filter(function(other) { return other != actor;});
+    if (!this.actors.some(function(actor) { return actor.type == "coin"; })) {
       this.status = "won";
       this.finishDelay = 1;
 
       displayTextCenter("You Won!", "5em", "UI");
     }
   } else if (type == "switch") {
-    if (!this.player.isTouchingSwitch) {
+    if (this.player.touchingSwitch != actor) {
       actor.on = !actor.on;
-      this.player.isTouchingSwitch = true;
+      this.player.touchingSwitch = actor;
     }
   }
 };
