@@ -112,7 +112,7 @@ Level.prototype.playerTouched = function(type, actor) {
 
       console.log("Player is immortal");
     } else {
-      
+
       this.status = "lost";
       this.finishDelay = 1;
 
@@ -131,7 +131,10 @@ Level.prototype.playerTouched = function(type, actor) {
       this.status = "won";
       this.finishDelay = 1;
 
-      displayTextCenter("You Won!", "5em", "UI");
+      console.log("won!");
+
+      uidisplay = new UICanvas();
+      uidisplay.won();
     }
   } else if (type == "switch") {
     if (this.player.touchingSwitch != actor) {

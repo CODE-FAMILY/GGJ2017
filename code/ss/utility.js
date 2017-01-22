@@ -48,13 +48,14 @@ Vector.prototype.times = function(factor) {
 
 function drawText(text, size, xpos, ypos, id) {
   var ctx = document.getElementById(id).getContext("2d");
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = "#fafafa";
   ctx.font = "bold " + size + " Arial";
   ctx.fillText(text, xpos, ypos);
 }
 
 function displayTextCenter(text, size, id) {
   var ctx = document.getElementById(id).getContext("2d");
+  ctx.fillStyle = "#000000";
   ctx.font = "bold " + size + " Arial";
   textString = text;
   textMeasure = ctx.measureText(textString);
@@ -65,27 +66,8 @@ function drawImage(path, xpos, ypos, id) {
   var ctx = document.getElementById(id).getContext("2d");
   var img = new Image();
   img.src = path;
-  console.log(img);
   ctx.drawImage(img, xpos, ypos);
 }
-
-/*function clearPausedOnCanvas() {
-  clearCanvas("UI");
-  drawDeathStatistics();
-  displaySelectCharacter(Character.FLOW);
-}
-
-function drawDeathStatistics() {
-  var text = "Deaths: " + stats.deaths;
-  drawText(text, "1.2em", 100, 80, "UI");
-}
-
-function displaySelectCharacter(character) {
-  var text = Character.getCharacterName(character);
-  if ( null != text ) {
-    drawText(text, "1.2em", 100, 100, "UI");
-  }
-}*/
 
 function clearCanvas(id) {
   var ctx = document.getElementById(id).getContext("2d");

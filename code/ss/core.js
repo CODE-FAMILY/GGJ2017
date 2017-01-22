@@ -72,10 +72,10 @@ function runGame(plans, Display) {
         uidisplay.setDeaths(stats.deaths);
 
         //TODO: Generates several new UI and Player level
-        if (stats.deaths == 3) {
+        /*if (stats.deaths == 3) {
           stats.deaths = 0;
           startLevel(0);
-        }
+        }*/
         startLevel(n);
       } else if (n < plans.length - 1) {
         startLevel(n + 1);
