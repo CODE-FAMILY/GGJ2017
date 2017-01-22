@@ -127,6 +127,8 @@ Level.prototype.playerTouched = function(type, actor) {
     }
   } else if (type == "coin") {
     sound = new Sound();
+    var sounds = ["Whale-Cry", "Splash"];
+
     sound.triggerSound("Whale-Cry");
 
     this.actors = this.actors.filter(function(other) { return other != actor;});
