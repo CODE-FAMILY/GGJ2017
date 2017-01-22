@@ -3,7 +3,7 @@ import csv
 
 with open('levelTemp.js', 'w') as the_file:
     #change this for different output levels
-    with open('level/Whale-Defense-Force-Level-Sheet1-2.csv', 'rb') as f:
+    with open('level/Whale-Defense-Force-Level-Sheet1-3.csv', 'rb') as f:
         reader = csv.reader(f)
         the_file.write('var GAME_LEVELS = [\n [\n')
         for row in reader:
