@@ -123,7 +123,11 @@ CanvasDisplay.prototype.drawBackground = function() {
       } else if (tile == "slideLeft") {
         sprite = iceSprite;
       } else if (tile == "fallthrough") {
-          sprite = waterSprites[Math.round(animFrame/24) % 2];
+          var spriteIndex = (Math.round(animFrame/60) + x) % 2;
+          if (this.level.grid[y - 1][x] != "fallthrough")
+              spriteIndex = spriteIndex + 2;
+          sprite = waterSprites[spriteIndex];
+
           animFrame = animFrame + 1;
       } else {
         sprite = brickRSprite;
