@@ -37,6 +37,17 @@ Stone.prototype.moveY = function(step, level) {
 };
 
 Stone.prototype.act = function(step, level) {
-    this.moveX(step, level);
-    this.moveY(step, level);
+  this.moveX(step, level);
+  this.moveY(step, level);
+
+  var otherActor = level.actorAt(this);
+  if (otherActor && otherActor.type == "skillSwitch") {
+    if (this.touchingSwitch != otherActor) {
+      otherActor.on = !otherActor.on;
+      this.touchingSwitch = otherActor;
+      otherActor.connectedActor.repeat += 1;
+    }
+  } else if(!otherActor || otherActor.type != "skillSwitch") {
+    this.touchingSwitch = null;
+  }
 };

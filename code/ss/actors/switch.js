@@ -24,11 +24,3 @@ Switch.prototype.act = function(step, level) {
     this.connectedActor.active = this.on;
 };
 
-function mapConnectedActor(theSwitch, actors) {
-  for (var i = 0; i < actors.length ; ++i) {
-    if (actors[i].ch != undefined && actors[i].ch == theSwitch.table[theSwitch.number]) {
-      theSwitch.connectedActor = actors[i];
-      return;
-    }
-  }
-}

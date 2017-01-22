@@ -79,8 +79,11 @@ CanvasDisplay.prototype.clearDisplay = function() {
     this.cx.fillStyle = "rgb(68, 191, 255)";
   else if (this.level.status == "lost")
     this.cx.fillStyle = "rgb(44, 136, 214)";
-  else
-    this.cx.fillStyle = "rgb(52, 166, 251)";
+  else{
+    // this.cx.fillStyle = "rgb(52, 166, 251)";
+
+    this.cx.fillStyle = this.cx.createPattern(bckGround, "repeat");
+  }
   this.cx.fillRect(0, 0,
                    this.canvas.width, this.canvas.height);
 };
@@ -102,11 +105,30 @@ CanvasDisplay.prototype.drawBackground = function() {
 
       var sprite;
       if (tile == "lava") {
-        sprite = lavaSprite;
+        temp = x//Math.floor(Math.random() * 10)
+        if(temp % 2 == 1){
+          sprite = lowWaterOne;
+          if(this.level.grid[y-1][x] != "lava"){
+            sprite = topWaterOne;
+          }
+        } else {
+          sprite = lowWaterTwo;
+          if(this.level.grid[y-1][x] != "lava"){
+            sprite = topWaterTwo;
+          }
+        }
+        
       } else if (tile == "slideRight") {
         sprite = iceSprite;
       } else if (tile == "slideLeft") {
         sprite = iceSprite;
+      } else if (tile == "fallthrough") {
+          var spriteIndex = (Math.round(animFrame/60) + x) % 2;
+          if (this.level.grid[y - 1][x] != "fallthrough")
+              spriteIndex = spriteIndex + 2;
+          sprite = waterSprites[spriteIndex];
+
+          animFrame = animFrame + 1;
       } else {
         sprite = brickRSprite;
         if(this.level.grid[y][x+1] != null){
@@ -161,23 +183,24 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     if (actor.type == "switch") {
       if (actor.on) sprite = onLever;
       else sprite = offLever;
+    } else if (actor.type == "skillSwitch") {
+      if (actor.on) sprite = onLever;
+      else sprite = offLever;
     } else if (actor.type == "coin") {
       sprite = coinSprite;
+    } else if (actor.type == "harpoon") {
+      sprite = harpoon;
     } else if (actor.type == "lava") {
       sprite = lavaSprite;
-    } else if (actor.type == "ladder") {
-      sprite = brickSprite;
     } else if (actor.type == "transport") {
       sprite = lavaSprite;
     } else if (actor.type == "stone") {
       sprite = onLever;
     } else if (actor.type == "ladder" || actor.type == "thinBar") {
-      sprite = brickSprite;
+      sprite = ladder;
       if(actor.type == "thinBar") height = height * .1;
-    } else if (actor.type == "fallthrough") {
-        sprite = waterSprites[0];
-        console.log("asldfa");
     }
+
     this.cx.drawImage(sprite, x, y, width, height);
   }
 };
@@ -185,3 +208,5 @@ CanvasDisplay.prototype.drawActor = function (actor) {
 CanvasDisplay.prototype.drawActors = function() {
   this.level.actors.forEach(function (actor) { this.drawActor(actor);}, this);
 };
+
+var animFrame = 0;
