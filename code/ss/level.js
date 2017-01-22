@@ -41,7 +41,14 @@ function Level(plan) {
     this.grid.push(gridLine);
   }
 
-  this.player = this.actors.filter(function(actor) { return actor.type == "player"; })[0];
+  //select player start position
+  this.player = this.actors.filter(function(actor) {
+    sound = new Sound(); //get instance of Sound
+    sound.playerSwitch("Flow");
+
+    return actor.type == "player";
+  })[0];
+
   this.actors.forEach(
     function (actor) { if (actor.type == "switch") { mapConnectedActor(actor, this.actors); } }, this);
   this.status = this.finishDelay = null;

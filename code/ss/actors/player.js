@@ -48,13 +48,12 @@ Player.prototype.moveY = function(step, level, keys) {
     else this.speed.y = 0;
 
     if (obstacle == "fallthrough" && this.charIndex !== 2) {
-        console.log(this.pos.y + " " + this.speed.y);
         this.pos = newPos;
     }
   } else {
     this.pos = newPos;
   }
-  console.log(this.pos.y + " " + this.speed.y);
+  //console.log(this.pos.y + " " + this.speed.y);
 };
 
 Player.prototype.moveYonLadder = function(actor, step, level, keys) {
@@ -76,7 +75,7 @@ Player.prototype.moveYonLadder = function(actor, step, level, keys) {
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle){
     level.playerTouched(obstacle);
-    
+
   } else {
     this.pos = newPos;
   }
@@ -93,13 +92,19 @@ Player.prototype.move = function(actor, step, level, keys) {
 };
 
 Player.prototype.changeChar = function (keys) {
+    sound = new Sound(); //get instance of sound
+
     var charChange = this.charIndex;
-    if (keys.charOneChange)
+    if (keys.charOneChange) {
         this.charIndex = 0;
-    else if (keys.charTwoChange)
+        sound.playerSwitch("Flow");
+    } else if (keys.charTwoChange) {
         this.charIndex = 1;
-    else if (keys.charThreeChange)
+        sound.playerSwitch("Flex");
+    } else if (keys.charThreeChange) {
         this.charIndex = 2;
+        sound.playerSwitch("Floyd");
+    }
 
     if (charChange !== this.charIndex) {
         this.gravity = charGravity[this.charIndex];
@@ -166,11 +171,11 @@ var charXspeed = [7, 5, 11];
 //getters and setters
 Player.prototype.setGravity = function(tempGrav){
   this.gravity = tempGrav;
-} 
+}
 
 Player.prototype.getGravity = function(){
   return this.gravity;
-} 
+}
 
 Player.prototype.setJumpSpeed = function(tempSpeed){
   this.speed = tempSpeed;
