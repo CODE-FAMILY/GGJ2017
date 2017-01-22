@@ -128,7 +128,7 @@ Level.prototype.playerTouched = function(type, actor) {
   } else if (type == "coin") {
     sound = new Sound();
     var sounds = ["Whale-Cry", "Splash", "Throw"];
-    var rand = (Math.Random() * 10) % 3;
+    var rand = (Math.floor(Math.random()*10) % sounds.length );
 
     sound.triggerSound(sounds[rand]);
 
