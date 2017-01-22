@@ -98,3 +98,8 @@ function createCanvas(id, level) {
 
   return canvas;
 }
+
+function getRandomNumber(lowest, size) {
+  return Math.floor(lowest + size * Math.random());
+}
+
