@@ -16,14 +16,14 @@ function UICanvas() {
   this.deaths = {
     text: "Deaths: 0",
     x: 85,
-    y: 80,
+    y: 50,
     size: this.smallSize,
   }
 
   this.playerName = {
     text: "Player: ",
     x: 85,
-    y: 50,
+    y: 80,
     size: this.smallSize,
   }
 }
