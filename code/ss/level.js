@@ -33,7 +33,9 @@ function Level(plan) {
       else if (ch == "<")
         fieldType = "slideLeft";
       else if (ch == ">")
-        fieldType = "slideRight";
+          fieldType = "slideRight";
+      else if (ch == "w")
+          fieldType = "fallthrough";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);

@@ -126,8 +126,6 @@ CanvasDisplay.prototype.drawBackground = function() {
           if (this.level.grid[y - 1][x] != "fallthrough")
               spriteIndex = spriteIndex + 2;
           sprite = waterSprites[spriteIndex];
-
-          animFrame = animFrame + 1;
       } else {
         sprite = brickRSprite;
         if(this.level.grid[y][x+1] != null){
@@ -142,6 +140,7 @@ CanvasDisplay.prototype.drawBackground = function() {
                         screenX, screenY, scale, scale);
     }
   }
+  animFrame = animFrame + 1;
 };
 
 CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
