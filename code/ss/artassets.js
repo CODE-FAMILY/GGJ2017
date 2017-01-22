@@ -1,8 +1,8 @@
 //characters
 var charSprites = [document.createElement("img"), document.createElement("img"), document.createElement("img")];
-charSprites[0].src = "img/atlasedElements/player.png";
-charSprites[1].src = "img/atlasedElements/playerTwo.png";
-charSprites[2].src = "img/atlasedElements/playerThree.png";
+charSprites[0].src = "img/atlasedElements/Flex.png";
+charSprites[1].src = "img/atlasedElements/FLow.png";
+charSprites[2].src = "img/atlasedElements/Floyd.png";
 
 var playerSprites = document.createElement("img");
 playerSprites = charSprites[0];

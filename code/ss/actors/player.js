@@ -1,6 +1,6 @@
 function Player(pos) {
-  this.pos = pos.plus(new Vector(0, -0.5));
-  this.size = new Vector(0.8, 1.5);
+  this.pos = pos.plus(new Vector(0, -1.5));
+  this.size = new Vector(0.8, 1.9);
   this.speed = new Vector(0, 0);
   this.charIndex;
   this.bouncing = 0; //any value greather than 0 is jumping

@@ -142,7 +142,7 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
   if (this.flipPlayer) flipHorizontally(this.cx, x + width / 2);
 
   this.cx.drawImage(playerSprites,
-                    sprite * spriteW, 0, spriteW, spriteH,
+                    //sprite * spriteW, 0, spriteW, spriteH,
                     x,              y, width, height);
 
   if (player.holdingObject)
