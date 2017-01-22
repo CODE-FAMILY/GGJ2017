@@ -23,6 +23,24 @@ canvas {
     background-color: transparent;
 }
 
-#menu {
-    width: 65%;
+#mute {
+  float: left;
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-top: 60px;
+  padding-right: 5px;
+  text-align: right;
+  vertical-align: text-top;
+  border: 0px;
+  font-size: 1.8em;
+}
+
+.unmuted {
+    background: url('img/ui/MUTEICON.png');
+    padding-left: 4px;
+}
+
+.muted {
+    background: url('img/ui/UNMUTEICON.png');
+    padding-left: 0px;
 }

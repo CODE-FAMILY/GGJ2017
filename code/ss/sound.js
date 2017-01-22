@@ -39,19 +39,22 @@ Sound.prototype.displayControls = function(id) {
 
   mute = document.createElement("button");
   mute.setAttribute("id", "mute");
+  mute.setAttribute("class", "unmuted");
   mute.setAttribute("data-mute", "false");
-  muteText = document.createTextNode("mute");
+  muteText = document.createTextNode("on");
   mute.appendChild(muteText);
 
   mute.addEventListener("click", function() {
     if ( mute.getAttribute("data-mute") == "false") {
       sound.muteAll();
-      mute.textContent = "unmute";
+      mute.textContent = "off";
       mute.setAttribute("data-mute", "true");
+      mute.setAttribute("class", "muted");
     } else {
       sound.unmuteAll();
-      mute.textContent = "mute";
+      mute.textContent = "on";
       mute.setAttribute("data-mute", "false");
+      mute.setAttribute("class", "unmuted");
     }
 
   }, false)
