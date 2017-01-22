@@ -196,9 +196,10 @@ CanvasDisplay.prototype.drawActor = function (actor) {
       sprite = onLever;
     } else if (actor.type == "ladder" || actor.type == "thinBar") {
       sprite = ladder;
-      if(actor.type == "thinBar") height = height * .25;
+      if(actor.type == "thinBar") height = height * .1;
+    } else if (actor.type == "secretWall") {
+      return;
     }
-
     this.cx.drawImage(sprite, x, y, width, height);
   }
 };

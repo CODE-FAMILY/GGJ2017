@@ -47,9 +47,13 @@ Player.prototype.moveX = function(step, level, keys) {
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
-      level.playerTouched(obstacle);
-      if (obstacle == "fallthrough")
-          this.pos = newPos;
+    level.playerTouched(obstacle);
+
+    if (obstacle == "fallthrough") {
+      this.pos = newPos;
+    } else if (obstacle == "secretWall" && keys.actOne) {
+      removeSecretWall(newPos, this.size, level);
+    }
   }
   else
       this.pos = newPos;
@@ -173,7 +177,14 @@ Player.prototype.revertChar = function () {
 
 Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
+    // if (this.holdingObject) {
+    //   this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
+    //   this.holdingObject.speed.y = -6;
+    //   level.actors.push(this.holdingObject);
+    //   this.holdingObject = null;
+    // }
     if (this.charIndex == Character.FLEX) {
+
     } else if (this.charIndex == Character.FLOYD) {
         if (this.holdingObject) {
           this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
@@ -209,11 +220,10 @@ Player.prototype.act = function(step, level, keys) {
   if(this.FlowDash.dashCharge <= 50) {this.FlowDash.dashCharge += 0.8; this.FlowDash.dashOn = false;}
   this.actions(step, level, keys);
   this.changeChar(keys);
-
   this.move(otherActor, step, level, keys);
 
   if (this.holdingObject) {
-          this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
+    this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
   }
   if (otherActor) {
     level.playerTouched(otherActor.type, otherActor);
