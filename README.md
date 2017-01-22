@@ -1,6 +1,6 @@
 # Global Game Jam 2017 (ggj2017)
 
-play the game: https://code-family.github.io/GGJ2017/
+play the game: https://code-family.github.io/GGJ2017/intro.html
 
 pitch:
 
@@ -14,7 +14,9 @@ symbols on map key
  * "#": Ladder, - works for any up or down
  * "_": thinBar
  * "T": Transport - goes to level, works
+ * "s": Stone,
  * "0-9": Switch programmable
+ * "h": Harpoon (repeats faster), "i": Harpoon (repeats slower), "H": Harpoon (single shot),
  * "=": Lava (horiz movement and bounces), "|": Lava(vertical and bounces), "v": Lava(vertical and resets)
  * "X": floor/block
  * "W": water
