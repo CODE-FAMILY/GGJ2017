@@ -38,6 +38,12 @@ harpoonR.src = "img/actorElements/HARPOON_R.png";
 var harpoonL = document.createElement("img");
 harpoonL.src = "img/actorElements/HARPOON_L.png";
 
+var harpoonD = document.createElement("img");
+harpoonD.src = "img/actorElements/HARPOON_D.png";
+
+var harpoonU = document.createElement("img");
+harpoonU.src = "img/actorElements/HARPOON_U.png";
+
 var throwAble = document.createElement("img");
 throwAble.src = "img/actorElements/THROWMEWHALE.png";
 
