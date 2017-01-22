@@ -36,7 +36,7 @@ function runLevel(level, Display, andThen) {
   runAnimation(function(step) {
     if (!preInputPause && arrows.pause) running = !running;
     if (running) {
-      clearCanvas("UI");
+      clearPausedOnCanvas();
       level.animate(step, arrows);
       display.drawFrame(step);
       if (level.isFinished()) {
@@ -56,7 +56,6 @@ function runGame(plans, Display) {
   stats = new Statistics();
 
   sound = new Sound();
-  sound.playBgSound("Flow");
   sound.displayControls("audio-controls");
 
   function startLevel(n) {

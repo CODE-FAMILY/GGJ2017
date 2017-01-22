@@ -6,20 +6,29 @@ function Sound() {
   arguments.callee._singeltonInstance = this;
 
   this.soundDir = "sound/";
-  this.bgSounds = {
-                     "Ambient Background": this.soundDir + "/soundshrim_-_Ambient_Background.ogg",
-                     "Cinematic Inspiration": this.soundDir + "Alex_Che_-_Cinematic_Inspiration.ogg"
-                  }
-
 
   this.sounds = {
+                   "Ambient": this.soundDir + "Ambient_Background.ogg",
                    "Theme": this.soundDir + "whale_force_theme_final.ogg",
                    "Flow": this.soundDir + "flow.ogg",
                    "Flex": this.soundDir + "flex.ogg",
                    "Floyd": this.soundDir + "floyd.ogg",
                  }
 
+  this.soundEffects = {
+                        "Drowning": this.soundDir + "drowning.ogg",
+                        "Whale-Cry": this.soundDir + "whale_cry.ogg",
+                      }
+
   this.bgSound = new Audio();
+  this.sound = new Audio();
+
+  this.flowSound = new Audio(this.sounds["Flow"]);
+  this.flexSound = new Audio(this.sounds["Flex"]);
+  this.floydSound = new Audio(this.sounds["Floyd"]);
+
+  this.playerSoundInit = false;
+  this.playerSoundVolume = 0.7; //range of 0 - 1.0
 }
 
 Sound.prototype.displayControls = function(id) {
@@ -54,11 +63,66 @@ Sound.prototype.playBgSound = function (name) {
   }, false);
 };
 
+Sound.prototype.initPlayerSound = function () {
+  if ( !this.playerSoundInit ) {
+    this.flowSound.loop = true;
+    this.flowSound.play();
+    this.flowSound.volume = this.playerSoundVolume;
+
+    this.flexSound.loop = true;
+    this.flexSound.play();
+    this.flexSound.volume = 0;
+
+    this.floydSound.loop = true;
+    this.floydSound.play();
+    this.floydSound.volume = 0;
+
+    this.playerSoundInit = true;
+  }
+};
+
+Sound.prototype.playerSwitch = function (playerName) {
+  if ( !this.playerSoundInit ) {
+    this.initPlayerSound();
+  }
+
+  if ("Flow" == playerName) {
+      this.flowSound.volume = this.playerSoundVolume;
+      this.flexSound.volume = 0;
+      this.floydSound.volume = 0;
+  } else if ("Flex" == playerName) {
+      this.flowSound.volume = 0;
+      this.flexSound.volume = 0.7;
+      this.floydSound.volume = 0;
+  } else if ("Floyd" == playerName) {
+      this.flowSound.volume = 0;
+      this.flexSound.volume = 0;
+      this.floydSound.volume = this.playerSoundVolume;
+  } else {
+    console.log("ERROR: Unknown Player Name");
+  }
+};
+
+Sound.prototype.triggerSound = function (soundName) {
+  if ("Drowning" == soundName || "Whale-Cry" == soundName) {
+    this.sound.src = this.soundEffects[soundName];
+    this.sound.play();
+  }
+};
+
 Sound.prototype.muteAll = function () {
   this.bgSound.muted = true;
+  this.flexSound.muted = true;
+  this.flowSound.muted = true;
+  this.floydSound.muted = true;
+  this.sound.muted = true;
 };
 
 Sound.prototype.unmuteAll = function () {
   this.bgSound.muted = false;
+  this.flexSound.muted = false;
+  this.flowSound.muted = false;
+  this.floydSound.muted = false;
+  this.sound.muted = false;
 };
 
