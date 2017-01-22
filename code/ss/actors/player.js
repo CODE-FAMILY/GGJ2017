@@ -18,6 +18,7 @@ function Player(pos) {
     dashCharge : 100,
     dashOn : false
   };
+  this.useSuperJump = false;
 }
 Player.prototype.type = "player";
 
@@ -72,6 +73,9 @@ Player.prototype.moveY = function(step, level, keys) {
       level.finishDelay = 1;
     }
 
+    if (this.useSuperJump && this.holdingObject)
+      this.loseObject(level);
+
     if (obstacle == "ice") {
       if (this.facingRight) this.pos.x += step * 3;
       else                  this.pos.x += step * -3;
@@ -83,6 +87,10 @@ Player.prototype.moveY = function(step, level, keys) {
     var curObstacle = level.obstacleAt(this.pos, this.size);
     if (keys.jump && this.speed.y > 0 && curObstacle != "fallthrough") {
       this.speed.y = -this.jumpSpeed;
+      if (keys.actTwo && this.charIndex == Character.FLOYD && this.holdingObject) {
+        this.speed.y -= (this.jumpSpeed / 3);
+        this.useSuperJump = true;
+      }
     }
     else {
       this.speed.y = 0;
@@ -225,11 +233,18 @@ Player.prototype.dropObject = function (level) {
 }
 
 Player.prototype.throwObject = function (level) {
-    this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
-    this.holdingObject.speed.y = -6;
+    this.holdingObject.speed.x = 12 * (this.facingRight ? 1: - 1);
+    this.holdingObject.speed.y = -7;
     level.actors.push(this.holdingObject);
     this.holdingObject = null;
     level.actors.sort(stoneSort);
+}
+
+Player.prototype.loseObject = function (level) {
+    this.holdingObject.pos.x += 1.6 * (this.facingRight)? 1 : -1;
+    this.holdingObject.pos.y += 1;
+    this.throwObject(level);
+    this.useSuperJump = false;
 }
 
 Player.prototype.revertChar = function () {
@@ -246,10 +261,7 @@ Player.prototype.actions = function(step, level, keys){
     if (this.charIndex == Character.FLEX) {
 
     } else if (this.charIndex == Character.FLOYD) {
-        if (this.holdingObject) {
-          this.moveHoldingObject();
-          if (keys.actOne) this.throwObject(level);
-        }
+        if (this.holdingObject) this.throwObject(level);
     } else if (this.charIndex == Character.FLOW) {
       if( keys.jump ) {
         this.bouncing = 10;
