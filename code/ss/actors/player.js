@@ -38,8 +38,6 @@ Player.prototype.moveY = function(step, level, keys) {
   var motion = new Vector(0, this.speed.y * step);
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
-  if (obstacle == "fallthrough")
-      console.log("asdf");
   if (obstacle) {
     level.playerTouched(obstacle);
 
