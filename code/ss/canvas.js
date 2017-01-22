@@ -80,9 +80,9 @@ CanvasDisplay.prototype.clearDisplay = function() {
   else if (this.level.status == "lost")
     this.cx.fillStyle = "rgb(44, 136, 214)";
   else{
-    this.cx.fillStyle = "rgb(52, 166, 251)";
+    // this.cx.fillStyle = "rgb(52, 166, 251)";
 
-    // this.cx.fillStyle = this.cx.createPattern(bckGround, "repeat");
+    this.cx.fillStyle = this.cx.createPattern(bckGround, "repeat");
   }
   this.cx.fillRect(0, 0,
                    this.canvas.width, this.canvas.height);
@@ -105,7 +105,19 @@ CanvasDisplay.prototype.drawBackground = function() {
 
       var sprite;
       if (tile == "lava") {
-        sprite = lavaSprite;
+        temp = x//Math.floor(Math.random() * 10)
+        if(temp % 2 == 1){
+          sprite = lowWaterOne;
+          if(this.level.grid[y-1][x] != "lava"){
+            sprite = topWaterOne;
+          }
+        } else {
+          sprite = lowWaterTwo;
+          if(this.level.grid[y-1][x] != "lava"){
+            sprite = topWaterTwo;
+          }
+        }
+        
       } else if (tile == "slideRight") {
         sprite = iceSprite;
       } else if (tile == "slideLeft") {

@@ -42,7 +42,7 @@ var brickLSprite = document.createElement("img");
 brickLSprite.src = "img/backgroundElements/LEFTEDGE_TITLE.png";
 
 var bckGround = document.createElement("img");
-bckGround.src = "img/backgroundElements/trialBackGround.png";
+bckGround.src = "img/backgroundElements/trialBackGround2.jpg";
 
 //waterImages
 var topWaterOne = document.createElement("img");
