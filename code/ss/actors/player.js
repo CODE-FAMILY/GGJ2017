@@ -33,14 +33,14 @@ Player.prototype.moveX = function(step, level, keys) {
     this.facingRight = true;
   } 
   
-  if(keys.actTwo && this.charIndex == Character.FLOW && this.FlowDash.dashCharge >= 50){
-    this.FlowDash.dashCharge -= 20;
+  if(this.charIndex == Character.FLOW && this.FlowDash.dashOn && this.FlowDash.dashCharge >= 50){
+    this.FlowDash.dashCharge -= 3;
     if (this.facingRight){
-      this.speed.x += this.playerXSpeed;
+      this.speed.x += this.playerXSpeed * 2;
     }else{
-      this.speed.x -= this.playerXSpeed;
+      this.speed.x -= this.playerXSpeed * 2;
     }
-
+    
   }
 
   var motion = new Vector(this.speed.x * step, 0);
@@ -66,8 +66,8 @@ Player.prototype.moveY = function(step, level, keys) {
       level.finishDelay = 1;
     }
 
-    if      (obstacle == "slideRight") this.pos.x += step * 2;
-    else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
+    if      (obstacle == "slideRight") this.pos.x += step * 3;
+    else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
 
     if (keys.jump && this.speed.y > 0) {
       this.speed.y = -this.jumpSpeed;
@@ -176,10 +176,14 @@ Player.prototype.actions = function(step, level, keys){
       }
     }
   } else if(keys.actTwo){
-    // if(this.charIndex == Character.FLOW){
-    //   console.log(this.FlowDash.dashCharge)
-    //   if(this.FlowDash.dashOn) {this.moveX(1, level, keys);}
-    // }
+    if(this.charIndex == Character.FLOW){
+      console.log(this.FlowDash.dashCharge)
+      if(this.FlowDash.dashCharge >= 50) {
+        this.FlowDash.dashOn = true;
+        this.moveX(step, level, keys);
+      }
+      else { this.FlowDash.dashOn = false;}
+    }
 
   } else if(keys.actThree){
 
@@ -188,7 +192,7 @@ Player.prototype.actions = function(step, level, keys){
 
 Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
-  if(this.FlowDash.dashCharge <= 0) {this.FlowDash.dashCharge += 0.2;}
+  if(this.FlowDash.dashCharge <= 50) {this.FlowDash.dashCharge += 0.8; this.FlowDash.dashOn = false;}
   this.actions(step, level, keys);
   this.changeChar(keys);
 
