@@ -34,12 +34,12 @@ Player.prototype.moveX = function(step, level, keys) {
     this.facingRight = true;
   }
 
-  if(keys.actTwo && this.charIndex == Character.FLOW && this.FlowDash.dashCharge >= 50){
-    this.FlowDash.dashCharge -= 20;
+  if(this.charIndex == Character.FLOW && this.FlowDash.dashOn && this.FlowDash.dashCharge >= 50){
+    this.FlowDash.dashCharge -= 3;
     if (this.facingRight){
-      this.speed.x += this.playerXSpeed;
+      this.speed.x += this.playerXSpeed * 2;
     }else{
-      this.speed.x -= this.playerXSpeed;
+      this.speed.x -= this.playerXSpeed * 2;
     }
 
   }
@@ -48,9 +48,14 @@ Player.prototype.moveX = function(step, level, keys) {
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
-      level.playerTouched(obstacle);
-      if (obstacle == "fallthrough")
-          this.pos = newPos;
+    level.playerTouched(obstacle);
+
+    if (obstacle == "fallthrough") {
+      this.pos = newPos;
+    } else if (this.charIndex == Character.FLOYD &&
+              obstacle == "secretWall" && keys.actThree) {
+      removeSecretWall(newPos, this.size, level);
+    }
   }
   else
       this.pos = newPos;
@@ -67,12 +72,21 @@ Player.prototype.moveY = function(step, level, keys) {
       level.finishDelay = 1;
     }
 
-    if      (obstacle == "slideRight") this.pos.x += step * 2;
-    else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
+    if      (obstacle == "slideRight") this.pos.x += step * 3;
+    else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
+    else if (this.charIndex == Character.FLOYD && this.speed.y < 1 &&
+              obstacle == "secretWall" && keys.actTwo) {
+      removeSecretWall(newPos, this.size, level);
+    }
 
-    if (keys.jump && this.speed.y > 0) {
+    var curObstacle = level.obstacleAt(this.pos, this.size);
+    if (keys.jump && this.speed.y > 0 && curObstacle != "fallthrough") {
       this.speed.y = -this.jumpSpeed;
 
+    } else if (obstacle == "fallthrough") {
+        this.speed.y = step * this.gravity * 7;
+        if (this.charIndex === Character.FLEX)
+            this.speed.y *= 2;
     } else {
       this.speed.y = 0;
     }
@@ -134,20 +148,23 @@ Player.prototype.move = function(actor, step, level, keys) {
   }
 };
 
-Player.prototype.changeChar = function (keys) {
+Player.prototype.changeChar = function (level, keys) {
     sound = new Sound(); //get instance of sound
 
     var charChange = this.charIndex;
     if (keys.charOneChange) {
-        this.charIndex = Character.FLOW;
-        sound.playerSwitch(Character.FLOW);
+      this.charIndex = Character.FLOW;
+      sound.playerSwitch(Character.FLOW);
+      if (this.holdingObject) this.dropObject(level);
     } else if (keys.charTwoChange) {
-        console.log("Player: FLEX!");
-        this.charIndex = Character.FLEX;
-        sound.playerSwitch(Character.FLEX);
+
+      this.charIndex = Character.FLEX;
+      sound.playerSwitch(Character.FLEX);
+
+      if (this.holdingObject) this.dropObject(level);
     } else if (keys.charThreeChange) {
-        this.charIndex = Character.FLOYD;
-        sound.playerSwitch(Character.FLOYD);
+      this.charIndex = Character.FLOYD;
+      sound.playerSwitch(Character.FLOYD);
     }
 
     if (charChange !== this.charIndex) {
@@ -157,6 +174,22 @@ Player.prototype.changeChar = function (keys) {
         playerXSpeed = charXspeed[this.charIndex];
         playerSprites = charSprites[this.charIndex];
     }
+}
+
+Player.prototype.dropObject = function (level) {
+    this.holdingObject.speed.x = 1 * (this.facingRight ? 1: - 1);
+    this.holdingObject.speed.y = 0;
+    level.actors.push(this.holdingObject);
+    this.holdingObject = null;
+    level.actors.sort(stoneSort);
+}
+
+Player.prototype.throwObject = function (level) {
+    this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
+    this.holdingObject.speed.y = -6;
+    level.actors.push(this.holdingObject);
+    this.holdingObject = null;
+    level.actors.sort(stoneSort);
 }
 
 Player.prototype.revertChar = function () {
@@ -171,7 +204,12 @@ Player.prototype.revertChar = function () {
 Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
     if (this.charIndex == Character.FLEX) {
+
     } else if (this.charIndex == Character.FLOYD) {
+        if (this.holdingObject) {
+          this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
+          if (keys.actOne) this.throwObject(level);
+        }
     } else if (this.charIndex == Character.FLOW) {
       if( keys.jump ) {
         this.bouncing = 10;
@@ -187,6 +225,14 @@ Player.prototype.actions = function(step, level, keys){
                setTimeout(function() { self.immortal = "no"; console.log("immortal: " + self.immortal); }, 15000)}, 10000);
         }
       }
+    if(this.charIndex == Character.FLOW){
+      console.log(this.FlowDash.dashCharge)
+      if(this.FlowDash.dashCharge >= 50) {
+        this.FlowDash.dashOn = true;
+        this.moveX(step, level, keys);
+      }
+      else { this.FlowDash.dashOn = false;}
+    }
   } else if(keys.actThree){
 
   }
@@ -194,21 +240,14 @@ Player.prototype.actions = function(step, level, keys){
 
 Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
-  if(this.FlowDash.dashCharge <= 0) {this.FlowDash.dashCharge += 0.2;}
+  if(this.FlowDash.dashCharge <= 50) {this.FlowDash.dashCharge += 0.8; this.FlowDash.dashOn = false;}
   this.actions(step, level, keys);
-  this.changeChar(keys);
-
+  this.changeChar(level, keys);
   this.move(otherActor, step, level, keys);
+
   if (this.holdingObject) {
     this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
-    if (keys.actOne) {
-      this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
-      this.holdingObject.speed.y = -6;
-      level.actors.push(this.holdingObject);
-      this.holdingObject = null;
-    }
   }
-
   if (otherActor) {
     level.playerTouched(otherActor.type, otherActor);
   } else if(!otherActor || otherActor.type != "switch") {

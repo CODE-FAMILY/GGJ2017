@@ -2,16 +2,18 @@ var actorChars = {
   "@": Player,
   "o": Coin,
   "s": Stone,
-  "0": Switch, "1": Switch,
-  "7": SkillSwitch, "8": SkillSwitch,
   "#": Ladder,
-  "h": Harpoon, "i": Harpoon, "H": Harpoon,
+  "h": Harpoon, "i": Harpoon, "j": Harpoon, "k": Harpoon,
   "_": thinBar,
-  "T": Transport,
-  "=": Lava, "|": Lava, "v": Lava, "A": Lava
+  "t": Transport,
+  "=": Lava, "|": Lava, "v": Lava,
+  
+
+  "0": Switch, "A": Lava,
+  "1": Switch, "B": SecretWall,
+  "7": SkillSwitch, "H": Harpoon,
+  "8": SkillSwitch
 };
-
-
 
 function Level(plan) {
   this.width = plan[0].length;
@@ -24,16 +26,16 @@ function Level(plan) {
     for (var x = 0; x < this.width; x++) {
       var ch = line[x], fieldType = null;
       var Actor = actorChars[ch];
-      if (Actor) 
-        this.actors.push(new Actor(new Vector(x, y), ch));
-      else if (ch == "x")
-        fieldType = "wall";
-      else if (ch == "!")
-        fieldType = "lava";
-      else if (ch == "<")
-        fieldType = "slideLeft";
-      else if (ch == ">")
-        fieldType = "slideRight";
+
+      if (Actor) this.actors.push(new Actor(new Vector(x, y), ch));
+
+      if (ch == "x") fieldType = "wall";
+      else if (ch == "B") fieldType = "wall";
+      else if (ch == "p") fieldType = "secretWall";
+      else if (ch == "!") fieldType = "lava";
+      else if (ch == "<") fieldType = "slideLeft";
+      else if (ch == ">") fieldType = "slideRight";
+      else if (ch == "w") fieldType = "fallthrough";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
@@ -51,8 +53,10 @@ function Level(plan) {
     if (actor.type == "switch" || actor.type == "skillSwitch")
       mapConnectedActor(actor, this.actors);
   }, this);
+  this.actors.sort(stoneSort);
   this.status = this.finishDelay = null;
 }
+
 
 Level.prototype.isFinished = function() {
   return this.status != null && this.finishDelay < 0;
@@ -64,10 +68,9 @@ Level.prototype.obstacleAt = function(pos, size) {
   var yStart = Math.floor(pos.y);
   var yEnd = Math.ceil(pos.y + size.y);
 
-  if (xStart < 0 || xEnd > this.width || yStart < 0)
-    return "wall";
-  if (yEnd > this.height)
-    return "lava";
+  if (xStart < 0 || xEnd > this.width || yStart < 0) return "wall";
+  if (yEnd > this.height) return "lava";
+
   for (var y = yStart; y < yEnd; y++) {
     for (var x = xStart; x < xEnd; x++) {
       var fieldType = this.grid[y][x];
@@ -133,7 +136,9 @@ Level.prototype.playerTouched = function(type, actor) {
   } else if (type == "transport") {
       this.status = "won";
   } else if (type == "stone") {
-    this.actors = this.actors.filter(function(other) { return other != actor;});
-    this.player.holdingObject = actor;
+    if (this.player.charIndex == Character.FLOYD) {
+      this.actors = this.actors.filter(function (other) { return other != actor; });
+      this.player.holdingObject = actor;
+    }
   }
 };

@@ -62,6 +62,10 @@ function runGame(plans, Display) {
     runLevel(new Level(plans[n]), Display, function(status) {
       if (status == "lost") {
         stats.playerDied();
+        if (stats.deaths == 3) {
+          stats.deaths = 0;
+          startLevel(0);
+        }
         startLevel(n);
       } else if (n < plans.length - 1) {
         startLevel(n + 1);

@@ -19,6 +19,7 @@ symbols on map key
  * "h": Harpoon (repeats faster), "i": Harpoon (repeats slower), "H": Harpoon (single shot),
  * "=": Lava (horiz movement and bounces), "|": Lava(vertical and bounces), "v": Lava(vertical and resets)
  * "X": floor/block
+ * "P": Breakable block
  * "W": water
  * "!": stationary lava
  * ">": move left ice
