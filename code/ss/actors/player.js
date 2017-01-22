@@ -14,6 +14,8 @@ function Player(pos) {
 }
 Player.prototype.type = "player";
 
+var dieFallingSpeed = 35;
+
 Player.prototype.moveX = function(step, level, keys) {
   this.speed.x = 0;
   if (keys.left) {
@@ -27,10 +29,13 @@ Player.prototype.moveX = function(step, level, keys) {
   var motion = new Vector(this.speed.x * step, 0);
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
-  if (obstacle)
-    level.playerTouched(obstacle);
+  if (obstacle) {
+      level.playerTouched(obstacle);
+      if (obstacle == "fallthrough")
+          this.pos = newPos;
+  }
   else
-    this.pos = newPos;
+      this.pos = newPos;
 };
 
 Player.prototype.moveY = function(step, level, keys) {
@@ -39,14 +44,21 @@ Player.prototype.moveY = function(step, level, keys) {
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
+    if (this.speed.y > dieFallingSpeed) {
+      level.status = "lost";
+      level.finishDelay = 1;
+    }
 
     if      (obstacle == "slideRight") this.pos.x += step * 2;
     else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
 
+    var curObstacle = level.obstacleAt(this.pos, this.size);
     if (obstacle == "fallthrough" && this.charIndex !== 2) {
         this.pos = newPos;
     }
-    else if (keys.jump && this.speed.y > 0) this.speed.y = -this.jumpSpeed;
+    else if (keys.jump && this.speed.y > 0 &&
+            !(curObstacle == "fallthrough" && this.charIndex !== 1))
+        this.speed.y = -this.jumpSpeed;
     else this.speed.y = 0;
 
   } else {
