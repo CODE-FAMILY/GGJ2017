@@ -7,11 +7,10 @@ var actorChars = {
   "#": Ladder,
   "h": Harpoon, "i": Harpoon, "H": Harpoon,
   "_": thinBar,
-  "T": Transport,
-  "=": Lava, "|": Lava, "v": Lava, "A": Lava
+  "t": Transport,
+  "=": Lava, "|": Lava, "v": Lava, "A": Lava,
+  "B": SecretWall
 };
-
-
 
 function Level(plan) {
   this.width = plan[0].length;
@@ -24,16 +23,13 @@ function Level(plan) {
     for (var x = 0; x < this.width; x++) {
       var ch = line[x], fieldType = null;
       var Actor = actorChars[ch];
-      if (Actor) 
-        this.actors.push(new Actor(new Vector(x, y), ch));
-      else if (ch == "x")
-        fieldType = "wall";
-      else if (ch == "!")
-        fieldType = "lava";
-      else if (ch == "<")
-        fieldType = "slideLeft";
-      else if (ch == ">")
-        fieldType = "slideRight";
+      if (Actor) this.actors.push(new Actor(new Vector(x, y), ch));
+
+      if (ch == "x") fieldType = "wall";
+      else if (ch == "B") fieldType = "wall";
+      else if (ch == "!") fieldType = "lava";
+      else if (ch == "<") fieldType = "slideLeft";
+      else if (ch == ">") fieldType = "slideRight";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
@@ -64,10 +60,9 @@ Level.prototype.obstacleAt = function(pos, size) {
   var yStart = Math.floor(pos.y);
   var yEnd = Math.ceil(pos.y + size.y);
 
-  if (xStart < 0 || xEnd > this.width || yStart < 0)
-    return "wall";
-  if (yEnd > this.height)
-    return "lava";
+  if (xStart < 0 || xEnd > this.width || yStart < 0) return "wall";
+  if (yEnd > this.height) return "lava";
+
   for (var y = yStart; y < yEnd; y++) {
     for (var x = xStart; x < xEnd; x++) {
       var fieldType = this.grid[y][x];
