@@ -129,7 +129,9 @@ Level.prototype.playerTouched = function(type, actor) {
   } else if (type == "transport") {
       this.status = "won";
   } else if (type == "stone") {
-    this.actors = this.actors.filter(function(other) { return other != actor;});
-    this.player.holdingObject = actor;
+    if (this.player.charIndex == Character.FLOYD) {
+      this.actors = this.actors.filter(function (other) { return other != actor; });
+      this.player.holdingObject = actor;
+    }
   }
 };
