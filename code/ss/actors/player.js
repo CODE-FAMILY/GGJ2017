@@ -246,7 +246,7 @@ Player.prototype.actions = function(step, level, keys){
 
     } else if (this.charIndex == Character.FLOYD) {
         if (this.holdingObject) {
-          this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
+          this.moveHoldingObject();
           if (keys.actOne) this.throwObject(level);
         }
     } else if (this.charIndex == Character.FLOW) {
@@ -277,6 +277,10 @@ Player.prototype.actions = function(step, level, keys){
   }
 }
 
+Player.prototype.moveHoldingObject = function () {
+    this.holdingObject.pos = this.pos.plus(new Vector(0, -this.holdingObject.size.y * 1)) ;
+}
+
 Player.prototype.act = function(step, level, keys) {
   var otherActors = level.actorAt(this);
   if(this.FlowDash.dashCharge <= 90) {this.FlowDash.dashCharge += 1.5; this.FlowDash.dashOn = false;}
@@ -284,9 +288,7 @@ Player.prototype.act = function(step, level, keys) {
   this.changeChar(level, keys);
   this.move(otherActors[0], step, level, keys);
 
-  if (this.holdingObject) {
-    this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
-  }
+  if (this.holdingObject) this.moveHoldingObject();
   if (otherActors) {
     if(otherActors.length == 1){
     level.playerTouched(otherActors[0].type, otherActors[0]);
