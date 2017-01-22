@@ -7,7 +7,7 @@ var actorChars = {
   "_": thinBar,
   "t": Transport,
   "=": Lava, "|": Lava, "v": Lava,
-  
+
 
   "0": Switch, "A": Lava,
   "1": Switch, "B": SecretWall,
@@ -44,7 +44,9 @@ function Level(plan) {
   //select player start position
   this.player = this.actors.filter(function(actor) {
     sound = new Sound(); //get instance of Sound
-    sound.playerSwitch(Character.FLOW);
+    sound.playerSwitch(Character.FLEX);
+    uidisplay = new UICanvas();
+    uidisplay.setPlayerName(Character.FLEX);
 
     return actor.type == "player";
   })[0];

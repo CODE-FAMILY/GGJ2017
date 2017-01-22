@@ -33,20 +33,26 @@ var running = true;
 var preInputPause = false;
 function runLevel(level, Display, andThen) {
   var display = new Display(document.getElementById("viewport"), level);
+  var uidisplay = new UICanvas();
+  uidisplay.init(document.getElementById("viewport"), level);
+
   runAnimation(function(step) {
     if (!preInputPause && arrows.pause) running = !running;
     if (running) {
-      clearPausedOnCanvas();
+      //display.updateHud();
+      uidisplay.updateHud();
       level.animate(step, arrows);
       display.drawFrame(step);
       if (level.isFinished()) {
         display.clear();
+        uidisplay.clear();
         if (andThen)
           andThen(level.status);
         return false;
       }
     } else {
-      displayTextCenter("Paused", "5em", "UI");
+       //display.pause();
+       uidisplay.paused();
     }
     preInputPause = arrows.pause;
   });
@@ -62,6 +68,10 @@ function runGame(plans, Display) {
     runLevel(new Level(plans[n]), Display, function(status) {
       if (status == "lost") {
         stats.playerDied();
+        uidisplay = new UICanvas();
+        uidisplay.setDeaths(stats.deaths);
+
+        //TODO: Generates several new UI and Player level
         if (stats.deaths == 3) {
           stats.deaths = 0;
           startLevel(0);

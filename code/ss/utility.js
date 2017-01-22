@@ -54,14 +54,13 @@ function drawText(text, size, xpos, ypos, id) {
 
 function displayTextCenter(text, size, id) {
   var ctx = document.getElementById(id).getContext("2d");
-  clearCanvas(id);
   ctx.font = "bold " + size + " Arial";
   textString = text;
   textMeasure = ctx.measureText(textString);
   ctx.fillText(textString, ((canvas.width / 2) - (textMeasure.width / 2)), (canvas.height / 2) );
 }
 
-function clearPausedOnCanvas() {
+/*function clearPausedOnCanvas() {
   clearCanvas("UI");
   drawDeathStatistics();
   displaySelectCharacter(Character.FLOW);
@@ -77,10 +76,10 @@ function displaySelectCharacter(character) {
   if ( null != text ) {
     drawText(text, "1.2em", 100, 100, "UI");
   }
-}
+}*/
 
 function clearCanvas(id) {
-  ctx = document.getElementById(id).getContext("2d");
+  var ctx = document.getElementById(id).getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
@@ -95,4 +94,16 @@ function mapConnectedActor(theSwitch, actors) {
       return;
     }
   }
+}
+
+/*
+ * Helper function to create canvas object
+ */
+function createCanvas(id, level) {
+  canvas = document.createElement("canvas");
+  canvas.setAttribute("id", id);
+  canvas.width = Math.min(document.documentElement.clientWidth*0.95, level.width * scale);
+  canvas.height = Math.min(document.documentElement.clientHeight*0.95, level.height * scale);
+
+  return canvas;
 }

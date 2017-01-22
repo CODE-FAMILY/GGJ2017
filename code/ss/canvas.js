@@ -1,35 +1,42 @@
-/*
- * Helper function to create canvas object
- */
-function createCanvas(id, level) {
-  canvas = document.createElement("canvas");
-  canvas.setAttribute("id", id);
-  canvas.width = Math.min(document.documentElement.clientWidth*0.95, level.width * scale);
-  canvas.height = Math.min(document.documentElement.clientHeight*0.95, level.height * scale);
-
-  return canvas;
-}
-
 function CanvasDisplay(parent, level) {
+  //this.uid = "UI";
+  //this.hugeSize = "5em";
+  this.id = "UI";
+
   //Player canvas
   this.canvas = createCanvas("player", level);
 
   //UI Canvas
-  this.UI = createCanvas("UI", level);
+  //this.UI = createCanvas(this.id, level);
 
   //Add canvas to HTML page
   parent.appendChild(this.canvas);
-  parent.appendChild(this.UI);
+  //parent.appendChild(this.UI);
+
+
+  this.hugeSize = "5em";
+  this.smallSize = "1.2em";
+
+  //this.UI = null;
+  //this.parent = null;
+  //this.level = null;
+
+  this.deaths = {
+    text: "Deaths: 0",
+    x: 100,
+    y: 80,
+    size: this.smallSize,
+  }
 
   //Get canvas context
   this.cx = this.canvas.getContext("2d");
-  this.cu = this.UI.getContext("2d");
+  //this.cu = this.UI.getContext("2d");
 
   //Draw death statistic
-  drawDeathStatistics();
+  //drawDeathStatistics();
 
   //Draw selected player
-  displaySelectCharacter(Character.FLOW);
+  //displaySelectCharacter(Character.FLOW);
 
   this.level = level;
   this.animationTime = 0;
@@ -47,7 +54,8 @@ function CanvasDisplay(parent, level) {
 
 CanvasDisplay.prototype.clear = function() {
   this.canvas.parentNode.removeChild(this.canvas);
-  this.UI.parentNode.removeChild(this.UI);
+  //this.UI.parentNode.removeChild(this.UI);
+  //this.UI.parentNode.removeChild(this.id);
 };
 
 CanvasDisplay.prototype.drawFrame = function(step) {
@@ -190,7 +198,7 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     } else if (actor.type == "coin") {
       sprite = coinSprite;
     } else if (actor.type == "harpoon") {
-      if (actor.ch == "h" || actor.ch == "i" || actor.ch == "B") 
+      if (actor.ch == "h" || actor.ch == "i" || actor.ch == "B")
         sprite = harpoonR;
       else sprite = harpoonL;
     } else if (actor.type == "lava") {
@@ -212,5 +220,28 @@ CanvasDisplay.prototype.drawActor = function (actor) {
 CanvasDisplay.prototype.drawActors = function() {
   this.level.actors.forEach(function (actor) { this.drawActor(actor);}, this);
 };
+
+CanvasDisplay.prototype.paused = function() {
+  clearCanvas(this.id);
+  displayTextCenter( "Paused", this.hugeSize, this.id);
+
+}
+
+CanvasDisplay.prototype.won = function() {
+  clearCanvas(this.id);
+  displayTextCenter( "You Won!", this.hugeSize, this.id);
+}
+
+CanvasDisplay.prototype.updateHud = function() {
+  clearCanvas(this.id);
+  //drawText(text, size, xpos, ypos, id)
+  drawText(this.deaths.text, this.deaths.x, this.deaths.y, this.deaths.size, this.id);
+
+}
+
+CanvasDisplay.prototype.setDeaths = function(deaths) {
+  this.deaths.text = "Deaths: " + deaths;
+  this.updateHud();
+}
 
 var animFrame = 0;
