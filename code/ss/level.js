@@ -27,6 +27,7 @@ function Level(plan) {
 
       if (ch == "x") fieldType = "wall";
       else if (ch == "B") fieldType = "wall";
+      else if (ch == "p") fieldType = "secretWall";
       else if (ch == "!") fieldType = "lava";
       else if (ch == "<") fieldType = "slideLeft";
       else if (ch == ">") fieldType = "slideRight";
@@ -96,6 +97,16 @@ Level.prototype.animate = function(step, keys) {
 
 Level.prototype.playerTouched = function(type, actor) {
   if ((type == "lava" || type == "harpoon") && this.status == null) {
+
+    sound = new Sound();
+    if (this.player.getCurrentChar() == 0) {
+      sound.triggerPlayerSound("Flow", "Flow-Death");
+    } else if (this.player.getCurrentChar() == 1) {
+      sound.triggerPlayerSound("Flex", "Flex-Death");
+    } else if (this.player.getCurrentChar() == 2) {
+      sound.triggerPlayerSound("Floyd", "Floyd-Death");
+    }
+
     this.status = "lost";
     this.finishDelay = 1;
   } else if (type == "coin") {

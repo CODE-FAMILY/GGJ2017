@@ -3,6 +3,8 @@ function Player(pos) {
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
   this.charIndex;
+  this.jumping = 0; //any value greather than 0 is jumping
+  this.death = false;
   //this.gravity = 30;
   //this.jumpSpeed = 17;
   //this.playerXSpeed = 7;
@@ -30,9 +32,13 @@ Player.prototype.moveX = function(step, level, keys) {
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
-      level.playerTouched(obstacle);
-      if (obstacle == "fallthrough")
-          this.pos = newPos;
+    level.playerTouched(obstacle);
+
+    if (obstacle == "fallthrough") {
+      this.pos = newPos;
+    } else if (obstacle == "secretWall" && keys.actOne) {
+      removeSecretWall(newPos, this.size, level);
+    }
   }
   else
       this.pos = newPos;
@@ -52,13 +58,30 @@ Player.prototype.moveY = function(step, level, keys) {
     if      (obstacle == "slideRight") this.pos.x += step * 2;
     else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
 
-    var curObstacle = level.obstacleAt(this.pos, this.size);
-    if (obstacle == "fallthrough" && this.charIndex !== 2) 
-      this.pos = newPos;
-    else if (keys.jump && this.speed.y > 0 &&
-            !(curObstacle == "fallthrough" && this.charIndex !== 1))
+    if (keys.jump && this.speed.y > 0) {
       this.speed.y = -this.jumpSpeed;
-    else this.speed.y = 0;
+
+      if (this.charIndex == Character.FLOW) {
+        this.jumping = 2;
+      }
+    } else {
+      this.speed.y = 0;
+    }
+
+    if (obstacle == "fallthrough" && this.charIndex !== 2) {
+        this.pos = newPos;
+    }
+
+    //only the second jumping player will jump again, because the jumping
+    //variable will be only greather for charIndex == 1 (second player)
+    if (this.jumping > 1) {
+      //delay the second jump
+      this.jumping--;
+    } else if (this.jumping == 1) {
+      //jump again
+      this.speed.y = -this.jumpSpeed * 0.4;
+      this.jumping--;
+    }
   } else {
     this.pos = newPos;
   }
@@ -74,10 +97,14 @@ Player.prototype.moveYonLadder = function(actor, step, level, keys) {
     if(actor.type == "thinBar"){
     }
   }
-  if (keys.up){
+
+  if (keys.up) {
     this.speed.y -= playerXSpeed * 2;
   }
-  if (keys.jump) this.speed.y = -this.jumpSpeed;
+
+  if (keys.jump) {
+    this.speed.y = -this.jumpSpeed;
+  }
 
   var motion = new Vector(0, this.speed.y * step);
   var newPos = this.pos.plus(motion);
@@ -105,14 +132,14 @@ Player.prototype.changeChar = function (keys) {
 
     var charChange = this.charIndex;
     if (keys.charOneChange) {
-        this.charIndex = 0;
-        sound.playerSwitch("Flow");
+        this.charIndex = Character.FLOW;
+        sound.playerSwitch(Character.FLOW);
     } else if (keys.charTwoChange) {
-        this.charIndex = 1;
-        sound.playerSwitch("Flex");
+        this.charIndex = Character.FLEX;
+        sound.playerSwitch(Character.FLEX);
     } else if (keys.charThreeChange) {
-        this.charIndex = 2;
-        sound.playerSwitch("Floyd");
+        this.charIndex = Character.FLOYD;
+        sound.playerSwitch(Character.FLOYD);
     }
 
     if (charChange !== this.charIndex) {
@@ -135,11 +162,16 @@ Player.prototype.revertChar = function () {
 
 Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
-
+    if (this.holdingObject) {
+      this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
+      this.holdingObject.speed.y = -6;
+      level.actors.push(this.holdingObject);
+      this.holdingObject = null;
+    }
   } else if(keys.actTwo){
-    
+
   } else if(keys.actThree){
-    
+
   }
 }
 
@@ -147,17 +179,10 @@ Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
   this.actions(step, level, keys);
   this.changeChar(keys);
-
   this.move(otherActor, step, level, keys);
-  if (this.holdingObject) {
+
+  if (this.holdingObject)
     this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
-    if (keys.actOne) {
-      this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
-      this.holdingObject.speed.y = -6;
-      level.actors.push(this.holdingObject);
-      this.holdingObject = null;
-    }
-  }
 
   if (otherActor) {
     level.playerTouched(otherActor.type, otherActor);
@@ -174,8 +199,8 @@ Player.prototype.act = function(step, level, keys) {
 
 //Character Stats
 var charGravity = [30, 22, 37]; //gravity values for characters one through three
-var charJumpSpeed = [17, 20, 14];
-var charXspeed = [7, 5, 11];
+var charJumpSpeed = [17, 17, 17];
+var charXspeed = [7, 7, 7];
 
 //getters and setters
 Player.prototype.setGravity = function(tempGrav){

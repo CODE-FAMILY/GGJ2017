@@ -2,7 +2,7 @@
 function Switch(pos, ch) {
   this.size = new Vector(1.0, 1.0);
   this.pos = pos;
-  this.on = false;
+  this.on = true;
 
   this.number = parseInt(ch);
   this.connectedActor = null;

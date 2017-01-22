@@ -8,7 +8,6 @@ function Sound() {
   this.soundDir = "sound/";
 
   this.sounds = {
-                   "Ambient": this.soundDir + "Ambient_Background.ogg",
                    "Theme": this.soundDir + "whale_force_theme_final.ogg",
                    "Flow": this.soundDir + "flow.ogg",
                    "Flex": this.soundDir + "flex.ogg",
@@ -16,8 +15,12 @@ function Sound() {
                  }
 
   this.soundEffects = {
+                        "Flow-Death": this.soundDir + "flow_death.ogg",
+                        "Flex-Death": this.soundDir + "flex_death.ogg",
+                        "Floyd-Death": this.soundDir + "floyd_death.ogg",
                         "Drowning": this.soundDir + "drowning.ogg",
                         "Whale-Cry": this.soundDir + "whale_cry.ogg",
+                        "Ladder": this.soundDir + "ladders.ogg",
                       }
 
   this.bgSound = new Audio();
@@ -81,32 +84,66 @@ Sound.prototype.initPlayerSound = function () {
   }
 };
 
-Sound.prototype.playerSwitch = function (playerName) {
+Sound.prototype.playerSwitch = function (player) {
   if ( !this.playerSoundInit ) {
     this.initPlayerSound();
   }
 
-  if ("Flow" == playerName) {
+  if (Character.FLOW == player) {
       this.flowSound.volume = this.playerSoundVolume;
       this.flexSound.volume = 0;
       this.floydSound.volume = 0;
-  } else if ("Flex" == playerName) {
+  } else if (Character.FLEX == player) {
       this.flowSound.volume = 0;
-      this.flexSound.volume = 0.7;
+      this.flexSound.volume = this.playerSoundVolume;
       this.floydSound.volume = 0;
-  } else if ("Floyd" == playerName) {
+  } else if (Character.FLOYD == player) {
       this.flowSound.volume = 0;
       this.flexSound.volume = 0;
       this.floydSound.volume = this.playerSoundVolume;
   } else {
-    console.log("ERROR: Unknown Player Name");
+    console.log("ERROR: Unknown Player Name: " + player);
   }
 };
 
 Sound.prototype.triggerSound = function (soundName) {
-  if ("Drowning" == soundName || "Whale-Cry" == soundName) {
+  if ("Drowning" == soundName || "Whale-Cry" == soundName ) {
+    this.sound.muteAll();
     this.sound.src = this.soundEffects[soundName];
     this.sound.play();
+    this.sound.unmuteAll();
+  }
+};
+
+Sound.prototype.triggerPlayerSound = function (playerName, soundName) {
+  if ("Flow-Death" == soundName || "Flex-Death" == soundName || "Floyd-Death" == soundName) {
+    this.muteAll();
+    this.sound.muted = false;
+
+    if ("Flow" == playerName) {
+      this.sound.src = this.soundEffects[soundName];
+      this.sound.play();
+    } else if ("Flex" == playerName) {
+      this.sound.src = this.soundEffects[soundName];
+      this.sound.play();
+    } else if ("Floyd" == playerName) {
+      this.sound.src = this.soundEffects[soundName];
+      this.sound.play();
+    } else {
+      console.log("ERROR: Wrong player name: " + playerName);
+    }
+
+    this.sound.play();
+
+    this.sound.addEventListener('ended', function() {
+      sound.unmuteAll();
+
+      //remove this event listener again
+      this.removeEventListener('ended', arguments.callee);
+    }, false);
+
+  } else {
+    console.log("ERROR: Wrong sound name: " + soundName);
   }
 };
 

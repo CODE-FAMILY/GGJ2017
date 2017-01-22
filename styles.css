@@ -22,3 +22,7 @@ canvas {
      */
     background-color: transparent;
 }
+
+#menu {
+    width: 65%;
+}
