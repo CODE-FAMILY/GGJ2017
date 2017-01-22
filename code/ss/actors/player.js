@@ -5,6 +5,7 @@ function Player(pos) {
   this.charIndex;
   this.bouncing = 0; //any value greather than 0 is jumping
   this.death = false;
+  this.immortal = "no";
   //this.gravity = 30;
   //this.jumpSpeed = 17;
   //this.playerXSpeed = 7;
@@ -24,15 +25,15 @@ var dieFallingSpeed = 35;
 
 Player.prototype.moveX = function(step, level, keys) {
   this.speed.x = 0;
-  
+
   if (keys.left) {
     this.speed.x -= this.playerXSpeed;
     this.facingRight = false;
   } else if (keys.right) {
     this.speed.x += this.playerXSpeed;
     this.facingRight = true;
-  } 
-  
+  }
+
   if(this.charIndex == Character.FLOW && this.FlowDash.dashOn && this.FlowDash.dashCharge >= 50){
     this.FlowDash.dashCharge -= 3;
     if (this.facingRight){
@@ -40,7 +41,7 @@ Player.prototype.moveX = function(step, level, keys) {
     }else{
       this.speed.x -= this.playerXSpeed * 2;
     }
-    
+
   }
 
   var motion = new Vector(this.speed.x * step, 0);
@@ -73,7 +74,7 @@ Player.prototype.moveY = function(step, level, keys) {
 
     if      (obstacle == "slideRight") this.pos.x += step * 3;
     else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
-    else if (this.charIndex == Character.FLOYD && this.speed.y < 1 && 
+    else if (this.charIndex == Character.FLOYD && this.speed.y < 1 &&
               obstacle == "secretWall" && keys.actTwo) {
       removeSecretWall(newPos, this.size, level);
     }
@@ -187,8 +188,10 @@ Player.prototype.changeChar = function (level, keys) {
       sound.playerSwitch(Character.FLOW);
       if (this.holdingObject) this.dropObject(level);
     } else if (keys.charTwoChange) {
+
       this.charIndex = Character.FLEX;
       sound.playerSwitch(Character.FLEX);
+
       if (this.holdingObject) this.dropObject(level);
     } else if (keys.charThreeChange) {
       this.charIndex = Character.FLOYD;
@@ -209,6 +212,7 @@ Player.prototype.dropObject = function (level) {
     this.holdingObject.speed.y = 0;
     level.actors.push(this.holdingObject);
     this.holdingObject = null;
+    level.actors.sort(stoneSort);
 }
 
 Player.prototype.throwObject = function (level) {
@@ -216,6 +220,7 @@ Player.prototype.throwObject = function (level) {
     this.holdingObject.speed.y = -6;
     level.actors.push(this.holdingObject);
     this.holdingObject = null;
+    level.actors.sort(stoneSort);
 }
 
 Player.prototype.revertChar = function () {
@@ -242,6 +247,15 @@ Player.prototype.actions = function(step, level, keys){
       }
     }
   } else if(keys.actTwo){
+      if (this.charIndex == Character.FLEX) {
+        if (this.immortal == "no") {
+          this.immortal = "yes";
+          console.log("immortal: " + this.immortal);
+          var self = this;
+          setTimeout(function() { self.immortal = "block"; console.log("immortal: " + self.immortal);
+               setTimeout(function() { self.immortal = "no"; console.log("immortal: " + self.immortal); }, 15000)}, 10000);
+        }
+      }
     if(this.charIndex == Character.FLOW){
       console.log(this.FlowDash.dashCharge)
       if(this.FlowDash.dashCharge >= 90) {
@@ -250,7 +264,6 @@ Player.prototype.actions = function(step, level, keys){
       }
       else { this.FlowDash.dashOn = false;}
     }
-
   } else if(keys.actThree){
 
   }
@@ -283,6 +296,16 @@ Player.prototype.act = function(step, level, keys) {
 var charGravity = [31, 31, 31]; //gravity values for characters one through three
 var charJumpSpeed = [17, 17, 17];
 var charXspeed = [7, 7, 7];
+
+Player.prototype.isImmortal = function() {
+  var immortal = false;
+
+  if ( this.immortal == "yes" ) {
+    immortal = true;
+  }
+
+  return immortal;
+}
 
 //getters and setters
 Player.prototype.setGravity = function(tempGrav){

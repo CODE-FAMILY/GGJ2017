@@ -44,7 +44,7 @@ function Level(plan) {
   //select player start position
   this.player = this.actors.filter(function(actor) {
     sound = new Sound(); //get instance of Sound
-    sound.playerSwitch("Flow");
+    sound.playerSwitch(Character.FLOW);
 
     return actor.type == "player";
   })[0];
@@ -53,8 +53,10 @@ function Level(plan) {
     if (actor.type == "switch" || actor.type == "skillSwitch")
       mapConnectedActor(actor, this.actors);
   }, this);
+  this.actors.sort(stoneSort);
   this.status = this.finishDelay = null;
 }
+
 
 Level.prototype.isFinished = function() {
   return this.status != null && this.finishDelay < 0;
@@ -102,16 +104,21 @@ Level.prototype.animate = function(step, keys) {
 
 Level.prototype.playerTouched = function(type, actor) {
   if ((type == "lava" || type == "harpoon") && this.status == null) {
-    this.status = "lost";
-    this.finishDelay = 1;
+    if ( this.player.isImmortal() ) {
 
-    sound = new Sound();
-    if (this.player.getCurrentChar() == 0) {
-      sound.triggerPlayerSound("Flow", "Flow-Death");
-    } else if (this.player.getCurrentChar() == 1) {
-      sound.triggerPlayerSound("Flex", "Flex-Death");
-    } else if (this.player.getCurrentChar() == 2) {
-      sound.triggerPlayerSound("Floyd", "Floyd-Death");
+      console.log("Player is immortal");
+    } else {
+      this.status = "lost";
+      this.finishDelay = 1;
+
+      sound = new Sound();
+      if (this.player.getCurrentChar() == Character.FLOW) {
+        sound.triggerPlayerSound("Flow", "Flow-Death");
+      } else if (this.player.getCurrentChar() == Character.FLEX) {
+        sound.triggerPlayerSound("Flex", "Flex-Death");
+      } else if (this.player.getCurrentChar() == Character.FLOYD) {
+        sound.triggerPlayerSound("Floyd", "Floyd-Death");
+      }
     }
   } else if (type == "coin") {
     this.actors = this.actors.filter(function(other) { return other != actor;});
