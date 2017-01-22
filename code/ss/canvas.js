@@ -187,7 +187,9 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     } else if (actor.type == "coin") {
       sprite = coinSprite;
     } else if (actor.type == "harpoon") {
-      sprite = harpoon;
+      if (actor.ch == "h" || actor.ch == "i" || actor.ch == "B") 
+        sprite = harpoonR;
+      else sprite = harpoonL;
     } else if (actor.type == "lava") {
       sprite = lavaSprite;
     } else if (actor.type == "transport") {

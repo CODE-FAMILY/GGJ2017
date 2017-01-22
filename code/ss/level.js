@@ -2,14 +2,17 @@ var actorChars = {
   "@": Player,
   "o": Coin,
   "s": Stone,
-  "0": Switch, "1": Switch,
-  "7": SkillSwitch, "8": SkillSwitch,
   "#": Ladder,
-  "h": Harpoon, "i": Harpoon, "H": Harpoon,
+  "h": Harpoon, "i": Harpoon, "j": Harpoon, "k": Harpoon,
   "_": thinBar,
   "t": Transport,
-  "=": Lava, "|": Lava, "v": Lava, "A": Lava,
-  "B": SecretWall
+  "=": Lava, "|": Lava, "v": Lava,
+  
+
+  "0": Switch, "A": Lava,
+  "1": Switch, "B": SecretWall,
+  "7": SkillSwitch, "H": Harpoon,
+  "8": SkillSwitch
 };
 
 function Level(plan) {
