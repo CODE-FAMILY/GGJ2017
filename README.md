@@ -12,9 +12,12 @@ symbols on map key
  * "o": Coin, - works but will be removes
  * "s": Switch, - works but requires coding
  * "#": Ladder, - works for any up or down
+ * "_": thinBar
  * "T": Transport - goes to level, works
+ * "0-9": Switch programmable
  * "=": Lava (horiz movement and bounces), "|": Lava(vertical and bounces), "v": Lava(vertical and resets)
  * "X": floor/block
+ * "W": water
  * "!": stationary lava
  * ">": move left ice
  * "<": move right ice 
