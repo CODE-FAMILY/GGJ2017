@@ -1,6 +1,4 @@
 function CanvasDisplay(parent, level) {
-  //this.uid = "UI";
-  //this.hugeSize = "5em";
   this.id = "UI";
 
   //Player canvas
@@ -11,32 +9,10 @@ function CanvasDisplay(parent, level) {
 
   //Add canvas to HTML page
   parent.appendChild(this.canvas);
-  //parent.appendChild(this.UI);
-
-
-  this.hugeSize = "5em";
-  this.smallSize = "1.2em";
-
-  //this.UI = null;
-  //this.parent = null;
-  //this.level = null;
-
-  this.deaths = {
-    text: "Deaths: 0",
-    x: 100,
-    y: 80,
-    size: this.smallSize,
-  }
 
   //Get canvas context
   this.cx = this.canvas.getContext("2d");
   //this.cu = this.UI.getContext("2d");
-
-  //Draw death statistic
-  //drawDeathStatistics();
-
-  //Draw selected player
-  //displaySelectCharacter(Character.FLOW);
 
   this.level = level;
   this.animationTime = 0;
@@ -54,8 +30,6 @@ function CanvasDisplay(parent, level) {
 
 CanvasDisplay.prototype.clear = function() {
   this.canvas.parentNode.removeChild(this.canvas);
-  //this.UI.parentNode.removeChild(this.UI);
-  //this.UI.parentNode.removeChild(this.id);
 };
 
 CanvasDisplay.prototype.drawFrame = function(step) {
@@ -212,7 +186,7 @@ CanvasDisplay.prototype.drawActor = function (actor) {
         // if (this.level.grid[y - 1][x] != "fallthrough")
         //   spriteIndex = spriteIndex + 2;
         sprite = waterSprites[spriteIndex];
-    } 
+    }
     this.cx.drawImage(sprite, x, y, width, height);
   }
 };
@@ -220,28 +194,5 @@ CanvasDisplay.prototype.drawActor = function (actor) {
 CanvasDisplay.prototype.drawActors = function() {
   this.level.actors.forEach(function (actor) { this.drawActor(actor);}, this);
 };
-
-CanvasDisplay.prototype.paused = function() {
-  clearCanvas(this.id);
-  displayTextCenter( "Paused", this.hugeSize, this.id);
-
-}
-
-CanvasDisplay.prototype.won = function() {
-  clearCanvas(this.id);
-  displayTextCenter( "You Won!", this.hugeSize, this.id);
-}
-
-CanvasDisplay.prototype.updateHud = function() {
-  clearCanvas(this.id);
-  //drawText(text, size, xpos, ypos, id)
-  drawText(this.deaths.text, this.deaths.x, this.deaths.y, this.deaths.size, this.id);
-
-}
-
-CanvasDisplay.prototype.setDeaths = function(deaths) {
-  this.deaths.text = "Deaths: " + deaths;
-  this.updateHud();
-}
 
 var animFrame = 0;
