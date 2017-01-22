@@ -137,8 +137,7 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
     sprite = Math.floor(this.animationTime * 12) % 8;
 
   this.cx.save();
-  if (this.flipPlayer)
-    flipHorizontally(this.cx, x + width / 2);
+  if (this.flipPlayer) flipHorizontally(this.cx, x + width / 2);
 
   this.cx.drawImage(playerSprites,
                     sprite * spriteW, 0, spriteW, spriteH,
@@ -158,7 +157,6 @@ CanvasDisplay.prototype.drawActor = function (actor) {
   if (actor.type == "player") {
     this.drawPlayer(x, y, width, height);
   } else {
-    //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
     var sprite;
     if (actor.type == "switch") {
       if (actor.on) sprite = onLever;

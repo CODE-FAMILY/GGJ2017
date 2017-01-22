@@ -39,15 +39,13 @@ Player.prototype.moveY = function(step, level, keys) {
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
-    level.playerTouched(obstacle);
 
     if      (obstacle == "slideRight") this.pos.x += step * 2;
     else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
 
-    if (keys.jump && this.speed.y > 0)
-      this.speed.y = -this.jumpSpeed;
-    else
-      this.speed.y = 0;
+    level.playerTouched(obstacle);
+    if (keys.jump && this.speed.y > 0) this.speed.y = -this.jumpSpeed;
+    else this.speed.y = 0;
   } else {
     this.pos = newPos;
   }
@@ -133,7 +131,7 @@ Player.prototype.act = function(step, level, keys) {
   this.move(otherActor, step, level, keys);
   if (this.holdingObject) {
     this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
-    if (keys.down) {
+    if (keys.actOne) {
       this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
       this.holdingObject.speed.y = -6;
       level.actors.push(this.holdingObject);

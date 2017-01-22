@@ -23,12 +23,12 @@ Stone.prototype.moveX = function(step, level) {
 
 Stone.prototype.moveY = function(step, level) {
   this.speed.y += step * this.gravity;
-  if (this.speed.y < 0.1) this.speed.y = 0;
 
   var motion = new Vector(0, this.speed.y * step);
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle) {
+    this.speed.y = 0;
     if      (obstacle == "slideRight") this.pos.x += step * 2;
     else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
   } else {
