@@ -7,6 +7,11 @@ charSprites[2].src = "img/atlasedElements/Floyd.png";
 var playerSprites = document.createElement("img");
 playerSprites = charSprites[0];
 
+var coinsSprites = [document.createElement("img"), document.createElement("img"), document.createElement("img")];
+coinsSprites[0].src = "img/actorElements/WHALE1.png";
+coinsSprites[1].src = "img/actorElements/WHALE2.png";
+coinsSprites[2].src = "img/actorElements/WHALE3.png";
+
 //animated tiles
 var waterSprites = [document.createElement("img"), document.createElement("img"), document.createElement("img"), document.createElement("img")];
 waterSprites[0].src = "img/backgroundElements/GROUNDWATERBLUE.png";
@@ -32,15 +37,6 @@ harpoonR.src = "img/actorElements/HARPOON_R.png";
 
 var harpoonL = document.createElement("img");
 harpoonL.src = "img/actorElements/HARPOON_L.png";
-
-var whaleOne = document.createElement("img");
-whaleOne.src = "img/actorElements/WHALE1.png";
-
-var whaleTwo = document.createElement("img");
-whaleTwo.src = "img/actorElements/WHALE2.png";
-
-var whaleThree = document.createElement("img");
-whaleThree.src = "img/actorElements/WHALE3.png";
 
 var throwAble = document.createElement("img");
 throwAble.src = "img/actorElements/THROWMEWHALE.png";
