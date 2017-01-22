@@ -156,9 +156,11 @@ Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
             this.speed.y *= 2;
     }
 
-  if (this.charIndex == Character.FLOW && keys.actOne) {
-    this.speed.y = 0;
-  }
+    if (this.charIndex == Character.FLOW && keys.actOne) {
+        this.speed.y = 0;
+      if (this.facingRight) this.pos.x += step * 4;
+      else this.pos.x -= step * 4;
+    }
 
   var motion = new Vector(0, this.speed.y * step);
   var newPos = this.pos.plus(motion);
