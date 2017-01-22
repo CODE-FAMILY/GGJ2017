@@ -63,11 +63,13 @@ function displayTextCenter(text, size, id) {
 }
 
 function clearPausedOnCanvas() {
-  ctx = document.getElementById("UI").getContext("2d");
   clearCanvas("UI");
-  textMeasure = ctx.measureText("");
+  drawDeathStatistics();
+}
+
+function drawDeathStatistics() {
   var text = "Deaths: " + stats.deaths;
-  drawText(text, "0.8em", 100, 100, "UI");
+  drawText(text, "1.2em", 100, 100, "UI");
 }
 
 function clearCanvas(id) {

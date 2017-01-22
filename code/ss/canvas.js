@@ -26,8 +26,7 @@ function CanvasDisplay(parent, level) {
   this.cu = this.UI.getContext("2d");
 
   //Draw death statistic
-  var text = "Deaths: " + stats.deaths;
-  drawText(text, "0.8em", 100, 100, "UI");
+  drawDeathStatistics();
 
   this.level = level;
   this.animationTime = 0;
@@ -117,7 +116,7 @@ CanvasDisplay.prototype.drawBackground = function() {
             sprite = topWaterTwo;
           }
         }
-        
+
       } else if (tile == "slideRight") {
         sprite = iceSprite;
       } else if (tile == "slideLeft") {
