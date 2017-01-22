@@ -6,6 +6,7 @@ function Player(pos) {
   this.bouncing = 0; //any value greather than 0 is jumping
   this.death = false;
   this.immortal = "no";
+  this.breath = 240;
   //this.gravity = 30;
   //this.jumpSpeed = 17;
   //this.playerXSpeed = 7;
@@ -93,6 +94,11 @@ Player.prototype.moveY = function(step, level, keys) {
       this.speed.y = -this.jumpSpeed * (this.bouncing/10);
       this.bouncing--;
     }
+
+      //Breath Replenish
+    this.breath += 4;
+    if (this.breath > 240)
+        this.breath = 240;
   } else {
     this.pos = newPos;
   }
@@ -157,6 +163,15 @@ Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
         
     } else {
       this.speed.y = 0;
+    }
+
+    if (this.charIndex != Character.FLOYD) {
+        this.breath -= 1;
+        console.log(this.breath);
+    }
+    if (this.breath < 0) {
+        level.status = "lost";
+        level.finishDelay = 1;
     }
 
     if (obstacle == "fallthrough" && //if the tile they're sinking into is water and
