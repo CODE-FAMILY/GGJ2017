@@ -73,10 +73,11 @@ function runGame(plans, Display) {
 
         //TODO: Generates several new UI and Player level
         if (stats.deaths == 3) {
-          stats.deaths = 0;
-          startLevel(0);
+          runGame(LEVELS, CanvasDisplay);
+          //stats.deaths = 0;
+          //startLevel(0);
         }
-        startLevel(n);
+        //startLevel(n);
       } else if (n < plans.length - 1) {
         startLevel(n + 1);
       } else {
