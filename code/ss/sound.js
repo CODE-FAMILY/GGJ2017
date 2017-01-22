@@ -8,13 +8,20 @@ function Sound() {
   this.soundDir = "sound/";
 
   this.sounds = {
+                   "Ambient": this.soundDir + "Ambient_Background.ogg",
                    "Theme": this.soundDir + "whale_force_theme_final.ogg",
                    "Flow": this.soundDir + "flow.ogg",
                    "Flex": this.soundDir + "flex.ogg",
                    "Floyd": this.soundDir + "floyd.ogg",
                  }
 
+  this.soundEffects = {
+                        "Drowning": this.soundDir + "drowning.ogg",
+                        "Whale-Cry": this.soundDir + "whale_cry.ogg",
+                      }
+
   this.bgSound = new Audio();
+  this.sound = new Audio();
 
   this.flowSound = new Audio(this.sounds["Flow"]);
   this.flexSound = new Audio(this.sounds["Flex"]);
@@ -96,11 +103,19 @@ Sound.prototype.playerSwitch = function (playerName) {
   }
 };
 
+Sound.prototype.triggerSound = function (soundName) {
+  if ("Drowning" == soundName || "Whale-Cry" == soundName) {
+    this.sound.src = this.soundEffects[soundName];
+    this.sound.play();
+  }
+};
+
 Sound.prototype.muteAll = function () {
   this.bgSound.muted = true;
   this.flexSound.muted = true;
   this.flowSound.muted = true;
   this.floydSound.muted = true;
+  this.sound.muted = true;
 };
 
 Sound.prototype.unmuteAll = function () {
@@ -108,5 +123,6 @@ Sound.prototype.unmuteAll = function () {
   this.flexSound.muted = false;
   this.flowSound.muted = false;
   this.floydSound.muted = false;
+  this.sound.muted = false;
 };
 

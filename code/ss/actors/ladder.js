@@ -1,5 +1,5 @@
 ﻿function Ladder(pos) {
-  this.size = new Vector(0.9, 0.9);
+  this.size = new Vector(1.1, 1);
   this.pos = pos;
 }
 
