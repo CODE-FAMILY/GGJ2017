@@ -118,7 +118,6 @@ CanvasDisplay.prototype.drawBackground = function() {
       }
 
       this.cx.drawImage(sprite,
-                        //tileX,         0, scale, scale,
                         screenX, screenY, scale, scale);
     }
   }
@@ -174,10 +173,11 @@ CanvasDisplay.prototype.drawActor = function (actor) {
       sprite = lavaSprite;
     } else if (actor.type == "stone") {
       sprite = onLever;
+    } else if (actor.type == "ladder" || actor.type == "thinBar") {
+      sprite = brickSprite;
+      if(actor.type == "thinBar") height = height * .1;
     }
-    this.cx.drawImage(sprite,
-                    //tileX, 0, width, height,
-                    x, y, width, height);
+    this.cx.drawImage(sprite, x, y, width, height);
   }
 };
 

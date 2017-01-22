@@ -4,7 +4,8 @@ var actorChars = {
   "s": Stone,
   "0": Switch, "1": Switch,
   "#": Ladder,
-  "t": Transport,
+  "_": thinBar,
+  "T": Transport,
   "=": Lava, "|": Lava, "v": Lava, "A": Lava
 };
 
