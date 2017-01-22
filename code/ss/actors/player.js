@@ -203,7 +203,7 @@ Player.prototype.actions = function(step, level, keys){
   } else if(keys.actTwo){
     if(this.charIndex == Character.FLOW){
       console.log(this.FlowDash.dashCharge)
-      if(this.FlowDash.dashCharge >= 50) {
+      if(this.FlowDash.dashCharge >= 90) {
         this.FlowDash.dashOn = true;
         this.moveX(step, level, keys);
       }
@@ -217,7 +217,7 @@ Player.prototype.actions = function(step, level, keys){
 
 Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
-  if(this.FlowDash.dashCharge <= 50) {this.FlowDash.dashCharge += 0.8; this.FlowDash.dashOn = false;}
+  if(this.FlowDash.dashCharge <= 90) {this.FlowDash.dashCharge += 1.5; this.FlowDash.dashOn = false;}
   this.actions(step, level, keys);
   this.changeChar(keys);
   this.move(otherActor, step, level, keys);
