@@ -1,18 +1,28 @@
 ﻿function Harpoon(pos, ch) {
   this.pos = pos;
-  this.size = new Vector(2, 1);
-  this.speed = new Vector(20, 0);
+  this.size = new Vector(1, 1);
   this.repeatPos = pos;
   this.ch = ch;
   if (ch == "h") {
+    this.speed = new Vector(20, 0);
     this.interval = 1;
     this.timeToWait = this.interval;
-  }
-  else if (ch == "i") {
+  } else if (ch == "i") {
+    this.speed = new Vector(20, 0);
     this.interval = 2;
     this.timeToWait = this.interval;
+  } else if (ch == "j") {
+    this.speed = new Vector(-20, 0);
+    this.interval = 1;
+    this.timeToWait = this.interval;
+  } else if (ch == "k") {
+    this.speed = new Vector(-20, 0);
+    this.interval = 2;
+    this.timeToWait = this.interval;
+  } else if (ch == "H") {
+    this.repeat = 0;
+    this.speed = new Vector(40, 0);
   }
-  else if (ch == "H") this.repeat = 0;
 }
 
 Harpoon.prototype.intervalShoot = function(step, level) {
@@ -44,6 +54,6 @@ Harpoon.prototype.switchShoot = function (step, level) {
 Harpoon.prototype.type = "harpoon";
 
 Harpoon.prototype.act = function(step, level) {
-  if (this.ch == "h" || this.ch == "i") this.intervalShoot(step, level);
-  else if (this.ch == "H") this.switchShoot(step, level);
+  if (this.ch == "H") this.switchShoot(step, level);
+  else this.intervalShoot(step, level);
 };

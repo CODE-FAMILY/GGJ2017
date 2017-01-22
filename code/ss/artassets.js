@@ -27,8 +27,11 @@ offLever.src = "img/actorElements/FALSELEVER-05.png";
 var onLever = document.createElement("img");
 onLever.src = "img/actorElements/TRUELEVER.png";
 
-var harpoon = document.createElement("img");
-harpoon.src = "img/actorElements/HARPOON.png";
+var harpoonR = document.createElement("img");
+harpoonR.src = "img/actorElements/HARPOON_R.png";
+
+var harpoonL = document.createElement("img");
+harpoonL.src = "img/actorElements/HARPOON_L.png";
 
 //static
 var iceSprite = document.createElement("img");
