@@ -64,13 +64,15 @@ Player.prototype.moveY = function(step, level, keys) {
       this.speed.y = 0;
     }
 
-    if (obstacle == "fallthrough" && this.charIndex !== 2 || (level.obstacleAt(this.pos, this.size) == "fallthrough" && this.charIndex === 2)) {
+    if (obstacle == "fallthrough" && //if the tile they're sinking into is water and
+        !((this.charIndex === Character.FLOW && (keys.actTwo || keys.actThree))) || //they aren't a Flow that is using the action keys nor
+            (level.obstacleAt(this.pos, this.size) == "fallthrough")) {             //are they already submerged if they are Flow
         this.pos = newPos;
     }
 
     //only the second jumping player will jump again, because the jumping
     //variable will be only greather for charIndex == 1 (second player)
-    if (this.jumping > 1) {
+    else if (this.jumping > 1) {
       //delay the second jump
       this.jumping--;
     } else if (this.jumping == 1) {
