@@ -279,7 +279,7 @@ Player.prototype.actions = function(step, level, keys){
 }
 
 Player.prototype.moveHoldingObject = function () {
-    this.holdingObject.pos = this.pos.plus(new Vector(0, this.holdingObject.size.y * 1.2)) ;
+    this.holdingObject.pos = this.pos.plus(new Vector(0, -this.holdingObject.size.y * 1.1)) ;
 }
 
 Player.prototype.act = function(step, level, keys) {
