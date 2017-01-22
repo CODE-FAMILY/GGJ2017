@@ -101,8 +101,6 @@ Sound.prototype.playerSwitch = function (player) {
       this.flowSound.volume = 0;
       this.flexSound.volume = 0;
       this.floydSound.volume = this.playerSoundVolume;
-  } else {
-    console.log("ERROR: Unknown Player Name: " + player);
   }
 };
 

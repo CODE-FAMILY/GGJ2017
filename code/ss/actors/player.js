@@ -3,7 +3,7 @@ function Player(pos) {
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
   this.charIndex;
-  this.jumping = 0; //any value greather than 0 is jumping
+  this.bouncing = 0; //any value greather than 0 is jumping
   this.death = false;
   //this.gravity = 30;
   //this.jumpSpeed = 17;
@@ -57,9 +57,6 @@ Player.prototype.moveY = function(step, level, keys) {
     if (keys.jump && this.speed.y > 0) {
       this.speed.y = -this.jumpSpeed;
 
-      if (this.charIndex == Character.FLOW) {
-        this.jumping = 2;
-      }
     } else {
       this.speed.y = 0;
     }
@@ -70,15 +67,11 @@ Player.prototype.moveY = function(step, level, keys) {
         this.pos = newPos;
     }
 
-    //only the second jumping player will jump again, because the jumping
-    //variable will be only greather for charIndex == 1 (second player)
-    else if (this.jumping > 1) {
-      //delay the second jump
-      this.jumping--;
-    } else if (this.jumping == 1) {
+    //FLOW Bounce
+    if (this.bouncing > 0) {
       //jump again
-      this.speed.y = -this.jumpSpeed * 0.4;
-      this.jumping--;
+      this.speed.y = -this.jumpSpeed * (this.bouncing/10);
+      this.bouncing--;
     }
   } else {
     this.pos = newPos;
@@ -160,7 +153,13 @@ Player.prototype.revertChar = function () {
 
 Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
-
+    if (this.charIndex == Character.FLEX) {
+    } else if (this.charIndex == Character.FLOYD) {
+    } else if (this.charIndex == Character.FLOW) {
+      if( keys.jump ) {
+        this.bouncing = 10;
+      }
+    }
   } else if(keys.actTwo){
 
   } else if(keys.actThree){
@@ -198,7 +197,7 @@ Player.prototype.act = function(step, level, keys) {
 };
 
 //Character Stats
-var charGravity = [30, 22, 37]; //gravity values for characters one through three
+var charGravity = [31, 31, 31]; //gravity values for characters one through three
 var charJumpSpeed = [17, 17, 17];
 var charXspeed = [7, 7, 7];
 
