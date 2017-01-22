@@ -110,6 +110,9 @@ CanvasDisplay.prototype.drawBackground = function() {
         sprite = iceSprite;
       } else if (tile == "slideLeft") {
         sprite = iceSprite;
+      } else if (tile == "fallthrough") {
+          sprite = waterSprites[Math.round(animFrame/24) % 2];
+          animFrame = animFrame + 1;
       } else {
         sprite = brickRSprite;
         if(this.level.grid[y][x+1] != null){
@@ -177,10 +180,8 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     } else if (actor.type == "ladder" || actor.type == "thinBar") {
       sprite = brickSprite;
       if(actor.type == "thinBar") height = height * .1;
-    } else if (actor.type == "fallthrough") {
-        sprite = waterSprites[0];
-        console.log("asldfa");
     }
+
     this.cx.drawImage(sprite, x, y, width, height);
   }
 };
@@ -188,3 +189,5 @@ CanvasDisplay.prototype.drawActor = function (actor) {
 CanvasDisplay.prototype.drawActors = function() {
   this.level.actors.forEach(function (actor) { this.drawActor(actor);}, this);
 };
+
+var animFrame = 0;
