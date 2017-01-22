@@ -43,3 +43,16 @@ brickLSprite.src = "img/backgroundElements/LEFTEDGE_TITLE.png";
 
 var bckGround = document.createElement("img");
 bckGround.src = "img/backgroundElements/trialBackGround.png";
+
+//waterImages
+var topWaterOne = document.createElement("img");
+topWaterOne.src = "img/backgroundElements/TOP_GROUNDWATERBLUE.png";
+
+var topWaterTwo = document.createElement("img");
+topWaterTwo.src = "img/backgroundElements/TOP_GROUNDWATERCLEAR.png";
+
+var lowWaterOne = document.createElement("img");
+lowWaterOne.src = "img/backgroundElements/GROUNDWATERBLUE.png";
+
+var lowWaterTwo = document.createElement("img");
+lowWaterTwo.src = "img/backgroundElements/GROUNDWATERCLEAR.png";
