@@ -19,6 +19,7 @@ function Player(pos) {
     dashCharge : 100,
     dashOn : false
   };
+  this.useSuperJump = false;
 }
 Player.prototype.type = "player";
 
@@ -53,7 +54,7 @@ Player.prototype.moveX = function(step, level, keys) {
 
     if (obstacle == "fallthrough") {
       this.pos = newPos;
-    } else if (this.charIndex == Character.FLOYD &&
+    } else if (this.charIndex == Character.FLEX &&
               obstacle == "secretWall" && keys.actThree) {
       removeSecretWall(newPos, this.size, level);
     }
@@ -73,16 +74,24 @@ Player.prototype.moveY = function(step, level, keys) {
       level.finishDelay = 1;
     }
 
-    if      (obstacle == "slideRight") this.pos.x += step * 3;
-    else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
-    else if (this.charIndex == Character.FLOYD && this.speed.y < 1 &&
-              obstacle == "secretWall" && keys.actTwo) {
+    if (this.useSuperJump && this.holdingObject)
+      this.loseObject(level);
+
+    if (obstacle == "ice") {
+      if (this.facingRight) this.pos.x += step * 3;
+      else                  this.pos.x += step * -3;
+    } else if (this.charIndex == Character.FLEX && obstacle == "secretWall"
+               && keys.actTwo && this.speed.y > -1) {
       removeSecretWall(newPos, this.size, level);
     }
 
-        var curObstacle = level.obstacleAt(this.pos, this.size);
+    var curObstacle = level.obstacleAt(this.pos, this.size);
     if (keys.jump && this.speed.y > 0 && curObstacle != "fallthrough") {
       this.speed.y = -this.jumpSpeed;
+      if (keys.actTwo && this.charIndex == Character.FLOYD && this.holdingObject) {
+        this.speed.y -= (this.jumpSpeed / 3);
+        this.useSuperJump = true;
+      }
     }
     else {
       this.speed.y = 0;
@@ -244,11 +253,18 @@ Player.prototype.dropObject = function (level) {
 }
 
 Player.prototype.throwObject = function (level) {
-    this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
-    this.holdingObject.speed.y = -6;
+    this.holdingObject.speed.x = 12 * (this.facingRight ? 1: - 1);
+    this.holdingObject.speed.y = -7;
     level.actors.push(this.holdingObject);
     this.holdingObject = null;
     level.actors.sort(stoneSort);
+}
+
+Player.prototype.loseObject = function (level) {
+    this.holdingObject.pos.x += 1.6 * (this.facingRight)? 1 : -1;
+    this.holdingObject.pos.y += 1;
+    this.throwObject(level);
+    this.useSuperJump = false;
 }
 
 Player.prototype.revertChar = function () {
@@ -265,10 +281,7 @@ Player.prototype.actions = function(step, level, keys){
     if (this.charIndex == Character.FLEX) {
 
     } else if (this.charIndex == Character.FLOYD) {
-        if (this.holdingObject) {
-          this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
-          if (keys.actOne) this.throwObject(level);
-        }
+        if (this.holdingObject) this.throwObject(level);
     } else if (this.charIndex == Character.FLOW) {
       if( keys.jump ) {
         this.bouncing = 10;
@@ -297,6 +310,10 @@ Player.prototype.actions = function(step, level, keys){
   }
 }
 
+Player.prototype.moveHoldingObject = function () {
+    this.holdingObject.pos = this.pos.plus(new Vector(0, -this.holdingObject.size.y * 1.1)) ;
+}
+
 Player.prototype.act = function(step, level, keys) {
   var otherActors = level.actorAt(this);
   if(this.FlowDash.dashCharge <= 90) {this.FlowDash.dashCharge += 1.5; this.FlowDash.dashOn = false;}
@@ -304,9 +321,7 @@ Player.prototype.act = function(step, level, keys) {
   this.changeChar(level, keys);
   this.move(otherActors[0], step, level, keys);
 
-  if (this.holdingObject) {
-    this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
-  }
+  if (this.holdingObject) this.moveHoldingObject();
   if (otherActors) {
     if(otherActors.length == 1){
     level.playerTouched(otherActors[0].type, otherActors[0]);

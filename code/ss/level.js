@@ -33,8 +33,7 @@ function Level(plan) {
       else if (ch == "B") fieldType = "wall";
       else if (ch == "p") fieldType = "secretWall";
       else if (ch == "!") fieldType = "lava";
-      else if (ch == "<") fieldType = "slideLeft";
-      else if (ch == ">") fieldType = "slideRight";
+      else if (ch == "*") fieldType = "ice";
 
       gridLine.push(fieldType);
     }

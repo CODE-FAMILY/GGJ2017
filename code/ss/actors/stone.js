@@ -1,5 +1,5 @@
 ﻿function Stone(pos) {
-  this.size = new Vector(0.5, 0.5);
+  this.size = new Vector(1, 1);
   this.pos = pos;
   this.speed = new Vector(0, 0);
   this.gravity = 10;
