@@ -51,3 +51,9 @@ Stone.prototype.act = function(step, level) {
     this.touchingSwitch = null;
   }
 };
+
+function stoneSort(a, b) {
+  if (a.type == "stone") return -1;
+  else if (a.type != "stone") return 1;
+  else return 0;
+}

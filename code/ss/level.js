@@ -53,8 +53,10 @@ function Level(plan) {
     if (actor.type == "switch" || actor.type == "skillSwitch")
       mapConnectedActor(actor, this.actors);
   }, this);
+  this.actors.sort(stoneSort);
   this.status = this.finishDelay = null;
 }
+
 
 Level.prototype.isFinished = function() {
   return this.status != null && this.finishDelay < 0;

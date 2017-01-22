@@ -178,6 +178,7 @@ Player.prototype.dropObject = function (level) {
     this.holdingObject.speed.y = 0;
     level.actors.push(this.holdingObject);
     this.holdingObject = null;
+    level.actors.sort(stoneSort);
 }
 
 Player.prototype.throwObject = function (level) {
@@ -185,6 +186,7 @@ Player.prototype.throwObject = function (level) {
     this.holdingObject.speed.y = -6;
     level.actors.push(this.holdingObject);
     this.holdingObject = null;
+    level.actors.sort(stoneSort);
 }
 
 Player.prototype.revertChar = function () {
