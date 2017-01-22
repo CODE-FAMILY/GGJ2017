@@ -44,3 +44,23 @@ canvas {
     background: url('img/ui/UNMUTEICON.png');
     padding-left: 0px;
 }
+
+
+#menu {
+    width: 60%;
+}
+
+
+.under
+{
+position:absolute;
+left:0px;
+top:0px;
+z-index:-1;
+}
+.over
+{
+position:absolute;
+left:40px;
+top:10px;
+}
