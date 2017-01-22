@@ -142,7 +142,7 @@ Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
 
     var curObstacle = level.obstacleAt(this.pos, this.size);
     if (keys.jump && this.speed.y > 0 && obstacle != "fallthrough") {
-      this.speed.y -= this.jumpSpeed * 3;
+      this.speed.y -= this.jumpSpeed * 4;
       var motion = new Vector(0, this.speed.y * step);
       var newPos = this.pos.plus(motion);
       this.pos = newPos;
