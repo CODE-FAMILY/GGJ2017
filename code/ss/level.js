@@ -35,7 +35,7 @@ function Level(plan) {
       else if (ch == "!") fieldType = "lava";
       else if (ch == "<") fieldType = "slideLeft";
       else if (ch == ">") fieldType = "slideRight";
-      
+
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
@@ -44,7 +44,9 @@ function Level(plan) {
   //select player start position
   this.player = this.actors.filter(function(actor) {
     sound = new Sound(); //get instance of Sound
-    sound.playerSwitch(Character.FLOW);
+    sound.playerSwitch(Character.FLEX);
+    uidisplay = new UICanvas();
+    uidisplay.setPlayerName(Character.FLEX);
 
     return actor.type == "player";
   })[0];

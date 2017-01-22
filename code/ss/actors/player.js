@@ -181,21 +181,25 @@ Player.prototype.move = function(actor, step, level, keys) {
 
 Player.prototype.changeChar = function (level, keys) {
     sound = new Sound(); //get instance of sound
+    uidisplay = new UICanvas();
 
     var charChange = this.charIndex;
     if (keys.charOneChange) {
       this.charIndex = Character.FLOW;
       sound.playerSwitch(Character.FLOW);
+      uidisplay.setPlayerName(Character.FLOW);
       if (this.holdingObject) this.dropObject(level);
     } else if (keys.charTwoChange) {
 
       this.charIndex = Character.FLEX;
       sound.playerSwitch(Character.FLEX);
+      uidisplay.setPlayerName(Character.FLEX);
 
       if (this.holdingObject) this.dropObject(level);
     } else if (keys.charThreeChange) {
       this.charIndex = Character.FLOYD;
       sound.playerSwitch(Character.FLOYD);
+      uidisplay.setPlayerName(Character.FLOYD);
     }
 
     if (charChange !== this.charIndex) {
