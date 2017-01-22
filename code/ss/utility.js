@@ -48,6 +48,7 @@ Vector.prototype.times = function(factor) {
 
 function drawText(text, size, xpos, ypos, id) {
   var ctx = document.getElementById(id).getContext("2d");
+  ctx.fillStyle = "#ffffff";
   ctx.font = "bold " + size + " Arial";
   ctx.fillText(text, xpos, ypos);
 }
@@ -58,6 +59,14 @@ function displayTextCenter(text, size, id) {
   textString = text;
   textMeasure = ctx.measureText(textString);
   ctx.fillText(textString, ((canvas.width / 2) - (textMeasure.width / 2)), (canvas.height / 2) );
+}
+
+function drawImage(path, xpos, ypos, id) {
+  var ctx = document.getElementById(id).getContext("2d");
+  var img = new Image();
+  img.src = path;
+  console.log(img);
+  ctx.drawImage(img, xpos, ypos);
 }
 
 /*function clearPausedOnCanvas() {
