@@ -8,7 +8,6 @@ function Sound() {
   this.soundDir = "sound/";
 
   this.sounds = {
-                   "Ambient": this.soundDir + "Ambient_Background.ogg",
                    "Theme": this.soundDir + "whale_force_theme_final.ogg",
                    "Flow": this.soundDir + "flow.ogg",
                    "Flex": this.soundDir + "flex.ogg",
@@ -21,6 +20,7 @@ function Sound() {
                         "Floyd-Death": this.soundDir + "floyd_death.ogg",
                         "Drowning": this.soundDir + "drowning.ogg",
                         "Whale-Cry": this.soundDir + "whale_cry.ogg",
+                        "Ladder": this.soundDir + "ladders.ogg",
                       }
 
   this.bgSound = new Audio();
@@ -95,7 +95,7 @@ Sound.prototype.playerSwitch = function (playerName) {
       this.floydSound.volume = 0;
   } else if ("Flex" == playerName) {
       this.flowSound.volume = 0;
-      this.flexSound.volume = 0.7;
+      this.flexSound.volume = this.playerSoundVolume;
       this.floydSound.volume = 0;
   } else if ("Floyd" == playerName) {
       this.flowSound.volume = 0;
