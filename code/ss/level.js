@@ -126,6 +126,12 @@ Level.prototype.playerTouched = function(type, actor) {
       }
     }
   } else if (type == "coin") {
+    sound = new Sound();
+    var sounds = ["Whale-Cry", "Splash", "Throw"];
+    var rand = (Math.Random() * 10) % 3;
+
+    sound.triggerSound(sounds[rand]);
+
     this.actors = this.actors.filter(function(other) { return other != actor;});
     if (!this.actors.some(function(actor) { return actor.type == "coin"; })) {
       this.status = "won";

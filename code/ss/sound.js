@@ -21,7 +21,15 @@ function Sound() {
                         "Drowning": this.soundDir + "drowning.ogg",
                         "Whale-Cry": this.soundDir + "whale_cry.ogg",
                         "Ladder": this.soundDir + "ladders.ogg",
+                        "Splash": this.soundDir + "splash.ogg",
+                        "Throw": this.soundDir + "throw.ogg",
                       }
+
+  this.voiceFlex = ["voices/flex/flex_1.ogg", "voices/flex/flex_2.ogg", "voices/flex/flex_3.ogg", "voices/flex/flex_4.ogg", "voices/flex/flex_5.ogg", "voices/flex/flex_6.ogg", "voices/flex/flex_7.ogg"];
+  this.voiceFlow = ["voices/flow/flow_1.ogg", "voices/flow/flow_2.ogg", "voices/flow/flow_3.ogg", "voices/flow/flow_4.ogg", "voices/flow/flow_5.ogg", "voices/flow/flow_6.ogg", "voices/flow/flow_7.ogg"]
+  this.voiceFloyd = ["voices/flow/floyd_1.ogg", "voices/flow/floyd_2.ogg", "voices/flow/floyd_3.ogg", "voices/flow/floyd_4.ogg", "voices/flow/floyd_5.ogg", "voices/flow/floyd_6.ogg", "voices/flow/floyd_7.ogg"]
+
+  this.timer = null;
 
   this.bgSound = new Audio();
   this.sound = new Audio();
@@ -32,11 +40,9 @@ function Sound() {
 
   this.playerSoundInit = false;
   this.playerSoundVolume = 0.7; //range of 0 - 1.0
-  console.log("sound");
 }
 
 Sound.prototype.displayControls = function(id) {
-  console.log("play");
   controls = document.getElementById(id);
 
   mute = document.createElement("button");
@@ -131,18 +137,17 @@ Sound.prototype.playerSwitch = function (player) {
 
 Sound.prototype.triggerSound = function (soundName) {
   if (!this.isMuted()) {
-    if ("Drowning" == soundName || "Whale-Cry" == soundName ) {
-      this.sound.muteAll();
+    if ("Drowning" == soundName || "Whale-Cry" == soundName || "Splash" == soundName || "Throw" == soundName ) {
+      this.muteAll();
       this.sound.src = this.soundEffects[soundName];
       this.sound.play();
-      this.sound.unmuteAll();
+      this.unmuteAll();
     }
   }
 };
 
 Sound.prototype.triggerPlayerSound = function (playerName, soundName) {
   if (!this.isMuted()) {
-    console.log("death");
     if ("Flow-Death" == soundName || "Flex-Death" == soundName || "Floyd-Death" == soundName) {
       this.muteAll();
       this.sound.muted = false;

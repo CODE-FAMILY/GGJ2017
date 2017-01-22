@@ -6,7 +6,7 @@ function Player(pos) {
   this.bouncing = 0; //any value greather than 0 is jumping
   this.death = false;
   this.immortal = "no";
-  this.breath = 240;
+  this.breath = 300;
   //this.gravity = 30;
   //this.jumpSpeed = 17;
   //this.playerXSpeed = 7;
