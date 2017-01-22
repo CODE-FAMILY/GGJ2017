@@ -33,6 +33,15 @@ harpoonR.src = "img/actorElements/HARPOON_R.png";
 var harpoonL = document.createElement("img");
 harpoonL.src = "img/actorElements/HARPOON_L.png";
 
+var whaleOne = document.createElement("img");
+whaleOne.src = "img/actorElements/WHALE1.png";
+
+var whaleTwo = document.createElement("img");
+whaleTwo.src = "img/actorElements/WHALE2.png";
+
+var whaleThree = document.createElement("img");
+whaleThree.src = "img/actorElements/WHALE3.png";
+
 //static
 var iceSprite = document.createElement("img");
 iceSprite.src = "img/backgroundElements/ICECUBE-03.png";
