@@ -4,6 +4,7 @@ var actorChars = {
   "s": Stone,
   "#": Ladder,
   "h": Harpoon, "i": Harpoon, "j": Harpoon, "k": Harpoon,
+  "l": Harpoon, "m": Harpoon, "n": Harpoon, "q": Harpoon,
   "_": thinBar,
   "t": Transport,
   "=": Lava, "|": Lava, "v": Lava,

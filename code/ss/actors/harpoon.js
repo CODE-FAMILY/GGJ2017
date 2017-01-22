@@ -3,6 +3,8 @@
   this.size = new Vector(1, 1);
   this.repeatPos = pos;
   this.ch = ch;
+
+  // Going Right
   if (ch == "h") {
     this.speed = new Vector(20, 0);
     this.interval = 1;
@@ -11,6 +13,8 @@
     this.speed = new Vector(20, 0);
     this.interval = 2;
     this.timeToWait = this.interval;
+
+  // Going Left
   } else if (ch == "j") {
     this.speed = new Vector(-20, 0);
     this.interval = 1;
@@ -19,6 +23,28 @@
     this.speed = new Vector(-20, 0);
     this.interval = 2;
     this.timeToWait = this.interval;
+
+  // Going Down
+  } else if (ch == "l") {
+    this.speed = new Vector(0, 20);
+    this.interval = 1;
+    this.timeToWait = this.interval;
+  } else if (ch == "m") {
+    this.speed = new Vector(0, 20);
+    this.interval = 2;
+    this.timeToWait = this.interval;
+
+  // Going Up
+  } else if (ch == "n") {
+    this.speed = new Vector(0, -20);
+    this.interval = 1;
+    this.timeToWait = this.interval;
+  } else if (ch == "q") {
+    this.speed = new Vector(0, -20);
+    this.interval = 2;
+    this.timeToWait = this.interval;
+
+  // Working with a witch
   } else if (ch == "H") {
     this.repeat = 0;
     this.speed = new Vector(40, 0);

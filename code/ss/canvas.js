@@ -186,7 +186,12 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     } else if (actor.type == "harpoon") {
       if (actor.ch == "h" || actor.ch == "i" || actor.ch == "B")
         sprite = harpoonR;
-      else sprite = harpoonL;
+      else if (actor.ch == "j" || actor.ch == "k")
+        sprite = harpoonL;
+      else if (actor.ch == "l" || actor.ch == "m")
+        sprite = harpoonD;
+      else
+        sprite = harpoonU;
     }
     this.cx.drawImage(sprite, x, y, width, height);
   }
