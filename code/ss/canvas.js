@@ -161,8 +161,13 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     if (actor.type == "switch") {
       if (actor.on) sprite = onLever;
       else sprite = offLever;
+    } else if (actor.type == "skillSwitch") {
+      if (actor.on) sprite = onLever;
+      else sprite = offLever;
     } else if (actor.type == "coin") {
       sprite = coinSprite;
+    } else if (actor.type == "harpoon") {
+      sprite = harpoon;
     } else if (actor.type == "lava") {
       sprite = lavaSprite;
     } else if (actor.type == "ladder") {

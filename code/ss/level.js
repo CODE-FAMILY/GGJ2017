@@ -3,9 +3,9 @@ var actorChars = {
   "o": Coin,
   "s": Stone,
   "0": Switch, "1": Switch,
+  "7": SkillSwitch, "8": SkillSwitch,
   "#": Ladder,
-  "t": Transport,
-  //"f": Fallthrough,
+  "h": Harpoon, "i": Harpoon, "H": Harpoon,
   "_": thinBar,
   "T": Transport,
   "=": Lava, "|": Lava, "v": Lava, "A": Lava
@@ -33,17 +33,17 @@ function Level(plan) {
       else if (ch == "<")
         fieldType = "slideLeft";
       else if (ch == ">")
-          fieldType = "slideRight";
-      else if (ch == "f")
-          fieldType = "fallthrough";
+        fieldType = "slideRight";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
   }
 
   this.player = this.actors.filter(function(actor) { return actor.type == "player"; })[0];
-  this.actors.forEach(
-    function (actor) { if (actor.type == "switch") { mapConnectedActor(actor, this.actors); } }, this);
+  this.actors.forEach(function (actor) {
+    if (actor.type == "switch" || actor.type == "skillSwitch")
+      mapConnectedActor(actor, this.actors);
+  }, this);
   this.status = this.finishDelay = null;
 }
 
@@ -93,7 +93,7 @@ Level.prototype.animate = function(step, keys) {
 };
 
 Level.prototype.playerTouched = function(type, actor) {
-  if (type == "lava" && this.status == null) {
+  if ((type == "lava" || type == "harpoon") && this.status == null) {
     this.status = "lost";
     this.finishDelay = 1;
   } else if (type == "coin") {
