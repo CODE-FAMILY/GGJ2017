@@ -15,14 +15,14 @@ function UICanvas() {
 
   this.deaths = {
     text: "Deaths: 0",
-    x: 85,
+    x: 70,
     y: 50,
     size: this.smallSize,
   }
 
   this.playerName = {
-    text: "Player: ",
-    x: 85,
+    text: "Character: ",
+    x: 70,
     y: 80,
     size: this.smallSize,
   }
@@ -51,7 +51,7 @@ UICanvas.prototype.setDeaths = function(deaths) {
 }
 
 UICanvas.prototype.setPlayerName = function(player) {
-  this.playerName.text = "Player: " + Character.getCharacterName(player);
+  this.playerName.text = "Character: " + Character.getCharacterName(player);
 }
 
 UICanvas.prototype.clear = function() {
