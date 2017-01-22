@@ -21,6 +21,7 @@ function Sound() {
                         "Drowning": this.soundDir + "drowning.ogg",
                         "Whale-Cry": this.soundDir + "whale_cry.ogg",
                         "Ladder": this.soundDir + "ladders.ogg",
+                        "Splash": this.soundDir + "splash.ogg",
                       }
 
   this.bgSound = new Audio();
@@ -129,18 +130,17 @@ Sound.prototype.playerSwitch = function (player) {
 
 Sound.prototype.triggerSound = function (soundName) {
   if (!this.isMuted()) {
-    if ("Drowning" == soundName || "Whale-Cry" == soundName ) {
-      this.sound.muteAll();
+    if ("Drowning" == soundName || "Whale-Cry" == soundName || "Splash" == soundName ) {
+      this.muteAll();
       this.sound.src = this.soundEffects[soundName];
       this.sound.play();
-      this.sound.unmuteAll();
+      this.unmuteAll();
     }
   }
 };
 
 Sound.prototype.triggerPlayerSound = function (playerName, soundName) {
   if (!this.isMuted()) {
-    console.log("death");
     if ("Flow-Death" == soundName || "Flex-Death" == soundName || "Floyd-Death" == soundName) {
       this.muteAll();
       this.sound.muted = false;
