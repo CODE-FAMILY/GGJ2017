@@ -183,14 +183,12 @@ CanvasDisplay.prototype.drawActor = function (actor) {
       sprite = coinSprite;
     } else if (actor.type == "lava") {
       sprite = lavaSprite;
-    } else if (actor.type == "ladder") {
-      sprite = brickSprite;
     } else if (actor.type == "transport") {
       sprite = lavaSprite;
     } else if (actor.type == "stone") {
       sprite = onLever;
     } else if (actor.type == "ladder" || actor.type == "thinBar") {
-      sprite = brickSprite;
+      sprite = ladder;
       if(actor.type == "thinBar") height = height * .1;
     }
 

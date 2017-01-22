@@ -44,6 +44,9 @@ brickLSprite.src = "img/backgroundElements/LEFTEDGE_TITLE.png";
 var bckGround = document.createElement("img");
 bckGround.src = "img/backgroundElements/trialBackGround2.jpg";
 
+var ladder = document.createElement("img");
+ladder.src = "img/backgroundElements/LADDER.png";
+
 //waterImages
 var topWaterOne = document.createElement("img");
 topWaterOne.src = "img/backgroundElements/TOP_GROUNDWATERBLUE.png";
