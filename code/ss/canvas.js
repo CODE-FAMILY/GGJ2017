@@ -170,7 +170,10 @@ CanvasDisplay.prototype.drawActors = function() {
             sprite = brickSprite;
         } else if (actor.type == "transport") {
             sprite = lavaSprite;
-        } 
+        } else if (actor.type == "fallthrough") {
+            sprite = brickSprite;
+        }
+          
         this.cx.drawImage(sprite,
                         //tileX, 0, width, height,
                         x,     y, width, height);

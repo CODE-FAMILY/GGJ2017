@@ -4,6 +4,7 @@ var actorChars = {
   "0": Switch, "1": Switch,
   "#": Ladder,
   "t": Transport,
+  //"f": Fallthrough,
   "=": Lava, "|": Lava, "v": Lava, "A": Lava
 };
 
@@ -29,7 +30,9 @@ function Level(plan) {
       else if (ch == "<")
         fieldType = "slideLeft";
       else if (ch == ">")
-        fieldType = "slideRight";
+          fieldType = "slideRight";
+      else if (ch == "f")
+          fieldType = "fallthrough";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
