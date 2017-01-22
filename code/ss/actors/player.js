@@ -129,13 +129,13 @@ Player.prototype.changeChar = function (keys) {
     var charChange = this.charIndex;
     if (keys.charOneChange) {
         this.charIndex = Character.FLOW;
-        sound.playerSwitch("Flow");
+        sound.playerSwitch(Character.FLOW);
     } else if (keys.charTwoChange) {
         this.charIndex = Character.FLEX;
-        sound.playerSwitch("Flex");
+        sound.playerSwitch(Character.FLEX);
     } else if (keys.charThreeChange) {
         this.charIndex = Character.FLOYD;
-        sound.playerSwitch("Floyd");
+        sound.playerSwitch(Character.FLOYD);
     }
 
     if (charChange !== this.charIndex) {

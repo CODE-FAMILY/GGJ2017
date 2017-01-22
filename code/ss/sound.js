@@ -84,25 +84,25 @@ Sound.prototype.initPlayerSound = function () {
   }
 };
 
-Sound.prototype.playerSwitch = function (playerName) {
+Sound.prototype.playerSwitch = function (player) {
   if ( !this.playerSoundInit ) {
     this.initPlayerSound();
   }
 
-  if ("Flow" == playerName) {
+  if (Character.FLOW == player) {
       this.flowSound.volume = this.playerSoundVolume;
       this.flexSound.volume = 0;
       this.floydSound.volume = 0;
-  } else if ("Flex" == playerName) {
+  } else if (Character.FLEX == player) {
       this.flowSound.volume = 0;
       this.flexSound.volume = this.playerSoundVolume;
       this.floydSound.volume = 0;
-  } else if ("Floyd" == playerName) {
+  } else if (Character.FLOYD == player) {
       this.flowSound.volume = 0;
       this.flexSound.volume = 0;
       this.floydSound.volume = this.playerSoundVolume;
   } else {
-    console.log("ERROR: Unknown Player Name");
+    console.log("ERROR: Unknown Player Name: " + player);
   }
 };
 
