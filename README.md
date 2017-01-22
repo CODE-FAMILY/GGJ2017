@@ -16,7 +16,7 @@ symbols on map key
  * "T": Transport - goes to level, works
  * "s": Stone,
  * "0-9": Switch programmable
- * "h": Harpoon (repeats faster), "i": Harpoon (repeats slower), "H": Harpoon (single shot),
+ * "h": Harpoon, "i": Harpoon right, "j": Harpoon, "k": Harpoon, left
  * "=": Lava (horiz movement and bounces), "|": Lava(vertical and bounces), "v": Lava(vertical and resets)
  * "X": floor/block
  * "P": Breakable block
