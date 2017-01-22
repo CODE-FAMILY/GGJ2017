@@ -79,8 +79,11 @@ CanvasDisplay.prototype.clearDisplay = function() {
     this.cx.fillStyle = "rgb(68, 191, 255)";
   else if (this.level.status == "lost")
     this.cx.fillStyle = "rgb(44, 136, 214)";
-  else
+  else{
     this.cx.fillStyle = "rgb(52, 166, 251)";
+
+    // this.cx.fillStyle = this.cx.createPattern(bckGround, "repeat");
+  }
   this.cx.fillRect(0, 0,
                    this.canvas.width, this.canvas.height);
 };

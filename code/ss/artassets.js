@@ -35,3 +35,6 @@ brickRSprite.src = "img/backgroundElements/RIGHTEDGE_TITLE.png";
 
 var brickLSprite = document.createElement("img");
 brickLSprite.src = "img/backgroundElements/LEFTEDGE_TITLE.png";
+
+var bckGround = document.createElement("img");
+bckGround.src = "img/backgroundElements/trialBackGround.png";
