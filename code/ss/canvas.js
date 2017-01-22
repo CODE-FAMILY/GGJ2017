@@ -132,11 +132,6 @@ CanvasDisplay.prototype.drawBackground = function() {
         sprite = iceSprite;
       } else if (tile == "slideLeft") {
         sprite = iceSprite;
-      } else if (tile == "fallthrough") {
-          var spriteIndex = (Math.round(animFrame/36) + x) % 2;
-          if (this.level.grid[y - 1][x] != "fallthrough")
-              spriteIndex = spriteIndex + 2;
-          sprite = waterSprites[spriteIndex];
       } else {
         sprite = brickRSprite;
         if(this.level.grid[y][x+1] != null){
@@ -212,7 +207,12 @@ CanvasDisplay.prototype.drawActor = function (actor) {
       if(actor.type == "thinBar") height = height * .1;
     } else if (actor.type == "secretWall") {
       return;
-    }
+    } else if (actor.type == "fallthrough"){
+        var spriteIndex = 2//(Math.round(animFrame/36) + x) % 2;
+        // if (this.level.grid[y - 1][x] != "fallthrough")
+        //   spriteIndex = spriteIndex + 2;
+        sprite = waterSprites[spriteIndex];
+    } 
     this.cx.drawImage(sprite, x, y, width, height);
   }
 };

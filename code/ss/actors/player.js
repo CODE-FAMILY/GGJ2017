@@ -79,22 +79,12 @@ Player.prototype.moveY = function(step, level, keys) {
       removeSecretWall(newPos, this.size, level);
     }
 
-    var curObstacle = level.obstacleAt(this.pos, this.size);
+        var curObstacle = level.obstacleAt(this.pos, this.size);
     if (keys.jump && this.speed.y > 0 && curObstacle != "fallthrough") {
       this.speed.y = -this.jumpSpeed;
-
-    } else if (obstacle == "fallthrough") {
-        this.speed.y = step * this.gravity * 7;
-        if (this.charIndex === Character.FLEX)
-            this.speed.y *= 2;
-    } else {
-      this.speed.y = 0;
     }
-
-    if (obstacle == "fallthrough" && //if the tile they're sinking into is water and
-        !((this.charIndex === Character.FLOW && (keys.actTwo || keys.actThree))) || //they aren't a Flow that is using the action keys nor
-            (level.obstacleAt(this.pos, this.size) == "fallthrough")) {             //are they already submerged if they are Flow
-        this.pos = newPos;
+    else {
+      this.speed.y = 0;
     }
 
     //FLOW Bounce
@@ -138,10 +128,51 @@ Player.prototype.moveYonLadder = function(actor, step, level, keys) {
   }
 };
 
+Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
+
+  this.speed.y = step * this.gravity * 7;
+  if (this.charIndex === Character.FLEX)
+    this.speed.y *= 2;
+
+  var motion = new Vector(0, this.speed.y * step);
+  var newPos = this.pos.plus(motion);
+  var obstacle = level.obstacleAt(newPos, this.size);
+  if (obstacle){
+    level.playerTouched(obstacle);
+
+    var curObstacle = level.obstacleAt(this.pos, this.size);
+    if (keys.jump && this.speed.y > 0 && obstacle != "fallthrough") {
+      this.speed.y -= this.jumpSpeed * 3;
+      var motion = new Vector(0, this.speed.y * step);
+      var newPos = this.pos.plus(motion);
+      this.pos = newPos;
+    } else if (obstacle == "fallthrough") {
+        this.speed.y = step * this.gravity * 7;
+        if (this.charIndex === Character.FLEX)
+            this.speed.y *= 2;
+        
+    } else {
+      this.speed.y = 0;
+    }
+
+    if (obstacle == "fallthrough" && //if the tile they're sinking into is water and
+        !((this.charIndex === Character.FLOW && (keys.actTwo || keys.actThree))) || //they aren't a Flow that is using the action keys nor
+            (level.obstacleAt(this.pos, this.size) == "fallthrough")) {             //are they already submerged if they are Flow
+        this.pos = newPos;
+    }
+
+  } else {
+    this.pos = newPos;
+  }
+};
+
 Player.prototype.move = function(actor, step, level, keys) {
   if (actor && (actor.type == "ladder" || actor.type == "thinBar")) {
     this.moveX(step, level, keys);
     this.moveYonLadder(actor, step, level, keys);
+  } if (actor && actor.type == "fallthrough") {
+    this.moveX(step, level, keys);
+    this.moveYonFallThrough(actor, step, level, keys);
   } else {
     this.moveX(step, level, keys);
     this.moveY(step, level, keys);
@@ -231,7 +262,7 @@ Player.prototype.actions = function(step, level, keys){
       }
     if(this.charIndex == Character.FLOW){
       console.log(this.FlowDash.dashCharge)
-      if(this.FlowDash.dashCharge >= 50) {
+      if(this.FlowDash.dashCharge >= 90) {
         this.FlowDash.dashOn = true;
         this.moveX(step, level, keys);
       }
@@ -244,7 +275,7 @@ Player.prototype.actions = function(step, level, keys){
 
 Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
-  if(this.FlowDash.dashCharge <= 50) {this.FlowDash.dashCharge += 0.8; this.FlowDash.dashOn = false;}
+  if(this.FlowDash.dashCharge <= 90) {this.FlowDash.dashCharge += 1.5; this.FlowDash.dashOn = false;}
   this.actions(step, level, keys);
   this.changeChar(level, keys);
   this.move(otherActor, step, level, keys);
