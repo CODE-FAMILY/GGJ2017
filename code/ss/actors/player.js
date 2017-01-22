@@ -102,15 +102,15 @@ Player.prototype.moveY = function(step, level, keys) {
 Player.prototype.moveYonLadder = function(actor, step, level, keys) {
   this.speed.y = 0;
   if (keys.down){
-  if(actor.type == "ladder"){
-      this.speed.y += playerXSpeed;
+    if(actor.type == "ladder"){
+      this.speed.y += playerXSpeed * .4;
     }
     if(actor.type == "thinBar"){
     }
   }
 
   if (keys.up) {
-    this.speed.y -= playerXSpeed * 2;
+    this.speed.y -= playerXSpeed * .6;
   }
 
   if (keys.jump) {
@@ -134,6 +134,10 @@ Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
   if (this.charIndex === Character.FLEX)
     this.speed.y *= 2;
 
+  if (this.charIndex == Character.FLOW && keys.actOne) {
+    this.speed.y = 0;
+  }
+
   var motion = new Vector(0, this.speed.y * step);
   var newPos = this.pos.plus(motion);
   var obstacle = level.obstacleAt(newPos, this.size);
@@ -156,7 +160,7 @@ Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
     }
 
     if (obstacle == "fallthrough" && //if the tile they're sinking into is water and
-        !((this.charIndex === Character.FLOW && (keys.actTwo || keys.actThree))) || //they aren't a Flow that is using the action keys nor
+        !(this.charIndex == Character.FLOW && keys.actOne) || //they aren't a Flow that is using the action keys nor
             (level.obstacleAt(this.pos, this.size) == "fallthrough")) {             //are they already submerged if they are Flow
         this.pos = newPos;
     }
@@ -168,9 +172,9 @@ Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
 
 Player.prototype.move = function(actor, step, level, keys) {
   if (actor && (actor.type == "ladder" || actor.type == "thinBar")) {
-    this.moveX(step, level, keys);
+    this.moveX(step/5, level, keys);
     this.moveYonLadder(actor, step, level, keys);
-  } if (actor && actor.type == "fallthrough") {
+  } else if (actor && actor.type == "fallthrough") {
     this.moveX(step, level, keys);
     this.moveYonFallThrough(actor, step, level, keys);
   } else {
@@ -274,18 +278,24 @@ Player.prototype.actions = function(step, level, keys){
 }
 
 Player.prototype.act = function(step, level, keys) {
-  var otherActor = level.actorAt(this);
+  var otherActors = level.actorAt(this);
   if(this.FlowDash.dashCharge <= 90) {this.FlowDash.dashCharge += 1.5; this.FlowDash.dashOn = false;}
   this.actions(step, level, keys);
   this.changeChar(level, keys);
-  this.move(otherActor, step, level, keys);
+  this.move(otherActors[0], step, level, keys);
 
   if (this.holdingObject) {
     this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
   }
-  if (otherActor) {
-    level.playerTouched(otherActor.type, otherActor);
-  } else if(!otherActor || otherActor.type != "switch") {
+  if (otherActors) {
+    if(otherActors.length == 1){
+    level.playerTouched(otherActors[0].type, otherActors[0]);
+    } else {
+      for(i = 0; i < otherActors.length; i++){
+        level.playerTouched(otherActors[i].type, otherActors[i]);
+      }
+    }
+  } else if(!otherActors[0] || otherActors[0].type != "switch") {
     this.touchingSwitch = null;
   }
 

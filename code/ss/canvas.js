@@ -192,11 +192,7 @@ CanvasDisplay.prototype.drawActor = function (actor) {
       else sprite = offLever;
     } else if (actor.type == "coin") {
       sprite = coinSprite;
-    } else if (actor.type == "harpoon") {
-      if (actor.ch == "h" || actor.ch == "i" || actor.ch == "B")
-        sprite = harpoonR;
-      else sprite = harpoonL;
-    } else if (actor.type == "lava") {
+    }  else if (actor.type == "lava") {
       sprite = lavaSprite;
     } else if (actor.type == "transport") {
       sprite = lavaSprite;
@@ -212,7 +208,11 @@ CanvasDisplay.prototype.drawActor = function (actor) {
         // if (this.level.grid[y - 1][x] != "fallthrough")
         //   spriteIndex = spriteIndex + 2;
         sprite = waterSprites[spriteIndex];
-    } 
+    } else if (actor.type == "harpoon") {
+      if (actor.ch == "h" || actor.ch == "i" || actor.ch == "B")
+        sprite = harpoonR;
+      else sprite = harpoonL;
+    }
     this.cx.drawImage(sprite, x, y, width, height);
   }
 };

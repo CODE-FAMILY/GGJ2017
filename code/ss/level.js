@@ -82,6 +82,7 @@ Level.prototype.obstacleAt = function(pos, size) {
 };
 
 Level.prototype.actorAt = function(actor) {
+  var actorings = []
   for (var i = 0; i < this.actors.length; i++) {
     var other = this.actors[i];
     if (other != actor &&
@@ -89,8 +90,9 @@ Level.prototype.actorAt = function(actor) {
         actor.pos.x < other.pos.x + other.size.x &&
         actor.pos.y + actor.size.y > other.pos.y &&
         actor.pos.y < other.pos.y + other.size.y)
-      return other;
+      actorings.push(other);
   }
+  return actorings;
 };
 
 Level.prototype.animate = function(step, keys) {
@@ -110,6 +112,7 @@ Level.prototype.playerTouched = function(type, actor) {
 
       console.log("Player is immortal");
     } else {
+      
       this.status = "lost";
       this.finishDelay = 1;
 
