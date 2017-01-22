@@ -56,8 +56,6 @@ function runGame(plans, Display) {
   stats = new Statistics();
 
   sound = new Sound();
-  sound.playerSwitch("Flex");
-  sound.triggerSound("Drowning");
   sound.displayControls("audio-controls");
 
   function startLevel(n) {
