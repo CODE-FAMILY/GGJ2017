@@ -60,10 +60,10 @@ Player.prototype.moveYonLadder = function(actor, step, level, keys) {
     }
     if(actor.type == "thinBar"){
     }
-  } 
+  }
   if (keys.up){
     this.speed.y -= playerXSpeed * 2;
-  } 
+  }
   if (keys.jump) this.speed.y = -this.jumpSpeed;
 
   var motion = new Vector(0, this.speed.y * step);
