@@ -172,7 +172,8 @@ CanvasDisplay.prototype.drawActors = function() {
         } else if (actor.type == "transport") {
             sprite = lavaSprite;
         } else if (actor.type == "fallthrough") {
-            sprite = brickSprite;
+            sprite = waterSprites[0];
+            console.log("asldfa");
         }
           
         this.cx.drawImage(sprite,

@@ -39,7 +39,6 @@ Player.prototype.moveY = function(step, level, keys) {
     else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
 
     if (obstacle == "fallthrough" && this.charIndex !== 2) {
-        console.log(this.pos.y + " " + this.speed.y);
         this.pos = newPos;
     }
     else if (keys.jump && this.speed.y > 0)
@@ -49,7 +48,6 @@ Player.prototype.moveY = function(step, level, keys) {
   } else {
     this.pos = newPos;
   }
-  console.log(this.pos.y + " " + this.speed.y);
 };
 
 Player.prototype.moveYonLadder = function(actor, step, level, keys) {
