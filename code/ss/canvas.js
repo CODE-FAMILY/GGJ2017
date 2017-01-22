@@ -145,35 +145,42 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
                     sprite * spriteW, 0, spriteW, spriteH,
                     x,              y, width, height);
 
+  if (player.holdingObject)
+    this.drawActor(player.holdingObject);
+
   this.cx.restore();
 };
 
-CanvasDisplay.prototype.drawActors = function() {
-  this.level.actors.forEach(function(actor) {
-    var width = actor.size.x * scale;
-    var height = actor.size.y * scale;
-    var x = (actor.pos.x - this.viewport.left) * scale;
-    var y = (actor.pos.y - this.viewport.top) * scale;
-    if (actor.type == "player") {
-      this.drawPlayer(x, y, width, height);
-    } else {
-      //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
-        var sprite;
-        if (actor.type == "switch") {
-          if (actor.on) sprite = onLever;
-          else          sprite = offLever;
-        } else if (actor.type == "coin") {
-            sprite = coinSprite;
-        } else if (actor.type == "lava") {
-            sprite = lavaSprite;
-        } else if (actor.type == "ladder") {
-            sprite = brickSprite;
-        } else if (actor.type == "transport") {
-            sprite = lavaSprite;
-        } 
-        this.cx.drawImage(sprite,
-                        //tileX, 0, width, height,
-                        x,     y, width, height);
+CanvasDisplay.prototype.drawActor = function (actor) {
+  var width = actor.size.x * scale;
+  var height = actor.size.y * scale;
+  var x = (actor.pos.x - this.viewport.left) * scale;
+  var y = (actor.pos.y - this.viewport.top) * scale;
+  if (actor.type == "player") {
+    this.drawPlayer(x, y, width, height);
+  } else {
+    //var tileX = (actor.type == "coin" ? 2 : 1) * scale;
+    var sprite;
+    if (actor.type == "switch") {
+      if (actor.on) sprite = onLever;
+      else sprite = offLever;
+    } else if (actor.type == "coin") {
+      sprite = coinSprite;
+    } else if (actor.type == "lava") {
+      sprite = lavaSprite;
+    } else if (actor.type == "ladder") {
+      sprite = brickSprite;
+    } else if (actor.type == "transport") {
+      sprite = lavaSprite;
+    } else if (actor.type == "stone") {
+      sprite = onLever;
     }
-  }, this);
+    this.cx.drawImage(sprite,
+                    //tileX, 0, width, height,
+                    x, y, width, height);
+  }
+};
+
+CanvasDisplay.prototype.drawActors = function() {
+  this.level.actors.forEach(function (actor) { this.drawActor(actor);}, this);
 };

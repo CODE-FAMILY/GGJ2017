@@ -1,6 +1,7 @@
 var actorChars = {
   "@": Player,
   "o": Coin,
+  "s": Stone,
   "0": Switch, "1": Switch,
   "#": Ladder,
   "t": Transport,
@@ -105,5 +106,8 @@ Level.prototype.playerTouched = function(type, actor) {
     }
   } else if (type == "transport") {
       this.status = "won";
+  } else if (type == "stone") {
+    this.actors = this.actors.filter(function(other) { return other != actor;});
+    this.player.holdingObject = actor;
   }
 };

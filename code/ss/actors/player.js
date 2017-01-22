@@ -9,14 +9,20 @@ function Player(pos) {
   this.revertChar();
   //this.playerSprites = playerSprites;
   this.isTouchingSwitch = false;
-
+  this.holdingObject = null
+  this.facingRight = true;
 }
 Player.prototype.type = "player";
 
 Player.prototype.moveX = function(step, level, keys) {
   this.speed.x = 0;
-  if (keys.left) this.speed.x -= this.playerXSpeed;
-  if (keys.right) this.speed.x += this.playerXSpeed;
+  if (keys.left) {
+    this.speed.x -= this.playerXSpeed;
+    this.facingRight = false;
+  } else if (keys.right) {
+    this.speed.x += this.playerXSpeed;
+    this.facingRight = true;
+  }
 
   var motion = new Vector(this.speed.x * step, 0);
   var newPos = this.pos.plus(motion);
@@ -117,13 +123,21 @@ Player.prototype.act = function(step, level, keys) {
   this.changeChar(keys);
 
   this.move(otherActor, step, level, keys);
+  if (this.holdingObject) {
+    this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
+    if (keys.down) {
+      this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
+      this.holdingObject.speed.y = -6;
+      level.actors.push(this.holdingObject);
+      this.holdingObject = null;
+    }
+  }
 
   if (otherActor) {
     level.playerTouched(otherActor.type, otherActor);
   } else if(!otherActor || otherActor.type != "switch") {
     this.touchingSwitch = null;
   }
-
 
   // Losing animation
   if (level.status == "lost") {
