@@ -27,3 +27,7 @@ symbols on map key
  * "W": water
  * ">": move left ice
  * "<": move right ice 
+
+update map
+
+https://drive.google.com/open?id=1J48tjwoIEitTz59EoK-kDPbjEZvadomMBzop35eIsik
