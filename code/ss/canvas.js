@@ -106,6 +106,8 @@ CanvasDisplay.prototype.drawBackground = function() {
         sprite = iceSprite;
       } else if (tile == "slideLeft") {
         sprite = iceSprite;
+      } else if(tile == "secretWall"){
+        sprite = breakAble;
       } else {
         sprite = brickRSprite;
         if(this.level.grid[y][x+1] != null){
@@ -171,12 +173,12 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     } else if (actor.type == "transport") {
       sprite = lavaSprite;
     } else if (actor.type == "stone") {
-      sprite = onLever;
+      sprite = throwAble;
     } else if (actor.type == "ladder" || actor.type == "thinBar") {
       sprite = ladder;
       if(actor.type == "thinBar") height = height * .1;
     } else if (actor.type == "secretWall") {
-      return;
+      sprite = breakAble;
     } else if (actor.type == "fallthrough"){
         var spriteIndex = 2//(Math.round(animFrame/36) + x) % 2;
         // if (this.level.grid[y - 1][x] != "fallthrough")
