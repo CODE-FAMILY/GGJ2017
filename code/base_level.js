@@ -22,21 +22,12 @@ var GAME_LEVELS = [
    "                                                                 xx!xx          ",
    "                                   xxxxx                          xvx           ",
    "                                                                            xx  ",
-<<<<<<< HEAD
    "  xi            x   #                     o o                                x  ",
    "  xh         7  x   #   o  A                                                 x  ",
    "  xH            x   #                    xfffx                             o x  ",
    "  x          xxxx   #   o                                                    x  ",
    "  x  @s 0 1 tx  x   #                                            xxxxx       x  ",
    "  xxxxxxxxxxxx  xxxxxxxxxxx>>>>   xxxxxxxxxxxxxxxxxxxx     xxxxxxx   xxxxxxxxx  ",
-=======
-   "  xx     #xx                              o o                                x  ",
-   "  x      #        A     o                                                    x  ",
-   "  x      #                               xfffx                             o x  ",
-   "  x      #   <<>>       o                xfffx                               x  ",
-   "  xs @  0#1 tx  x                        xfffx                   xxxxx       x  ",
-   "  xxxxxxxxxxxx  xxxxxxxxxxxxxxx   xxxxxxxxxxxxxxxxxxxx     xxxxxxx   xxxxxxxxx  ",
->>>>>>> 7240c990181235b59cf5ca56437f8d247517d8a5
    "                              x   x                  x     x                    ",
    "                              x!!!x                  x!!!!!x                    ",
    "                              x!!!x                  x!!!!!x                    ",
