@@ -72,7 +72,10 @@ Player.prototype.moveY = function(step, level, keys) {
       level.finishDelay = 1;
     }
 
-    if      (obstacle == "slideRight") this.pos.x += step * 3;
+    if (obstacle == "ice") {
+      if (this.facingRight) this.pos.x += step * 3;
+      else                  this.pos.x += step * -3;
+    }
     else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
     else if (this.charIndex == Character.FLOYD && this.speed.y < 1 &&
               obstacle == "secretWall" && keys.actTwo) {
@@ -278,7 +281,7 @@ Player.prototype.actions = function(step, level, keys){
 }
 
 Player.prototype.moveHoldingObject = function () {
-    this.holdingObject.pos = this.pos.plus(new Vector(0, -this.holdingObject.size.y * 1)) ;
+    this.holdingObject.pos = this.pos.plus(new Vector(0, this.holdingObject.size.y * 1.2)) ;
 }
 
 Player.prototype.act = function(step, level, keys) {

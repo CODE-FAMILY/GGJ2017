@@ -101,10 +101,7 @@ CanvasDisplay.prototype.drawBackground = function() {
             sprite = topWaterTwo;
           }
         }
-
-      } else if (tile == "slideRight") {
-        sprite = iceSprite;
-      } else if (tile == "slideLeft") {
+      } else if (tile == "ice") {
         sprite = iceSprite;
       } else {
         sprite = brickRSprite;
