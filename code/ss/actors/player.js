@@ -3,6 +3,8 @@ function Player(pos) {
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
   this.charIndex;
+  this.jumping = 0; //any value greather than 0 is jumping
+  this.death = false;
   //this.gravity = 30;
   //this.jumpSpeed = 17;
   //this.playerXSpeed = 7;
@@ -44,11 +46,29 @@ Player.prototype.moveY = function(step, level, keys) {
     if      (obstacle == "slideRight") this.pos.x += step * 2;
     else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
 
-    if (keys.jump && this.speed.y > 0) this.speed.y = -this.jumpSpeed;
-    else this.speed.y = 0;
+    if (keys.jump && this.speed.y > 0) {
+      this.speed.y = -this.jumpSpeed;
+
+      if (this.charIndex == 1) {
+        this.jumping = 2;
+      }
+    } else {
+      this.speed.y = 0;
+    }
 
     if (obstacle == "fallthrough" && this.charIndex !== 2) {
         this.pos = newPos;
+    }
+
+    //only the second jumping player will jump again, because the jumping
+    //variable will be only greather for charIndex == 1 (second player)
+    if (this.jumping > 1) {
+      //delay the second jump
+      this.jumping--;
+    } else if (this.jumping == 1) {
+      //jump again
+      this.speed.y = -this.jumpSpeed * 0.4;
+      this.jumping--;
     }
   } else {
     this.pos = newPos;
@@ -65,10 +85,14 @@ Player.prototype.moveYonLadder = function(actor, step, level, keys) {
     if(actor.type == "thinBar"){
     }
   }
-  if (keys.up){
+
+  if (keys.up) {
     this.speed.y -= playerXSpeed * 2;
   }
-  if (keys.jump) this.speed.y = -this.jumpSpeed;
+
+  if (keys.jump) {
+    this.speed.y = -this.jumpSpeed;
+  }
 
   var motion = new Vector(0, this.speed.y * step);
   var newPos = this.pos.plus(motion);
@@ -128,9 +152,9 @@ Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
 
   } else if(keys.actTwo){
-    
+
   } else if(keys.actThree){
-    
+
   }
 }
 
