@@ -13,6 +13,10 @@ function Player(pos) {
   this.isTouchingSwitch = false;
   this.holdingObject = null
   this.facingRight = true;
+  this.FlowDash = {
+    dashCharge : 100,
+    dashOn : false
+  };
 }
 Player.prototype.type = "player";
 
@@ -20,12 +24,23 @@ var dieFallingSpeed = 35;
 
 Player.prototype.moveX = function(step, level, keys) {
   this.speed.x = 0;
+  
   if (keys.left) {
     this.speed.x -= this.playerXSpeed;
     this.facingRight = false;
   } else if (keys.right) {
     this.speed.x += this.playerXSpeed;
     this.facingRight = true;
+  } 
+  
+  if(keys.actTwo && this.charIndex == Character.FLOW && this.FlowDash.dashCharge >= 50){
+    this.FlowDash.dashCharge -= 20;
+    if (this.facingRight){
+      this.speed.x += this.playerXSpeed;
+    }else{
+      this.speed.x -= this.playerXSpeed;
+    }
+
   }
 
   var motion = new Vector(this.speed.x * step, 0);
@@ -160,6 +175,10 @@ Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
 
   } else if(keys.actTwo){
+    // if(this.charIndex == Character.FLOW){
+    //   console.log(this.FlowDash.dashCharge)
+    //   if(this.FlowDash.dashOn) {this.moveX(1, level, keys);}
+    // }
 
   } else if(keys.actThree){
 
@@ -168,6 +187,7 @@ Player.prototype.actions = function(step, level, keys){
 
 Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
+  if(this.FlowDash.dashCharge <= 0) {this.FlowDash.dashCharge += 0.2;}
   this.actions(step, level, keys);
   this.changeChar(keys);
 
