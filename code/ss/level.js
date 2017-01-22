@@ -7,7 +7,7 @@ var actorChars = {
   "_": thinBar,
   "t": Transport,
   "=": Lava, "|": Lava, "v": Lava,
-  
+  "w": fallthrough,
 
   "0": Switch, "A": Lava,
   "1": Switch, "B": SecretWall,
@@ -35,7 +35,7 @@ function Level(plan) {
       else if (ch == "!") fieldType = "lava";
       else if (ch == "<") fieldType = "slideLeft";
       else if (ch == ">") fieldType = "slideRight";
-      else if (ch == "w") fieldType = "fallthrough";
+      
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);

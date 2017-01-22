@@ -1,11 +1,11 @@
 //Fallthrough Tile
-function Fallthrough(pos) {
+function fallthrough(pos) {
     this.size = new Vector(1, 1);
     this.pos = pos;
 }
 
-Fallthrough.prototype.type = "fallthrough";
+fallthrough.prototype.type = "fallthrough";
 
-Fallthrough.prototype.act = function (step, level) {
+fallthrough.prototype.act = function (step, level) {
 
 };
