@@ -28,6 +28,9 @@ function CanvasDisplay(parent, level) {
   //Draw death statistic
   drawDeathStatistics();
 
+  //Draw selected player
+  displaySelectCharacter(Character.FLOW);
+
   this.level = level;
   this.animationTime = 0;
   this.flipPlayer = false;

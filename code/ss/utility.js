@@ -47,14 +47,13 @@ Vector.prototype.times = function(factor) {
 };
 
 function drawText(text, size, xpos, ypos, id) {
-  ctx = document.getElementById(id).getContext("2d");
+  var ctx = document.getElementById(id).getContext("2d");
   ctx.font = "bold " + size + " Arial";
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillText(text, xpos, ypos);
 }
 
 function displayTextCenter(text, size, id) {
-  ctx = document.getElementById(id).getContext("2d");
+  var ctx = document.getElementById(id).getContext("2d");
   clearCanvas(id);
   ctx.font = "bold " + size + " Arial";
   textString = text;
@@ -65,11 +64,19 @@ function displayTextCenter(text, size, id) {
 function clearPausedOnCanvas() {
   clearCanvas("UI");
   drawDeathStatistics();
+  displaySelectCharacter(Character.FLOW);
 }
 
 function drawDeathStatistics() {
   var text = "Deaths: " + stats.deaths;
-  drawText(text, "1.2em", 100, 100, "UI");
+  drawText(text, "1.2em", 100, 80, "UI");
+}
+
+function displaySelectCharacter(character) {
+  var text = Character.getCharacterName(character);
+  if ( null != text ) {
+    drawText(text, "1.2em", 100, 100, "UI");
+  }
 }
 
 function clearCanvas(id) {

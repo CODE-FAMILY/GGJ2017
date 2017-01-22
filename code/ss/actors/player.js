@@ -5,6 +5,7 @@ function Player(pos) {
   this.charIndex;
   this.bouncing = 0; //any value greather than 0 is jumping
   this.death = false;
+  this.immortal = "no";
   //this.gravity = 30;
   //this.jumpSpeed = 17;
   //this.playerXSpeed = 7;
@@ -24,15 +25,15 @@ var dieFallingSpeed = 35;
 
 Player.prototype.moveX = function(step, level, keys) {
   this.speed.x = 0;
-  
+
   if (keys.left) {
     this.speed.x -= this.playerXSpeed;
     this.facingRight = false;
   } else if (keys.right) {
     this.speed.x += this.playerXSpeed;
     this.facingRight = true;
-  } 
-  
+  }
+
   if(keys.actTwo && this.charIndex == Character.FLOW && this.FlowDash.dashCharge >= 50){
     this.FlowDash.dashCharge -= 20;
     if (this.facingRight){
@@ -141,6 +142,7 @@ Player.prototype.changeChar = function (keys) {
         this.charIndex = Character.FLOW;
         sound.playerSwitch(Character.FLOW);
     } else if (keys.charTwoChange) {
+        console.log("Player: FLEX!");
         this.charIndex = Character.FLEX;
         sound.playerSwitch(Character.FLEX);
     } else if (keys.charThreeChange) {
@@ -176,11 +178,15 @@ Player.prototype.actions = function(step, level, keys){
       }
     }
   } else if(keys.actTwo){
-    // if(this.charIndex == Character.FLOW){
-    //   console.log(this.FlowDash.dashCharge)
-    //   if(this.FlowDash.dashOn) {this.moveX(1, level, keys);}
-    // }
-
+      if (this.charIndex == Character.FLEX) {
+        if (this.immortal == "no") {
+          this.immortal = "yes";
+          console.log("immortal: " + this.immortal);
+          var self = this;
+          setTimeout(function() { self.immortal = "block"; console.log("immortal: " + self.immortal);
+               setTimeout(function() { self.immortal = "no"; console.log("immortal: " + self.immortal); }, 15000)}, 10000);
+        }
+      }
   } else if(keys.actThree){
 
   }
@@ -220,6 +226,16 @@ Player.prototype.act = function(step, level, keys) {
 var charGravity = [31, 31, 31]; //gravity values for characters one through three
 var charJumpSpeed = [17, 17, 17];
 var charXspeed = [7, 7, 7];
+
+Player.prototype.isImmortal = function() {
+  var immortal = false;
+
+  if ( this.immortal == "yes" ) {
+    immortal = true;
+  }
+
+  return immortal;
+}
 
 //getters and setters
 Player.prototype.setGravity = function(tempGrav){
