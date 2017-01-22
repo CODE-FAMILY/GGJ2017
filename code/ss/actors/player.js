@@ -279,7 +279,13 @@ Player.prototype.revertChar = function () {
 Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
     if (this.charIndex == Character.FLEX) {
-
+        if (this.immortal == "no") {
+          this.immortal = "yes";
+          console.log("immortal: " + this.immortal);
+          var self = this;
+          setTimeout(function() { self.immortal = "block"; console.log("immortal: " + self.immortal);
+               setTimeout(function() { self.immortal = "no"; console.log("immortal: " + self.immortal); }, 15000)}, 10000);
+      }
     } else if (this.charIndex == Character.FLOYD) {
         if (this.holdingObject) this.throwObject(level);
     } else if (this.charIndex == Character.FLOW) {
@@ -288,15 +294,6 @@ Player.prototype.actions = function(step, level, keys){
       }
     }
   } else if(keys.actTwo){
-      if (this.charIndex == Character.FLEX) {
-        if (this.immortal == "no") {
-          this.immortal = "yes";
-          console.log("immortal: " + this.immortal);
-          var self = this;
-          setTimeout(function() { self.immortal = "block"; console.log("immortal: " + self.immortal);
-               setTimeout(function() { self.immortal = "no"; console.log("immortal: " + self.immortal); }, 15000)}, 10000);
-        }
-      }
     if(this.charIndex == Character.FLOW){
       console.log(this.FlowDash.dashCharge)
       if(this.FlowDash.dashCharge >= 90) {

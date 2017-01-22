@@ -150,7 +150,6 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
   this.cx.restore();
 };
 
-var counter = 0;
 CanvasDisplay.prototype.drawActor = function (actor) {
   var width = actor.size.x * scale;
   var height = actor.size.y * scale;
@@ -167,8 +166,7 @@ CanvasDisplay.prototype.drawActor = function (actor) {
       if (actor.on) sprite = onLever;
       else sprite = offLever;
     } else if (actor.type == "coin") {
-      sprite = coinsSprites[counter % 3];
-      counter++;
+      sprite = coinsSprites[1];
     }  else if (actor.type == "lava") {
       sprite = lavaSprite;
     } else if (actor.type == "transport") {
