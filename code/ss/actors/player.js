@@ -61,7 +61,7 @@ Player.prototype.moveY = function(step, level, keys) {
       this.speed.y = 0;
     }
 
-    if (obstacle == "fallthrough" && this.charIndex !== 2) {
+    if (obstacle == "fallthrough" && this.charIndex !== 2 || (level.obstacleAt(this.pos, this.size) == "fallthrough" && this.charIndex === 2)) {
         this.pos = newPos;
     }
 
