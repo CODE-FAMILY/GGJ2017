@@ -57,7 +57,7 @@ Player.prototype.moveY = function(step, level, keys) {
     if (keys.jump && this.speed.y > 0) {
       this.speed.y = -this.jumpSpeed;
 
-      if (this.charIndex == 1) {
+      if (this.charIndex == Character.FLOW) {
         this.jumping = 2;
       }
     } else {
@@ -128,13 +128,13 @@ Player.prototype.changeChar = function (keys) {
 
     var charChange = this.charIndex;
     if (keys.charOneChange) {
-        this.charIndex = 0;
+        this.charIndex = Character.FLOW;
         sound.playerSwitch("Flow");
     } else if (keys.charTwoChange) {
-        this.charIndex = 1;
+        this.charIndex = Character.FLEX;
         sound.playerSwitch("Flex");
     } else if (keys.charThreeChange) {
-        this.charIndex = 2;
+        this.charIndex = Character.FLOYD;
         sound.playerSwitch("Floyd");
     }
 
@@ -197,8 +197,8 @@ Player.prototype.act = function(step, level, keys) {
 
 //Character Stats
 var charGravity = [30, 22, 37]; //gravity values for characters one through three
-var charJumpSpeed = [17, 20, 14];
-var charXspeed = [7, 5, 11];
+var charJumpSpeed = [17, 17, 17];
+var charXspeed = [7, 7, 7];
 
 //getters and setters
 Player.prototype.setGravity = function(tempGrav){
