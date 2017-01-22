@@ -137,47 +137,51 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
     sprite = Math.floor(this.animationTime * 12) % 8;
 
   this.cx.save();
-  if (this.flipPlayer)
-    flipHorizontally(this.cx, x + width / 2);
+  if (this.flipPlayer) flipHorizontally(this.cx, x + width / 2);
 
   this.cx.drawImage(playerSprites,
                     sprite * spriteW, 0, spriteW, spriteH,
                     x,              y, width, height);
 
+  if (player.holdingObject)
+    this.drawActor(player.holdingObject);
+
   this.cx.restore();
 };
 
-CanvasDisplay.prototype.drawActors = function() {
-  this.level.actors.forEach(function(actor) {
-    var width = actor.size.x * scale;
-    var height = actor.size.y * scale;
-    var x = (actor.pos.x - this.viewport.left) * scale;
-    var y = (actor.pos.y - this.viewport.top) * scale;
-    if (actor.type == "player") {
-      this.drawPlayer(x, y, width, height);
-    } else {
-        var sprite;
-        if (actor.type == "switch") {
-          if (actor.on) sprite = onLever;
-          else          sprite = offLever;
-        } else if (actor.type == "coin") {
-            sprite = coinSprite;
-        } else if (actor.type == "lava") {
-            sprite = lavaSprite;
-        } else if (actor.type == "ladder" || actor.type == "thinBar") {
-            sprite = brickSprite;
-            if(actor.type == "thinBar"){
-              height = height * .1;
-            }
-        } else if (actor.type == "transport") {
-            sprite = lavaSprite;
-        } else if (actor.type == "fallthrough") {
-            sprite = waterSprites[0];
-            console.log("asldfa");
-        }
-          
-        this.cx.drawImage(sprite,
-                        x,     y, width, height);
+CanvasDisplay.prototype.drawActor = function (actor) {
+  var width = actor.size.x * scale;
+  var height = actor.size.y * scale;
+  var x = (actor.pos.x - this.viewport.left) * scale;
+  var y = (actor.pos.y - this.viewport.top) * scale;
+  if (actor.type == "player") {
+    this.drawPlayer(x, y, width, height);
+  } else {
+    var sprite;
+    if (actor.type == "switch") {
+      if (actor.on) sprite = onLever;
+      else sprite = offLever;
+    } else if (actor.type == "coin") {
+      sprite = coinSprite;
+    } else if (actor.type == "lava") {
+      sprite = lavaSprite;
+    } else if (actor.type == "ladder") {
+      sprite = brickSprite;
+    } else if (actor.type == "transport") {
+      sprite = lavaSprite;
+    } else if (actor.type == "stone") {
+      sprite = onLever;
+    } else if (actor.type == "ladder" || actor.type == "thinBar") {
+      sprite = brickSprite;
+      if(actor.type == "thinBar") height = height * .1;
+    } else if (actor.type == "fallthrough") {
+        sprite = waterSprites[0];
+        console.log("asldfa");
     }
-  }, this);
+    this.cx.drawImage(sprite, x, y, width, height);
+  }
+};
+
+CanvasDisplay.prototype.drawActors = function() {
+  this.level.actors.forEach(function (actor) { this.drawActor(actor);}, this);
 };

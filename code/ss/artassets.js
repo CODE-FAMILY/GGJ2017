@@ -10,7 +10,7 @@ playerSprites = charSprites[0];
 //animated tiles
 var waterSprites = [document.createElement("img"), document.createElement("img")];//, document.createElement("img")];
 waterSprites[0].src = "img/actorElements/TRUELEVER.png";
-waterSprites[1].src = "img/actorEleemnts/FALSELEVER-05.png";
+waterSprites[1].src = "img/actorElements/FALSELEVER-05.png";
 
 //actors
 var lavaSprite = document.createElement("img");
