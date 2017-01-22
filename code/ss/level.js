@@ -1,8 +1,11 @@
 var actorChars = {
   "@": Player,
   "o": Coin,
+  "s": Stone,
   "0": Switch, "1": Switch,
   "#": Ladder,
+  "t": Transport,
+  //"f": Fallthrough,
   "_": thinBar,
   "T": Transport,
   "=": Lava, "|": Lava, "v": Lava, "A": Lava
@@ -30,7 +33,9 @@ function Level(plan) {
       else if (ch == "<")
         fieldType = "slideLeft";
       else if (ch == ">")
-        fieldType = "slideRight";
+          fieldType = "slideRight";
+      else if (ch == "f")
+          fieldType = "fallthrough";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
@@ -106,5 +111,8 @@ Level.prototype.playerTouched = function(type, actor) {
     }
   } else if (type == "transport") {
       this.status = "won";
+  } else if (type == "stone") {
+    this.actors = this.actors.filter(function(other) { return other != actor;});
+    this.player.holdingObject = actor;
   }
 };

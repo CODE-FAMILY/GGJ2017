@@ -36,7 +36,7 @@ function runLevel(level, Display, andThen) {
   runAnimation(function(step) {
     if (!preInputPause && arrows.pause) running = !running;
     if (running) {
-      clearCanvas("UI");
+      clearPausedOnCanvas();
       level.animate(step, arrows);
       display.drawFrame(step);
       if (level.isFinished()) {

@@ -13,9 +13,9 @@ var arrowCodes = {
         38: "up",               //Up-Arrow
         39: "right",            //Right-Arrow
         40: "down",             //Down-Arrow
-        69: "actOne",           //Z
-        70: "actTwo",           //X
-        82: "actThree",         //C
+        90: "actOne",           //Z
+        88: "actTwo",           //X
+        67: "actThree",         //C
         65: "charOneChange",    //A
         83: "charTwoChange",    //S
         68: "charThreeChange",  //D
@@ -60,6 +60,14 @@ function displayTextCenter(text, size, id) {
   textString = text;
   textMeasure = ctx.measureText(textString);
   ctx.fillText(textString, ((canvas.width / 2) - (textMeasure.width / 2)), (canvas.height / 2) );
+}
+
+function clearPausedOnCanvas() {
+  ctx = document.getElementById("UI").getContext("2d");
+  clearCanvas("UI");
+  textMeasure = ctx.measureText("");
+  var text = "Deaths: " + stats.deaths;
+  drawText(text, "0.8em", 100, 100, "UI");
 }
 
 function clearCanvas(id) {
