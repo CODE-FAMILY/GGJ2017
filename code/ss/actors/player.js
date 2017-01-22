@@ -175,6 +175,15 @@ Player.prototype.actions = function(step, level, keys){
   if(keys.actOne){
     if (this.charIndex == Character.FLEX) {
     } else if (this.charIndex == Character.FLOYD) {
+        if (this.holdingObject) {
+          this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
+          if (keys.actOne) {
+            this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
+            this.holdingObject.speed.y = -6;
+            level.actors.push(this.holdingObject);
+            this.holdingObject = null;
+          }
+        }
     } else if (this.charIndex == Character.FLOW) {
       if( keys.jump ) {
         this.bouncing = 10;
@@ -202,16 +211,10 @@ Player.prototype.act = function(step, level, keys) {
   this.changeChar(keys);
 
   this.move(otherActor, step, level, keys);
-  if (this.holdingObject) {
-    this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
-    if (keys.actOne) {
-      this.holdingObject.speed.x = 10 * (this.facingRight ? 1: - 1);
-      this.holdingObject.speed.y = -6;
-      level.actors.push(this.holdingObject);
-      this.holdingObject = null;
-    }
-  }
 
+  if (this.holdingObject) {
+          this.holdingObject.pos = this.pos.plus(new Vector(0, -0.6)) ;
+  }
   if (otherActor) {
     level.playerTouched(otherActor.type, otherActor);
   } else if(!otherActor || otherActor.type != "switch") {
