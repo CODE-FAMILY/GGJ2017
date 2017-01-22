@@ -174,6 +174,8 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     } else if (actor.type == "ladder" || actor.type == "thinBar") {
       sprite = brickSprite;
       if(actor.type == "thinBar") height = height * .1;
+    } else if (actor.type == "fallthrough") {
+        sprite = brickSprite;
     }
     this.cx.drawImage(sprite, x, y, width, height);
   }

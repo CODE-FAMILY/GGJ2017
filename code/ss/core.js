@@ -56,7 +56,7 @@ function runGame(plans, Display) {
   stats = new Statistics();
 
   sound = new Sound();
-  sound.playBgSound("Flow");
+  sound.playerSwitch("Flex");
   sound.displayControls("audio-controls");
 
   function startLevel(n) {
