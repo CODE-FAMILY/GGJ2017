@@ -32,9 +32,11 @@ function Sound() {
 
   this.playerSoundInit = false;
   this.playerSoundVolume = 0.7; //range of 0 - 1.0
+  console.log("sound");
 }
 
 Sound.prototype.displayControls = function(id) {
+  console.log("play");
   controls = document.getElementById(id);
 
   mute = document.createElement("button");
