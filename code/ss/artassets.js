@@ -1,8 +1,8 @@
 //characters
 var charSprites = [document.createElement("img"), document.createElement("img"), document.createElement("img")];
-charSprites[0].src = "img/atlasedElements/player.png";
-charSprites[1].src = "img/atlasedElements/playerTwo.png";
-charSprites[2].src = "img/atlasedElements/playerThree.png";
+charSprites[0].src = "img/atlasedElements/Flex.png";
+charSprites[1].src = "img/atlasedElements/FLow.png";
+charSprites[2].src = "img/atlasedElements/Floyd.png";
 
 var playerSprites = document.createElement("img");
 playerSprites = charSprites[0];
@@ -42,6 +42,9 @@ whaleTwo.src = "img/actorElements/WHALE2.png";
 var whaleThree = document.createElement("img");
 whaleThree.src = "img/actorElements/WHALE3.png";
 
+var throwAble = document.createElement("img");
+throwAble.src = "img/actorElements/THROWMEWHALE.png";
+
 //static
 var iceSprite = document.createElement("img");
 iceSprite.src = "img/backgroundElements/ICECUBE-03.png";
@@ -54,6 +57,9 @@ brickRSprite.src = "img/backgroundElements/RIGHTEDGE_TITLE.png";
 
 var brickLSprite = document.createElement("img");
 brickLSprite.src = "img/backgroundElements/LEFTEDGE_TITLE.png";
+
+var breakAble = document.createElement("img");
+breakAble.src = "img/backgroundElements/BREAKABLEDOOR.png";
 
 var bckGround = document.createElement("img");
 bckGround.src = "img/backgroundElements/trialBackGround2.jpg";

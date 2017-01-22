@@ -15,14 +15,14 @@ function UICanvas() {
 
   this.deaths = {
     text: "Deaths: 0",
-    x: 100,
-    y: 100,
+    x: 70,
+    y: 50,
     size: this.smallSize,
   }
 
   this.playerName = {
-    text: "Player: ",
-    x: 100,
+    text: "Character: ",
+    x: 70,
     y: 80,
     size: this.smallSize,
   }
@@ -41,6 +41,7 @@ UICanvas.prototype.won = function() {
 
 UICanvas.prototype.updateHud = function() {
   clearCanvas(this.id);
+  drawImage("img/ui/TOPSTATSBG.png", 10, 10, this.id);
   drawText(this.deaths.text, this.deaths.size, this.deaths.x, this.deaths.y, this.id);
   drawText(this.playerName.text, this.playerName.size, this.playerName.x, this.playerName.y, this.id);
 }
@@ -50,7 +51,7 @@ UICanvas.prototype.setDeaths = function(deaths) {
 }
 
 UICanvas.prototype.setPlayerName = function(player) {
-  this.playerName.text = "Player: " + Character.getCharacterName(player);
+  this.playerName.text = "Character: " + Character.getCharacterName(player);
 }
 
 UICanvas.prototype.clear = function() {

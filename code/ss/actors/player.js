@@ -1,11 +1,12 @@
 function Player(pos) {
-  this.pos = pos.plus(new Vector(0, -0.5));
-  this.size = new Vector(0.8, 1.5);
+  this.pos = pos.plus(new Vector(0, -1.5));
+  this.size = new Vector(0.8, 1.9);
   this.speed = new Vector(0, 0);
   this.charIndex;
   this.bouncing = 0; //any value greather than 0 is jumping
   this.death = false;
   this.immortal = "no";
+  this.breath = 240;
   //this.gravity = 30;
   //this.jumpSpeed = 17;
   //this.playerXSpeed = 7;
@@ -102,6 +103,11 @@ Player.prototype.moveY = function(step, level, keys) {
       this.speed.y = -this.jumpSpeed * (this.bouncing/10);
       this.bouncing--;
     }
+
+      //Breath Replenish
+    this.breath += 4;
+    if (this.breath > 240)
+        this.breath = 240;
   } else {
     this.pos = newPos;
   }
@@ -139,9 +145,16 @@ Player.prototype.moveYonLadder = function(actor, step, level, keys) {
 
 Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
 
-  this.speed.y = step * this.gravity * 7;
-  if (this.charIndex === Character.FLEX)
-    this.speed.y *= 2;
+    if (this.speed.y < 0)
+        if (this.charIndex == Character.FLEX)
+            this.speed.y += step * this.gravity / 2;
+        else
+            this.speed.y += step * this.gravity / 4;
+    else {
+        this.speed.y = step * this.gravity * 7;
+        if (this.charIndex === Character.FLEX)
+            this.speed.y *= 2;
+    }
 
   if (this.charIndex == Character.FLOW && keys.actOne) {
     this.speed.y = 0;
@@ -155,17 +168,24 @@ Player.prototype.moveYonFallThrough = function(actor, step, level, keys) {
 
     var curObstacle = level.obstacleAt(this.pos, this.size);
     if (keys.jump && this.speed.y > 0 && obstacle != "fallthrough") {
-      this.speed.y -= this.jumpSpeed * 4;
+      this.speed.y -= this.jumpSpeed;
       var motion = new Vector(0, this.speed.y * step);
       var newPos = this.pos.plus(motion);
       this.pos = newPos;
     } else if (obstacle == "fallthrough") {
-        this.speed.y = step * this.gravity * 7;
-        if (this.charIndex === Character.FLEX)
-            this.speed.y *= 2;
-        
+            this.speed.y = step * this.gravity * 7;
+            if (this.charIndex === Character.FLEX)
+                this.speed.y *= 2;
     } else {
       this.speed.y = 0;
+    }
+
+    if (this.charIndex != Character.FLOYD) {
+        this.breath -= 1;
+    }
+    if (this.breath < 0) {
+        level.status = "lost";
+        level.finishDelay = 1;
     }
 
     if (obstacle == "fallthrough" && //if the tile they're sinking into is water and

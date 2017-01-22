@@ -59,11 +59,13 @@ CanvasDisplay.prototype.updateViewport = function() {
 };
 
 CanvasDisplay.prototype.clearDisplay = function() {
-  if (this.level.status == "won")
+  if (this.level.status == "won") {
     this.cx.fillStyle = "rgb(68, 191, 255)";
-  else if (this.level.status == "lost")
+    var uidisplay = new UICanvas();
+    uidisplay.won();
+  } else if (this.level.status == "lost") {
     this.cx.fillStyle = "rgb(44, 136, 214)";
-  else{
+  } else{
     // this.cx.fillStyle = "rgb(52, 166, 251)";
 
     this.cx.fillStyle = this.cx.createPattern(bckGround, "repeat");
@@ -103,6 +105,8 @@ CanvasDisplay.prototype.drawBackground = function() {
         }
       } else if (tile == "ice") {
         sprite = iceSprite;
+      } else if(tile == "secretWall"){
+        sprite = breakAble;
       } else {
         sprite = brickRSprite;
         if(this.level.grid[y][x+1] != null){
@@ -137,7 +141,7 @@ CanvasDisplay.prototype.drawPlayer = function(x, y, width, height) {
   if (this.flipPlayer) flipHorizontally(this.cx, x + width / 2);
 
   this.cx.drawImage(playerSprites,
-                    sprite * spriteW, 0, spriteW, spriteH,
+                    //sprite * spriteW, 0, spriteW, spriteH,
                     x,              y, width, height);
 
   if (player.holdingObject)
@@ -168,12 +172,12 @@ CanvasDisplay.prototype.drawActor = function (actor) {
     } else if (actor.type == "transport") {
       sprite = lavaSprite;
     } else if (actor.type == "stone") {
-      sprite = onLever;
+      sprite = throwAble;
     } else if (actor.type == "ladder" || actor.type == "thinBar") {
       sprite = ladder;
       if(actor.type == "thinBar") height = height * .1;
     } else if (actor.type == "secretWall") {
-      return;
+      sprite = breakAble;
     } else if (actor.type == "fallthrough"){
         var spriteIndex = 2//(Math.round(animFrame/36) + x) % 2;
         // if (this.level.grid[y - 1][x] != "fallthrough")
