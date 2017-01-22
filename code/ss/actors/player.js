@@ -69,9 +69,14 @@ Player.prototype.moveY = function(step, level, keys) {
     if      (obstacle == "slideRight") this.pos.x += step * 3;
     else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
 
-    if (keys.jump && this.speed.y > 0) {
+    var curObstacle = level.obstacleAt(this.pos, this.size);
+    if (keys.jump && this.speed.y > 0 && curObstacle != "fallthrough") {
       this.speed.y = -this.jumpSpeed;
 
+    } else if (obstacle == "fallthrough") {
+        this.speed.y = step * this.gravity * 7;
+        if (this.charIndex === Character.FLEX)
+            this.speed.y *= 2;
     } else {
       this.speed.y = 0;
     }
