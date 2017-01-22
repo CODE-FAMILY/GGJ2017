@@ -3,7 +3,7 @@ function Player(pos) {
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
   this.charIndex;
-  this.jumping = 0; //any value greather than 0 is jumping
+  this.bouncing = 0; //any value greather than 0 is jumping
   this.death = false;
   //this.gravity = 30;
   //this.jumpSpeed = 17;
@@ -13,6 +13,10 @@ function Player(pos) {
   this.isTouchingSwitch = false;
   this.holdingObject = null
   this.facingRight = true;
+  this.FlowDash = {
+    dashCharge : 100,
+    dashOn : false
+  };
 }
 Player.prototype.type = "player";
 
@@ -20,12 +24,23 @@ var dieFallingSpeed = 35;
 
 Player.prototype.moveX = function(step, level, keys) {
   this.speed.x = 0;
+  
   if (keys.left) {
     this.speed.x -= this.playerXSpeed;
     this.facingRight = false;
   } else if (keys.right) {
     this.speed.x += this.playerXSpeed;
     this.facingRight = true;
+  } 
+  
+  if(this.charIndex == Character.FLOW && this.FlowDash.dashOn && this.FlowDash.dashCharge >= 50){
+    this.FlowDash.dashCharge -= 3;
+    if (this.facingRight){
+      this.speed.x += this.playerXSpeed * 2;
+    }else{
+      this.speed.x -= this.playerXSpeed * 2;
+    }
+    
   }
 
   var motion = new Vector(this.speed.x * step, 0);
@@ -55,32 +70,32 @@ Player.prototype.moveY = function(step, level, keys) {
       level.finishDelay = 1;
     }
 
-    if      (obstacle == "slideRight") this.pos.x += step * 2;
-    else if (obstacle == "slideLeft")  this.pos.x -= step * 2;
+    if      (obstacle == "slideRight") this.pos.x += step * 3;
+    else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
 
-    if (keys.jump && this.speed.y > 0) {
+    var curObstacle = level.obstacleAt(this.pos, this.size);
+    if (keys.jump && this.speed.y > 0 && curObstacle != "fallthrough") {
       this.speed.y = -this.jumpSpeed;
 
-      if (this.charIndex == Character.FLOW) {
-        this.jumping = 2;
-      }
+    } else if (obstacle == "fallthrough") {
+        this.speed.y = step * this.gravity * 7;
+        if (this.charIndex === Character.FLEX)
+            this.speed.y *= 2;
     } else {
       this.speed.y = 0;
     }
 
-    if (obstacle == "fallthrough" && this.charIndex !== 2) {
+    if (obstacle == "fallthrough" && //if the tile they're sinking into is water and
+        !((this.charIndex === Character.FLOW && (keys.actTwo || keys.actThree))) || //they aren't a Flow that is using the action keys nor
+            (level.obstacleAt(this.pos, this.size) == "fallthrough")) {             //are they already submerged if they are Flow
         this.pos = newPos;
     }
 
-    //only the second jumping player will jump again, because the jumping
-    //variable will be only greather for charIndex == 1 (second player)
-    if (this.jumping > 1) {
-      //delay the second jump
-      this.jumping--;
-    } else if (this.jumping == 1) {
+    //FLOW Bounce
+    if (this.bouncing > 0) {
       //jump again
-      this.speed.y = -this.jumpSpeed * 0.4;
-      this.jumping--;
+      this.speed.y = -this.jumpSpeed * (this.bouncing/10);
+      this.bouncing--;
     }
   } else {
     this.pos = newPos;
@@ -168,7 +183,24 @@ Player.prototype.actions = function(step, level, keys){
       level.actors.push(this.holdingObject);
       this.holdingObject = null;
     }
+    if (this.charIndex == Character.FLEX) {
+
+    } else if (this.charIndex == Character.FLOYD) {
+
+    } else if (this.charIndex == Character.FLOW) {
+      if( keys.jump ) {
+        this.bouncing = 10;
+      }
+    }
   } else if(keys.actTwo){
+    if(this.charIndex == Character.FLOW){
+      console.log(this.FlowDash.dashCharge)
+      if(this.FlowDash.dashCharge >= 50) {
+        this.FlowDash.dashOn = true;
+        this.moveX(step, level, keys);
+      }
+      else { this.FlowDash.dashOn = false;}
+    }
 
   } else if(keys.actThree){
 
@@ -177,6 +209,7 @@ Player.prototype.actions = function(step, level, keys){
 
 Player.prototype.act = function(step, level, keys) {
   var otherActor = level.actorAt(this);
+  if(this.FlowDash.dashCharge <= 50) {this.FlowDash.dashCharge += 0.8; this.FlowDash.dashOn = false;}
   this.actions(step, level, keys);
   this.changeChar(keys);
   this.move(otherActor, step, level, keys);
@@ -198,7 +231,7 @@ Player.prototype.act = function(step, level, keys) {
 };
 
 //Character Stats
-var charGravity = [30, 22, 37]; //gravity values for characters one through three
+var charGravity = [31, 31, 31]; //gravity values for characters one through three
 var charJumpSpeed = [17, 17, 17];
 var charXspeed = [7, 7, 7];
 

@@ -23,6 +23,7 @@ function Level(plan) {
     for (var x = 0; x < this.width; x++) {
       var ch = line[x], fieldType = null;
       var Actor = actorChars[ch];
+
       if (Actor) this.actors.push(new Actor(new Vector(x, y), ch));
 
       if (ch == "x") fieldType = "wall";
@@ -97,6 +98,8 @@ Level.prototype.animate = function(step, keys) {
 
 Level.prototype.playerTouched = function(type, actor) {
   if ((type == "lava" || type == "harpoon") && this.status == null) {
+    this.status = "lost";
+    this.finishDelay = 1;
 
     sound = new Sound();
     if (this.player.getCurrentChar() == 0) {
@@ -106,9 +109,6 @@ Level.prototype.playerTouched = function(type, actor) {
     } else if (this.player.getCurrentChar() == 2) {
       sound.triggerPlayerSound("Floyd", "Floyd-Death");
     }
-
-    this.status = "lost";
-    this.finishDelay = 1;
   } else if (type == "coin") {
     this.actors = this.actors.filter(function(other) { return other != actor;});
     if (!this.actors.some(function(actor) { return actor.type == "coin"; })) {
