@@ -129,12 +129,9 @@ Level.prototype.playerTouched = function(type, actor) {
     this.actors = this.actors.filter(function(other) { return other != actor;});
     if (!this.actors.some(function(actor) { return actor.type == "coin"; })) {
       this.status = "won";
-      this.finishDelay = 1;
+      this.finishDelay = 3;
 
       console.log("won!");
-
-      uidisplay = new UICanvas();
-      uidisplay.won();
     }
   } else if (type == "switch") {
     if (this.player.touchingSwitch != actor) {
