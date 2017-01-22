@@ -99,6 +99,10 @@ function createCanvas(id, level) {
   return canvas;
 }
 
+function getRandomNumberForArray(arrayLength) {
+  return (Math.floor( Math.random()*10 ) % arrayLength );
+}
+
 function getRandomNumber(lowest, size) {
   return Math.floor(lowest + size * Math.random());
 }

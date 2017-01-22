@@ -26,8 +26,8 @@ function Sound() {
                       }
 
   this.voiceFlex = ["voices/flex/flex_1.ogg", "voices/flex/flex_2.ogg", "voices/flex/flex_3.ogg", "voices/flex/flex_4.ogg", "voices/flex/flex_5.ogg", "voices/flex/flex_6.ogg", "voices/flex/flex_7.ogg"];
-  this.voiceFlow = ["voices/flow/flow_1.ogg", "voices/flow/flow_2.ogg", "voices/flow/flow_3.ogg", "voices/flow/flow_4.ogg", "voices/flow/flow_5.ogg", "voices/flow/flow_6.ogg", "voices/flow/flow_7.ogg"]
-  this.voiceFloyd = ["voices/flow/floyd_1.ogg", "voices/flow/floyd_2.ogg", "voices/flow/floyd_3.ogg", "voices/flow/floyd_4.ogg", "voices/flow/floyd_5.ogg", "voices/flow/floyd_6.ogg", "voices/flow/floyd_7.ogg"]
+  this.voiceFlow = ["voices/flow/flow_1.ogg", "voices/flow/flow_2.ogg", "voices/flow/flow_3.ogg", "voices/flow/flow_4.ogg", "voices/flow/flow_5.ogg", "voices/flow/flow_6.ogg", "voices/flow/flow_7.ogg"];
+  this.voiceFloyd = ["voices/floyd/floyd_1.ogg", "voices/floyd/floyd_2.ogg", "voices/floyd/floyd_3.ogg", "voices/floyd/floyd_4.ogg", "voices/floyd/floyd_5.ogg", "voices/floyd/floyd_6.ogg"];
 
   this.timer = null;
 
@@ -119,19 +119,44 @@ Sound.prototype.playerSwitch = function (player) {
   }
 
   if (!this.isMuted()) {
+    var songPath;
+
     if (Character.FLOW == player) {
       this.flowSound.volume = this.playerSoundVolume;
       this.flexSound.volume = 0;
       this.floydSound.volume = 0;
+
+      var rand = getRandomNumberForArray(this.voiceFlow.length);
+      songPath = this.voiceFlow[rand];
+
     } else if (Character.FLEX == player) {
       this.flowSound.volume = 0;
       this.flexSound.volume = this.playerSoundVolume;
       this.floydSound.volume = 0;
+
+      var rand = getRandomNumberForArray(this.voiceFlex.length);
+      songPath = this.voiceFlex[rand];
+
     } else if (Character.FLOYD == player) {
       this.flowSound.volume = 0;
       this.flexSound.volume = 0;
       this.floydSound.volume = this.playerSoundVolume;
+
+      var rand = getRandomNumberForArray(this.voiceFloyd.length);
+      songPath = this.voiceFloyd[rand];
     }
+
+    var rand = getRandomNumber(1000,3000);
+    this.timer = setTimeout(this.playSound(songPath), rand);
+  }
+};
+
+Sound.prototype.playSound = function(songPath) {
+  if (!this.isMuted()) {
+     this.muteAll();
+     this.bgSound.src = songPath;
+     this.bgSound.play();
+     this.unmuteAll();
   }
 };
 
