@@ -72,6 +72,9 @@ Player.prototype.moveY = function(step, level, keys) {
 
     if      (obstacle == "slideRight") this.pos.x += step * 3;
     else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
+    else if (obstacle == "secretWall" && keys.actOne) {
+      removeSecretWall(newPos, this.size, level);
+    }
 
     var curObstacle = level.obstacleAt(this.pos, this.size);
     if (keys.jump && this.speed.y > 0 && curObstacle != "fallthrough") {
