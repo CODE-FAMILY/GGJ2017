@@ -52,7 +52,7 @@ Player.prototype.moveX = function(step, level, keys) {
 
     if (obstacle == "fallthrough") {
       this.pos = newPos;
-    } else if (this.charIndex == Character.FLOYD &&
+    } else if (this.charIndex == Character.FLEX &&
               obstacle == "secretWall" && keys.actThree) {
       removeSecretWall(newPos, this.size, level);
     }
@@ -75,14 +75,12 @@ Player.prototype.moveY = function(step, level, keys) {
     if (obstacle == "ice") {
       if (this.facingRight) this.pos.x += step * 3;
       else                  this.pos.x += step * -3;
-    }
-    else if (obstacle == "slideLeft")  this.pos.x -= step * 3;
-    else if (this.charIndex == Character.FLOYD && this.speed.y < 1 &&
-              obstacle == "secretWall" && keys.actTwo) {
+    } else if (this.charIndex == Character.FLEX && obstacle == "secretWall"
+               && keys.actTwo && this.speed.y > -1) {
       removeSecretWall(newPos, this.size, level);
     }
 
-        var curObstacle = level.obstacleAt(this.pos, this.size);
+    var curObstacle = level.obstacleAt(this.pos, this.size);
     if (keys.jump && this.speed.y > 0 && curObstacle != "fallthrough") {
       this.speed.y = -this.jumpSpeed;
     }
