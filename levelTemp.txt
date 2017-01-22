@@ -1,0 +1,21 @@
+var GAME_LEVELS = [
+ [
+"xxxxxxxxxx",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x        x",
+"x   @    x",
+"xxxxxxxxxx",
+]
+];
+if (typeof module != "undefined" && module.exports)module.exports = GAME_LEVELS;

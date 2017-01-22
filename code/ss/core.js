@@ -29,17 +29,26 @@ function runAnimation(frameFunc) {
   requestAnimationFrame(frame);
 }
 
+var running = true;
+var preInputPause = false;
 function runLevel(level, Display, andThen) {
   var display = new Display(document.getElementById("viewport"), level);
   runAnimation(function(step) {
-    level.animate(step, arrows);
-    display.drawFrame(step);
-    if (level.isFinished()) {
-      display.clear();
-      if (andThen)
-        andThen(level.status);
-      return false;
+    if (!preInputPause && arrows.pause) running = !running;
+    if (running) {
+      clearCanvas("UI");
+      level.animate(step, arrows);
+      display.drawFrame(step);
+      if (level.isFinished()) {
+        display.clear();
+        if (andThen)
+          andThen(level.status);
+        return false;
+      }
+    } else {
+      displayTextCenter("Paused", "5em", "UI");
     }
+    preInputPause = arrows.pause;
   });
 }
 
@@ -47,7 +56,7 @@ function runGame(plans, Display) {
   stats = new Statistics();
 
   sound = new Sound();
-  sound.playBgSound();
+  sound.playBgSound("Flow");
   sound.displayControls("audio-controls");
 
   function startLevel(n) {
