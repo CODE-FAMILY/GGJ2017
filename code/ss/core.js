@@ -51,7 +51,6 @@ function runLevel(level, Display, andThen) {
         return false;
       }
     } else {
-       //display.pause();
        uidisplay.paused();
     }
     preInputPause = arrows.pause;
