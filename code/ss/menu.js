@@ -1,7 +1,7 @@
 window.onload = function() {
   sound = new Sound();
   sound.playBgSound("Theme");
-  //sound.displayControls();
+  sound.displayControls("audio-controls");
 
   svgDoc = document.getElementById("menu").contentDocument;
 
