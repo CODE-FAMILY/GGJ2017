@@ -7,15 +7,11 @@ window.onload = function() {
 
   playbtn = svgDoc.getElementById("PLAYBUTTON");
   playbtn.addEventListener("click", function() {
-    var current = window.location.href
-    var newLink = current.replace("index.html", "game.html");
-    window.location.href=newLink;
+    window.location.href="game.html";
   });
 
   creditsbtn = svgDoc.getElementById("CREDITSBUTTON");
   creditsbtn.addEventListener("click", function() {
-    var current = window.location.href
-    var newLink = current.replace("index.html", "credits.html");
-    window.location.href=newLink;
+    window.location.href="credits.html";
   });
 }
